@@ -1,5 +1,5 @@
-set cp_version=0.4.3
-# .cshrc.aliases 1.2
+set cp_version=0.4.4
+# .cshrc.aliases 1.3
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.3
 # .cshrc.interactive .1
@@ -136,6 +136,7 @@ endif
 
 # application setup
 setenv ENSCRIPT -G
+setenv EDITOR emacs
 
 # shell stuff
 

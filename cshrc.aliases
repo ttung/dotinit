@@ -19,7 +19,7 @@ endif
 	alias more		less -m -e
 	alias less		less -m 
 	alias ps                ps -U $WHOAMI
-	alias which		where
+#	alias which		where
 
 
 	# editors
