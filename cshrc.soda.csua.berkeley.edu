@@ -1,12 +1,24 @@
 set watch= (1 \
-	ctung any \
 	iyaowu any \
-	ihsuan any \
+	ctung any \
 	reblee any \
+	ihsuan any \
 	braden any \
 	ngjeff any \
 	mhchu any \
 	$user any)
+
+if ($user == iyaowu) then
+    set watch= (1 \
+            tonytung any \
+            ctung any \
+            ihsuan any \
+            reblee any \
+            braden any \
+            ngjeff any \
+            mhchu any \
+            $user any)
+endif    
 
 umask 066
 
