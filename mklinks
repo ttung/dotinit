@@ -9,6 +9,12 @@ else
     set addr_user = tonytung
 endif
 
+foreach dotfile (.*)
+    if (-l $dotfile && ! -e $dotfile) then
+        echo "Warning: $dotfile is a broken link."
+    endif
+end
+
 set nonomatch
 foreach addrbook (.address*[^\.][^l][^u])
     set addrbookdest = `echo $addrbook | sed -e 's/\.\(.*\)/\1/'`
