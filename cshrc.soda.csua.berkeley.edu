@@ -14,8 +14,11 @@ setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv PATH	"${PATH}:/csua/bin"
 setenv MANPATH	"${MANPATH}:/csua/man"
 setenv EDITOR	"emacs-nw"
-alias	ncftp	ncftp2
-alias	skey		'key `keyinfo`'
-alias	skeyi	'key `keyinfo iyaowu`'
 
-/usr/bin/quota -q
+if ($?INTERACTIVE) then
+    alias	ncftp	ncftp2
+    alias	skey		'key `keyinfo`'
+    alias	skeyi	'key `keyinfo iyaowu`'
+
+    /usr/bin/quota -q
+endif
