@@ -1,4 +1,4 @@
-set CP_VERSION="cshrc package 0.3.2"
+set cp_version=0.3.3
 # .cshrc.aliases 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.1
@@ -31,8 +31,7 @@ endif
 if (! $?INTERACTIVE) then
     if ( ($?prompt) && (! $?EMACS) ) then
 #    if (! $?EMACS && ! $?0) then
-	echo $CP_VERSION
-	unset CP_VERSION
+	echo "cshrc package" $cp_version
         set INTERACTIVE
     endif
 endif
