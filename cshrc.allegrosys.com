@@ -42,4 +42,6 @@ if ($?LESSOPEN) then
 endif
 
 set ellipsis
-stty erase '^?'
+if ($?INTERACTIVE) then
+    stty erase '^?'
+endif
