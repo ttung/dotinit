@@ -20,6 +20,6 @@ XTerm*background:		black
 
 Xclock*update:			1
 
-Emacs*font:			-misc-fixed-medium-r-normal--15-140-*-*-c-*-*-1
+Emacs*font:			-misc-fixed-medium-r-normal--14-130-75-75-c-70-*-1
 Emacs*toolBar:			off
 
