@@ -1,4 +1,4 @@
-set cp_version=0.8.11
+set cp_version=0.8.12
 # .cshrc.aliases 1.24
 # .cshrc.complete 1.2
 # .cshrc.crhc 1.6
@@ -95,8 +95,10 @@ if ($?HOME) then
     if (-r $HOME/.cshrc.paths) then
 	if (! $?SHLVL) then
 	    source $HOME/.cshrc.paths
-	else if ($SHLVL == 1) then
-	    source $HOME/.cshrc.paths
+	else 
+	    if ($SHLVL == 1) then
+		source $HOME/.cshrc.paths
+	    endif
 	endif
     else
 	echo WARNING: $HOME/.cshrc.paths unavailable, using default:
