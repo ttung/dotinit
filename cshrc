@@ -1,10 +1,10 @@
-set cp_version=0.7.0
+set cp_version=0.7.1
 # .cshrc.aliases 1.13
 # .cshrc.crhc 1.4
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive 1.7
-# .cshrc.paths 1.8
+# .cshrc.interactive 1.8
+# .cshrc.paths 1.9
 # .cshrc.soda.csua.berkeley.edu 1.8
 
 set path = (/bin /usr/bin)
@@ -113,7 +113,6 @@ if ($?HOME) then
 	    echo WARNING: $HOME/.cshrc.aliases unavailable
     endif
 endif
-
 
 # do host dependent initialization
 if ($?YPDOMAIN) then

@@ -27,7 +27,7 @@ if ($?tcsh) then
     bindkey "^[[6~" history-search-forward   # pagedown
 endif
 
-if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
+if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
 
 if ($?DISPLAY) then
 	setenv SSH_DISPLAY $DISPLAY
@@ -42,10 +42,14 @@ setenv BLOCKSIZE K
 
 # set the prompt
 if ($?TERM) then
-    if ($TERM == xterm) then
-	set prompt='%{\e]2\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%~%b%# '
+    if ($?tcsh) then
+	if ($TERM == xterm) then
+	    set prompt='%{\e]2\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%~%b%# '
+	else
+	    set prompt='[%n %m] \!:%B%~%b%# '
+    	endif
     else
-	set prompt='[%n %m] \!:%B%~%b%# '
+	set prompt='[\!] '
     endif
 endif
 

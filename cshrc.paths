@@ -3,7 +3,7 @@ setenv MANPATH .
 setenv LD_LIBRARY_PATH  .
 setenv INCLUDE .
 
-setenv GCC_DFLAG
+setenv GCC_DFLAG ""
 setenv GCC_IFLAG "-I."
 setenv GCC_LFLAG "-L."
 
