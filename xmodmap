@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+# xmodmap_kludge
+
+# Filter for xmodmap input that converts keysym expressions to keycode
+# expressions, using somewhat more friendly rules than xmodmap does.  In
+# particular, the keysym on the left is translated only into the keycodes for
+# which it is the first keysym.  This prevents unexpected results when a keysym
+# is bound to a keycode with an obscure modifier.  As an example, part of
+# keymap table (as output by xmodmap -pke) on my machine is:
+#   keycode  17 = 8 asterisk bracketleft trademark
+# (This means the 8 key can produce a trademark when various other keys are
+# held down.  Don't ask me why.)  If I feed xmodmap the expression:
+#   keysym bracketleft = slash question
+# it will assign 'slash question' to keycode 17, my 8 key!  If you use this
+# script to filter the expression, it will assign 'slash question' only to the
+# _real_ bracketleft key.
+
+# You should be sure that the "assigned to" keysym in your expressions is the
+# same as what xmodmap -pke spits out (for that key).  For example, (my)
+# xmodmap accepts both apostrophe and the deprecated quoteright for the '
+# character, but will always output the keysym as apostrophe.  Therefore, input
+# to this script must use apostrophe on the left side of assignments.  You can
+# make sure this script understands all the keysyms you're assigning to (as
+# well as perform a couple other sanity checks) by running this script as:
+#   xmodmap_kludge .xmodmaprc > /dev/null
+# and watching for warnings.  Normally, use as:
+#   xmodmap_kludge .xmodmaprc | xmodmap -
+
+# Andrew Pimlott <pimlott@math.harvard.edu>
+
+open (MAP, 'xmodmap -pke |') || die "Can't run xmodmap -pke!\n";
+while (<MAP>) {
+        next unless (($code, $firstsym) = /^keycode\s+(\d+)\s*=\s*(\w+)/);
+        push @{$keycode{$firstsym}}, $code;
+}
+
+while (<>) {
+        print, next unless (($from, $to) = /^keysym\s+(\w+)\s*=([\w\s]*)$/);
+        @to = split " ", $to;
+        @{$keycode{$from}} || warn "$from was not bound to begin!\n";
+        foreach (@{$keycode{$from}}) {
+                print "keycode $_ = @to\n";
+        }
+}

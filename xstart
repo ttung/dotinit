@@ -1,0 +1,13 @@
+#!/bin/tcsh
+if ($OS == SunOS) then
+    xmodmap .dvorak.keysym
+else
+    ~/.xmodmap ~/.dvorak | xmodmap -
+endif
+if (-X fvwm2) then
+    fvwm2
+else if (-X fvwm) then
+    fvwm
+else
+    twm
+endif

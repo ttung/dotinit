@@ -1,4 +1,31 @@
 #!/bin/sh
 cd ${HOME}
-ln -sf .init/.cshrc* .
-ln -sf .init/.emacs .
+ln -sf .init/cshrc .cshrc
+ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
+ln -sf .init/cshrc.aliases .cshrc.aliases
+ln -sf .init/cshrc.complete .cshrc.complete
+ln -sf .init/cshrc.crhc .cshrc.crhc
+ln -sf .init/cshrc.cso.uiuc.edu .cshrc.cso.uiuc.edu
+ln -sf .init/cshrc.eng.cisco.com .cshrc.eng.cisco.com
+ln -sf .init/cshrc.ews.uiuc.edu .cshrc.ews.uiuc.edu
+ln -sf .init/cshrc.interactive .cshrc.interactive
+ln -sf .init/cshrc.login .cshrc.login
+ln -sf .init/cshrc.logout .cshrc.logout
+ln -sf .init/cshrc.paths .cshrc.paths
+ln -sf .init/cshrc.soda.csua.berkeley.edu .cshrc.soda.csua.berkeley.edu
+ln -sf .init/emacs .emacs
+ln -sf .init/xstart .xstart
+ln -sf .init/dvorak .dvorak
+ln -sf .init/xsession .xsession
+ln -sf .init/qwerty .qwerty
+ln -sf .init/fvwm2rc .fvwm2rc
+ln -sf .init/xmodmap .xmodmap
+ln -sf .init/dvorak.keysym .dvorak.keysym
+ln -sf .init/Xdefaults .Xdefaults
+ln -sf .init/hushlogin .hushlogin
+
+ln -sf .cshrc.aliases .aliases
+ln -sf .cshrc.login .login
+ln -sf .cshrc.logout .logout
+
+ln -sf .xsession .xinitrc 
