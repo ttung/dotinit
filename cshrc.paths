@@ -1,11 +1,49 @@
-setenv PATH .:/usr/bin:/bin:/etc:/sbin:/usr/sbin
-setenv MANPATH /usr/man
-setenv LD_LIBRARY_PATH  /lib:/usr/lib
-setenv INCLUDE .:/usr/include
+setenv PATH .
+setenv MANPATH .
+setenv LD_LIBRARY_PATH  .
+setenv INCLUDE .
 
 setenv GCC_DFLAG
 setenv GCC_IFLAG "-I."
 setenv GCC_LFLAG "-L."
+
+# initialize path variables for HOME subsystem
+if ($?LOGHOME) then
+        if (-d $LOGHOME/software/bin) then
+                setenv PATH     "${PATH}:${LOGHOME}/software/bin"
+        endif
+
+        if (-d $LOGHOME/software/bin-$ARCH) then
+                setenv PATH     "${PATH}:${LOGHOME}/software/bin-${ARCH}"
+        endif
+
+        if (-d $LOGHOME/software/lib) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib"
+        endif
+
+        if (-d $LOGHOME/software/lib-$ARCH) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib-${ARCH}"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib-${ARCH}"
+        endif
+
+        if (-d $LOGHOME/software/man) then
+                setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man"
+        endif
+
+    	if (-d $LOGHOME/software/include) then
+		setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include"
+		setenv GCC_IFLAG "${GCC_IFLAG} -I${LOGHOME}/software/include"
+    	endif
+endif
+
+setenv PATH	"${PATH}:/usr/bin:/bin:/etc:/sbin:/usr/sbin"
+setenv MANPATH	"${MANPATH}:/usr/man"
+setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/lib:/usr/lib"
+setenv INCLUDE	"${INCLUDE}:/usr/include"
+
+setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include"
+setenv GCC_LFLAG "${GCC_LFLAG} -L/lib -L/usr/lib"
 
 # initialize random usr paths
 if (-d /usr/ucb) then
@@ -187,36 +225,6 @@ if ($?LOCALROOT) then
 		unset unsetLOCALROOT
 		unset LOCALROOT
 	endif
-endif
-
-# initialize path variables for HOME subsystem
-if ($?LOGHOME) then
-        if (-d $LOGHOME/software/bin) then
-                setenv PATH     "${PATH}:${LOGHOME}/software/bin"
-        endif
-
-        if (-d $LOGHOME/software/bin-$ARCH) then
-                setenv PATH     "${PATH}:${LOGHOME}/software/bin-${ARCH}"
-        endif
-
-        if (-d $LOGHOME/software/lib) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib"
-        endif
-
-        if (-d $LOGHOME/software/lib-$ARCH) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib-${ARCH}"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib-${ARCH}"
-        endif
-
-        if (-d $LOGHOME/software/man) then
-                setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man"
-        endif
-
-    	if (-d $LOGHOME/software/include) then
-		setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include"
-		setenv GCC_IFLAG "${GCC_IFLAG} -I${LOGHOME}/software/include"
-    	endif
 endif
 
 if ($OS == SunOS) then

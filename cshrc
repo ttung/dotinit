@@ -1,10 +1,10 @@
-set cp_version=0.4.8
-# .cshrc.aliases 1.3
+set cp_version=0.5.0
+# .cshrc.aliases 1.4
 # .cshrc.csil 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive .1
-# .cshrc.paths 1.2
+# .cshrc.interactive 1.1
+# .cshrc.paths 1.3
 # .cshrc.soda.csua.berkeley.edu 1.2
 
 if (! $?WHOAMI) then
