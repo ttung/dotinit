@@ -17,10 +17,6 @@ if ($?SETPATHS) then
         endif
     endif
 
-    if (-d /usr/X11R6/bin) then
-        setenv PATH ${PATH}:/usr/X11R6/bin
-    endif
-
     if (-d /usr/local/sde4/bin) then
         setenv PATH ${PATH}:/usr/local/sde4/bin
     endif
