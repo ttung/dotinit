@@ -1,7 +1,5 @@
 alias	lynx	lynx -cfg=${HOME}/software/lynx2-8-2/lynx.cfg
-
-setenv	CVSROOT	/asi/db/cvsroot
-setenv	CVSREAD	1
+unalias	more
 
 if (-d /asi) then
     if (-d /asi/net/common/user-defaults/bin) then
@@ -33,5 +31,10 @@ if ($?TERM) then
     endif
 endif
 
+setenv	CVSROOT	/asi/db/cvsroot
+setenv	CVSREAD	1
+
 set ellipsis
 stty erase '^?'
+setenv PYTHONPATH /asi/local/bin
+
