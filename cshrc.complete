@@ -31,3 +31,5 @@ complete	unsetenv	'p/1/v/'
 complete	where		'n/*/c/'
 complete	which		'n/*/c/'
 complete	zcat		'p/*/f:*.{gz,Z,z,zip,taz,tgz}/'
+
+pstat "done\n"

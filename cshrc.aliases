@@ -88,3 +88,5 @@ endif
 
 # tperiod
     alias periodic	myfrm -s u -s n -t -n -r
+
+pstat "done\n"
