@@ -8,6 +8,8 @@
 
 # custom aliases
 
+	alias ver		echo "cshrc package" $cp_version
+
 	# basic unix stuff
 
 	alias ls                ls -F
