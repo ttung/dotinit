@@ -1,4 +1,4 @@
-set cp_version=0.10.7
+set cp_version=0.10.8
 
 # general initialization files
 # ----------------------------
