@@ -21,8 +21,22 @@ setenv NOMOTD
 setenv NOFRM
 setenv NOQUOTACHECK
 
-if (-e ${HOME}/software/lib/pkgconfig/) then
-    setenv PKG_CONFIG_PATH ${HOME}/software/lib/pkgconfig/
+if ($OSTYPE == "linux") then
+    #######################################################
+    # Common initialization
+    source /proj/modules/init/csh
+    module load pasemi/init
+
+    #######################################################
+    # Setup a project
+    setup_project andromeda
+endif
+
+setenv PRINTER		chuck
+setenv PASEMI_PATH	"${PATH}"
+
+if ($OSTYPE == "darwin") then
+    setenv DISPLAY :0
 endif
 
 cstat "done\n"
