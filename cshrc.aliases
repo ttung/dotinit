@@ -1,4 +1,6 @@
-alias ver			echo "cshrc package" $cp_version
+if ($?cp_version) then
+    alias ver			echo "cshrc package" $cp_version
+endif
 
 # basic unix stuff
 alias rm			rm -i

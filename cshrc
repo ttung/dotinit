@@ -1,4 +1,4 @@
-set cp_version=0.11.6
+set cp_version=0.11.7
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -16,9 +16,6 @@ else
 endif
 
 if ($?INTERACTIVE) then
-    clear
-
-    alias pstat 'echo -n \!*'
     pstat "cshrc package ${cp_version}\n\n"
     pstat "Initializing...\n"
     pstat "  main..."
