@@ -15,7 +15,9 @@
 	alias lla		ls -al
 	alias top		nice +2 top -s 1
 if (-e /bin/umask) then
-	alias umask             'umask \!* ; /bin/umask -S'
+	alias umask		"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
+else if (-e /usr/bin/umask) then
+	alias umask		"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
 endif
 	alias more		less -m -e
 	alias less		less -m 
