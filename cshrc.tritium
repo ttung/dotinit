@@ -6,13 +6,19 @@ if ($?INTERACTIVE) then
     complete	ssh	'p/1/(aurora-borealis.dyndns.org ssh-sj1.cisco.com)/'
 
     cstat "."
-endif
 
-if ($?TERM) then
-    if ($TERM == xterm) then
-        setenv TERM xterm-color
+    if ($?TERM) then
+        if ($TERM == xterm) then
+            setenv TERM xterm-color
+        endif
     endif
+    set dontshowproc
+
+    if (! $?DISPLAY) then
+        setenv DISPLAY :0
+    endif
+
+    alias em /Applications/Emacs.app/Contents/MacOS/Emacs
 endif
-set dontshowproc
 
 cstat "done"
