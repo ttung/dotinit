@@ -43,11 +43,17 @@ if ($?INTERACTIVE) then
             screen -X reportidle
         endif
     endif
-    if ($?TERM) then
-        if ($TERM == screen) then
-            alias periodic	'if (-r '${HOME}'/tmp/tonytung-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/tonytung-DISPLAY`'
-            periodic
+    if (! $?prompt && $?tcsh && $TERMTYPE == screen) then
+        if ($?WINDOW) then 
+            setenv WINDOW_NUM "-$WINDOW"
+            unsetenv WINDOW
+        else
+            setenv WINDOW_NUM 
         endif
+
+        set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
+        alias periodic	'if (-r '${HOME}'/tmp/tonytung-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/tonytung-DISPLAY`'
+        periodic
     endif
 endif
 
