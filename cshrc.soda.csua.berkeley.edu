@@ -9,6 +9,7 @@ set watch= (1 \
 	tonytung any)
 
 umask 066
+limit maxproc 256
 
 if ($?SETPATHS) then
     setenv PATH	"${PATH}:/csua/bin:/usr/local/jdk1.1.8/bin"
