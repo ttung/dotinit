@@ -1,3 +1,10 @@
+if (`alias rm` == "") then
+    set normalias
+else
+    set rmalias=`alias rm`
+    unalias rm
+endif
+
 if ($?SHLVL) then
     if ($SHLVL == 1) then
         if ($?SSH2_AGENT_PID) then
@@ -7,4 +14,11 @@ if ($?SHLVL) then
             eval `ssh-agent -k`
         endif
     endif
+endif
+
+if ($?normalias) then
+    unset normalias
+else
+    alias rm $rmalias
+    unset rmalias
 endif

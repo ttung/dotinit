@@ -1,4 +1,4 @@
-set cp_version=0.9.29
+set cp_version=0.9.30
 
 # general initialization files
 # ----------------------------
@@ -6,13 +6,13 @@ set cp_version=0.9.29
 # .cshrc.complete 1.4
 # .cshrc.interactive 1.36
 # .cshrc.login 1.1
-# .cshrc.logout 1.1
+# .cshrc.logout 1.2
 # .cshrc.paths 1.14
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.allegrosys.com 1.14
 # .cshrc.crhc 1.11
+# .cshrc.eng.cisco.com 1.1
 # .cshrc.OCF.Berkeley.EDU 1.3
 # .cshrc.soda.csua.berkeley.edu 1.21
 
@@ -95,16 +95,16 @@ if ($?INTERACTIVE) then
     echo -n "" domain
 endif
 if (! $?YPDOMAIN) then
-    if (-x /bin/domainname) then
+    if (! $?YPDOMAIN && -r $HOME/.domainname) then
+        setenv YPDOMAIN `cat $HOME/.domainname`
+        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
+    endif
+    if (! $?YPDOMAIN && -x /bin/domainname) then
         setenv YPDOMAIN `domainname`
         if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
     endif
     if (! $?YPDOMAIN && -r /etc/ypdomainname) then
         setenv YPDOMAIN `cat /etc/ypdomainname`
-        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
-    endif
-    if (! $?YPDOMAIN && -r $HOME/.domainname) then
-        setenv YPDOMAIN `cat $HOME/.domainname`
         if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
     endif
     if (! $?YPDOMAIN) then
