@@ -1,4 +1,4 @@
-set cp_version=0.9.9
+set cp_version=0.9.10
 
 # general initialization files
 # ----------------------------
@@ -7,7 +7,7 @@ set cp_version=0.9.9
 # .cshrc.interactive 1.33
 # .cshrc.login 1.1
 # .cshrc.logout 1.1
-# .cshrc.paths 1.12
+# .cshrc.paths 1.13
 
 # site-specific initialization files
 # ----------------------------------

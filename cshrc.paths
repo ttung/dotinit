@@ -189,6 +189,9 @@ if (! $?X11) then
     if (-d /usr/X11) then
 	set X11 = /usr/X11
 	set unsetX11
+    else if (-d /usr/X11R6) then
+        set X11 = /usr/X11R6
+        set unsetX11
     endif
 endif
 
