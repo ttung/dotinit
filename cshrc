@@ -1,4 +1,4 @@
-set cp_version=0.8.15
+set cp_version=0.8.17
 # .cshrc.aliases 1.25
 # .cshrc.complete 1.2
 # .cshrc.crhc 1.6
@@ -67,6 +67,12 @@ if (! $?HOST) then
         else
                 setenv HOST `uname -n`
         endif
+endif
+
+if (! $?MACHNAME) then
+    if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
+        setenv MACHNAME `echo $HOST | sed 's/\..*//'`
+    endif
 endif
 
 if (! $?YPDOMAIN) then
@@ -156,4 +162,4 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${HOST}]:> \!-0\a"'
+if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${MACHNAME}]:> \!-0\a"'
