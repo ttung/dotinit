@@ -17,7 +17,6 @@ set noglob
 unset noglob
 
 mesg y
-biff y
 
 if ($?tcsh) then
     bindkey "^[[1~" beginning-of-line        # home
