@@ -1,7 +1,8 @@
 #!/bin/tcsh
-set nonomatch
 cd ${HOME}
+set nonomatch
 'rm' -f .cshrc*
+unset nonomatch
 'rm' -f .emacs
 'rm' -f .xstart
 'rm' -f .dvorak
@@ -28,13 +29,18 @@ else
     set addr_user = tonytung
 endif
 
+set nonomatch
 foreach addrbook (.addressbook*[^\.][^l][^u])
     set addrbookdest = `echo $addrbook | sed -e 's/\.\(.*\)/\1/'`
+    if (! -e $addrbook) then
+        break
+    endif
     if (! -l $addrbook) then
         mkdir -p .init/${addr_user}-addressbook/
         'mv' -f $addrbook .init/${addr_user}-addressbook/${addrbookdest}
     endif
 end
+unset nonomatch
 
 foreach cshrc (.init/cshrc*)
     set cshrcdest = `echo $cshrc | sed -e 's/.*\/\([^\/]*\)/.\1/'`
@@ -67,5 +73,3 @@ if (-d .init/${addr_user}-addressbook/) then
 endif
 
 cd -
-
-unset nonomatch
