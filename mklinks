@@ -1,4 +1,5 @@
 #!/bin/tcsh
+set nonomatch
 cd ${HOME}
 'rm' -f .cshrc*
 'rm' -f .emacs
@@ -66,3 +67,5 @@ if (-d .init/${addr_user}-addressbook/) then
 endif
 
 cd -
+
+unset nonomatch
