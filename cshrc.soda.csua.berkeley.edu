@@ -18,6 +18,7 @@ if ($?SETPATHS) then
 endif
 setenv EDITOR	"emacs-nw"
 setenv CVSROOT	${HOME}/.CVSROOT
+setenv NOFRM
 
 if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
