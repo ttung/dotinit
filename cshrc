@@ -1,4 +1,4 @@
-set cp_version=0.8.41
+set cp_version=0.8.42
 # .cshrc.aliases 1.33
 # .cshrc.complete 1.4
 # .cshrc.crhc 1.9
@@ -9,7 +9,7 @@ set cp_version=0.8.41
 # .cshrc.logout 1.1
 # .cshrc.OCF.Berkeley.EDU 1.2
 # .cshrc.paths 1.12
-# .cshrc.soda.csua.berkeley.edu 1.14
+# .cshrc.soda.csua.berkeley.edu 1.15
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
