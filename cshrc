@@ -1,8 +1,8 @@
-set cp_version=0.9.4
+set cp_version=0.9.5
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.37
+# .cshrc.aliases 1.38
 # .cshrc.complete 1.4
 # .cshrc.interactive 1.33
 # .cshrc.login 1.1
@@ -11,7 +11,7 @@ set cp_version=0.9.4
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.allegrosys.com 1.4
+# .cshrc.allegrosys.com 1.5
 # .cshrc.crhc 1.11
 # .cshrc.OCF.Berkeley.EDU 1.3
 # .cshrc.soda.csua.berkeley.edu 1.18

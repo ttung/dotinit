@@ -1,22 +1,25 @@
 alias	lynx	lynx -cfg=${HOME}/software/lynx2-8-2/lynx.cfg
+alias	olympia	setenv DISPLAY olympia:0
 unalias	more
 
-if (-d /asi) then
-    if (-d /asi/net/common/user-defaults/bin) then
-        setenv PATH ${PATH}:/asi/net/common/user-defaults/bin
+if ($?SETPATHS) then
+    if (-d /asi) then
+        if (-d /asi/net/common/user-defaults/bin) then
+            setenv PATH ${PATH}:/asi/net/common/user-defaults/bin
+        endif
+
+        if (-d /asi/local/bin) then
+            setenv PATH ${PATH}:/asi/local/bin
+        endif
     endif
 
-    if (-d /asi/local/bin) then
-        setenv PATH ${PATH}:/asi/local/bin
+    if (-d /usr/X11R6/bin) then
+        setenv PATH ${PATH}:/usr/X11R6/bin
     endif
-endif
 
-if (-d /usr/X11R6/bin) then
-    setenv PATH ${PATH}:/usr/X11R6/bin
-endif
-
-if (-d /usr/local/sde4/bin) then
-    setenv PATH ${PATH}:/usr/local/sde4/bin
+    if (-d /usr/local/sde4/bin) then
+        setenv PATH ${PATH}:/usr/local/sde4/bin
+    endif
 endif
 
 if ($?TERM) then
@@ -37,4 +40,3 @@ setenv	CVSREAD	1
 set ellipsis
 stty erase '^?'
 setenv PYTHONPATH /asi/local/bin
-
