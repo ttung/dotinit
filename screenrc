@@ -7,17 +7,20 @@ hardstatus on
 defscrollback 2000
 
 # this prohibits screen from resizing our window (or something like that)
-termcapinfo vt100 Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
-#termcapinfo xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+termcap vt100 Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+#termcap xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 
 # this magically allows the hardstatus to be put to the xterm title
-termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+termcap xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 
-#termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
-#termcapinfo xterm 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
-termcapinfo xterm 'kb=^?:kD=\E[3~'
-termcapinfo vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
-termcapinfo vt100 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
+# keymappings specific to each terminal
+termcap xterm 'kb=^?:kD=\E[3~'
+termcap vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcap vt100 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
+
+# give the background-color-erase capability
+termcap vt100|xterm "" 'ut'
+termcap vt100|xterm 'op=\E[37;40m'
 
 msgminwait 5
 msgwait 30
@@ -26,3 +29,5 @@ msgwait 30
 #bindkey -d -k k2 stuff \033[12~
 #bindkey -d -k k3 stuff \033[13~
 #bindkey -d -k k4 stuff \033[14~
+
+bindkey "^[OI" stuff "^I"
