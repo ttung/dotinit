@@ -58,3 +58,6 @@ unset autologout
 set history=500
 set savehist=100
 set cdpath=${HOME}
+set echo_style=both
+set symlinks=ignore
+
