@@ -79,14 +79,16 @@ if ($?TERM) then
     endif
 endif
 
-set notify pushdtohome ignoreeof notify noclobber listjobs autolist
 unset autologout
-set history=500
-set savehist=100
+set notify pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
 set echo_style=both
+set history=500
+set ignoreeof=3
+set savehist=100
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
+
 if (-x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
 	set tperiod=1
 else
