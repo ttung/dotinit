@@ -205,8 +205,8 @@ if ($?LOCALROOT) then
 		setenv PATH	"${PATH}:${LOCALROOT}"
 	endif
 
-	if (-d $LOCALROOT/java) then
-		setenv PATH	"${PATH}:${LOCALROOT}/java"
+	if (-d $LOCALROOT/java/bin) then
+		setenv PATH	"${PATH}:${LOCALROOT}/java/bin"
 	endif
 
 	if (-d $LOCALROOT/man) then
