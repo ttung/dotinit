@@ -9,29 +9,23 @@ endif
 
 # initialize path variables for HOME subsystem
 if ($?gatherpaths) then
-    set C_PATH		= (/router/bin ${C_PATH} /asi/local/bin /sw/current/solaris2bin \
-                            /usr/atria/bin /usr/local/ddts/bin)
+    set C_PATH		= (/router/bin ${C_PATH} \
+                            /asi/local/bin /sw/current/solaris2bin \
+                            /usr/atria/bin /usr/local/ddts/bin \
+                            /sw/packages/gcc/c2.95.3-p4/bin \
+                            /auto/macedon_tools/asi-utils)
+
     set C_MANPATH	= (${C_MANPATH} /usr/atria/doc/man /sw/current/man \
                             /usr/local/ddts/doc/man /usr/local/contrib/man)
 
-    if (${OSTYPE} == "linux") then
-        setenv SBTOOLS_BASE /usr/local/sbtools/x86-linux-rh6.0/mips64-sb1sim-2.1.1
-    else if (${OSTYPE} == "solaris" && -d /vws/xnw/sbtools/sparc-solaris-5.6/mips64-sb1sim-2.3.1) then
-        setenv SBTOOLS_BASE /vws/xnw/sbtools/sparc-solaris-5.6/mips64-sb1sim-2.3.1
-    endif
-
-    if ($?SBTOOLS_BASE) then
-        set C_PATH	= (${SBTOOLS_BASE}/bin ${C_PATH})
-        set C_MANPATH	= (${SBTOOLS_BASE}/man ${C_MANPATH})
-    endif
-
-    set C_PATH		= (${C_PATH} /sw/packages/gcc/c2.95.3-p4/bin \
-                            /auto/macedon_tools/asi-utils)
+    # temporary hack required by teambuilder
+    setenv PATH         /router/bin:${PATH}
 endif
 
 cstat "."
 
 setenv CC_DISABLE_MAKE_HINTS 1
+setenv MAKEFLAG_J -j8
 setenv CVSROOT /vws/xel/work/CVSROOT
 setenv VIEWER emacsclient-ret
 setenv LPDEST e2-f2-4
@@ -47,7 +41,7 @@ if (-x /usr/xpg4/bin/cp) alias cp '/usr/xpg4/bin/cp -i'
 if (-x /usr/xpg4/bin/mv) alias mv '/usr/xpg4/bin/mv -i'
 if (-x /usr/xpg4/bin/rm) alias rm '/usr/xpg4/bin/rm -i'
 
-unalias gmake
+unalias make
 
 # clearcase aliases
 alias	ct		cleartool
@@ -61,22 +55,35 @@ if ($HOST == glenlivet) then
 else if ($HOST == skoda) then
     alias	start_task	start_task -d /ws/habg
     alias	mkview		mkview -s /ws/habg
+else if ($HOST == yugo) then
+    alias	start_task	start_task -d /ws/haap
+    alias	mkview		mkview -s /ws/haap
 endif
 alias	tagit		ct mklabel -replace BUILD
 alias	cc_rmview	cc_rmview -view 
-alias	mksp		nice make -j8 c6s2p2_sp-sp-mz -C /vob/ios/sys/obj-4k-apollo_plus
+alias	mksp		nice make -j8 c6s2p2_sp-spv-mz -C /vob/ios/sys/obj-4k-apollo_plus
 alias	mkrp		nice make -j8 c6sup2_rp-jk9sv-mz -C /vob/ios/sys/obj-4k-draco2-mp
+
+if (-x /auto/ncsoft14/const/bin/easy_sa) then
+    alias	easy_sa		/auto/ncsoft14/const/bin/easy_sa
+endif
+if (-x /auto/ncsoft14/const/bin/easy_prep) then
+    alias	easy_prep	/auto/ncsoft14/const/bin/easy_prep
+endif
+
 if ($?tcsh) then
     if (-X emacs21) then
         alias	emacs	emacs21
     endif
 endif
-alias	r1		telnet 172.23.56.77 2007
-alias	r2		telnet 172.23.56.77 2013
-alias	r1-mcpu		telnet 172.23.56.77 2006
-alias	r1-icpu		telnet 172.23.56.77 2015
-alias	r1-ocpu		telnet 172.23.56.77 2008
-alias	r2-mcpu		telnet 172.23.56.77 2005
+alias	r1		telnet cscpm10 2002
+alias	r1-ch		telnet cscpm10 2007
+alias	r1-mcpu		telnet cscpm10 2008
+alias	r2		telnet cscpm10 2010
+alias	r2-ch		telnet cscpm10 2013
+alias	r2-mcpu		telnet cscpm10 2016
+alias	r2-ocpu		telnet cscpm10 2005
+alias	r2-icpu		telnet cscpm10 2004
 
 alias cat1	'telnet cscpm8 2008'
 alias cat1-mcpu	'telnet cscpm8 2007'
@@ -118,7 +125,7 @@ if ($?TERM) then
     endif
 endif
 
-if ($?TERMTYPE) then
+if ($?TERMTYPE && ! $?QUIET_CSHRC) then
     if ($?tcsh) then
         if ($?WINDOW) then 
             setenv WINDOW_NUM ":$WINDOW"
@@ -141,7 +148,7 @@ if ($?TERMTYPE) then
     endif
 endif
 
-if ($?TERMTYPE && $?tcsh) then
+if ($?TERMTYPE && $?tcsh && ! $?QUIET_CSHRC) then
     if ($TERMTYPE == 'xterm' && -X resize && $SHLVL == 1) then
         eval `resize`
         set setterm
@@ -157,14 +164,27 @@ setenv NOMOTD
 setenv NOFRM
 setenv NOQUOTACHECK
 
-setenv IXIA_VERSION 3.65.284
+setenv IXIA_VERSION 3.80.125
 
 cstat "."
 
 if ($?INTERACTIVE && $SHLVL == 1 && \
-    -e /sw/packages/ccache/current/bin/setup-ccache && \
-    -w /auto/ccache) then
-    source /sw/packages/ccache/current/bin/setup-ccache
+    -e /sw/packages/ccache/2.3-RC1/bin/setup-ccache) then
+    setenv TEAMBUILDER_SYSTEM "cisco:cross"
+    setenv TEAMBUILDER_C_EXTNS ".s,.S"
+    setenv TEAMBUILDER_CPP_EXTNS ".ii"
+
+    if ($?gatherpaths) then
+        set C_PATH	= (/opt/teambuilder/bin ${C_PATH})
+    endif
+
+    if ($HOST != glenlivet) then
+#         setenv CCACHE_GCC_FARM_PATH /opt/teambuilder/bin
+#         source /sw/packages/ccache/2.3-RC1/bin/setup-ccache
+#         if ($?gatherpaths) then
+#             set C_PATH	= (/sw/packages/ccache/2.3-RC1/bin ${C_PATH})
+#         endif
+    endif
 endif
 
 cstat "done\n"
