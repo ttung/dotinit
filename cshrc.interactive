@@ -21,11 +21,9 @@ if (! $?EMACS ) then
 endif
 
 if ($?SHLVL) then
-    if ($SHLVL == 1) then
-	if (! $?SSH_AUTH_SOCK) then
+    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) ) then
 	    eval `ssh-agent -c`
-	    ssh-add
-	endif
+	    if (-r ${HOME}/.ssh/identity) ssh-add
     endif
 endif
 
