@@ -81,8 +81,10 @@ if ($?tcsh) then
     bindkey	"^[[6~"	history-search-forward		# pagedown
     bindkey	"^B"	backward-word
     bindkey	"^F"	forward-word
-    bindkey	"^[b"	backward-char
-    bindkey	"^[f"	forward-char
+    bindkey	-b M-b	backward-char
+    bindkey	-b M-f	forward-char
+    bindkey	-b M-s	i-search-fwd
+    bindkey	-b M-r	i-search-back
 endif
 
 if (! $?NOMOTD && -r /etc/motd) then
