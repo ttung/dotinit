@@ -60,3 +60,7 @@ endif
 if ($?HOME) then
 	alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
 endif
+
+# tperiod
+
+	alias periodic		frm -s new -t -n
