@@ -76,7 +76,7 @@ if ($?LOCALROOT) then
 
     	if (-d $LOCALROOT/include) then
 		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
-                setenv GCC_IFLAG "${GCC_IFLAG} -I${LOCALROOT}/include"
+#                setenv GCC_IFLAG "${GCC_IFLAG} -I${LOCALROOT}/include"
     	endif
 
 	if ($?unsetLOCALROOT) then
@@ -90,7 +90,7 @@ setenv MANPATH	"${MANPATH}:/usr/man"
 setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/lib:/usr/lib"
 setenv INCLUDE	"${INCLUDE}:/usr/include"
 
-setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include"
+#setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include"
 setenv GCC_LFLAG "${GCC_LFLAG} -L/lib -L/usr/lib"
 
 # initialize random usr paths
@@ -108,7 +108,7 @@ endif
 
 if (-d /usr/include/X11) then
 	setenv INCLUDE	"${INCLUDE}:/usr/include/X11"
-        setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include/X11"
+#        setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include/X11"
 endif
 
 if (-d /usr/share/man) then
@@ -137,7 +137,7 @@ if (-d /usr/openwin) then
 
 	if (-d /usr/openwin/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/openwin/include"
-                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/openwin/include"
+#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/openwin/include"
 	endif
 endif
 
@@ -158,7 +158,7 @@ if (-d /usr/dt) then
 
 	if (-d /usr/dt/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/dt/include"
-                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/dt/include"
+#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/dt/include"
 	endif
 endif
 
@@ -179,7 +179,7 @@ if (-d /usr/ccs) then
 
 	if (-d /usr/ccs/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/ccs/include"
-                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/ccs/include"
+#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/ccs/include"
 	endif
 endif
     
@@ -208,7 +208,7 @@ if ($?X11) then
 
     if (-d $X11/include) then
 	setenv INCLUDE	"${INCLUDE}:${X11}/include"
-        setenv GCC_IFLAG "${GCC_IFLAG} -I${X11}/include"
+#        setenv GCC_IFLAG "${GCC_IFLAG} -I${X11}/include"
     endif
 
     if ($?unsetX11) then
@@ -278,7 +278,7 @@ if ($?CONTRIB) then
 
     if (-d $CONTRIB/include) then
 	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
-        setenv GCC_IFLAG "${GCC_IFLAG} -I${CONTRIB}/include"
+#        setenv GCC_IFLAG "${GCC_IFLAG} -I${CONTRIB}/include"
     endif
 
     if ($?unsetCONTRIB) then

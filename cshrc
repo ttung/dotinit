@@ -1,11 +1,11 @@
-set cp_version=0.8.29
+set cp_version=0.8.30
 # .cshrc.aliases 1.30
 # .cshrc.complete 1.3
 # .cshrc.crhc 1.9
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.25
-# .cshrc.paths 1.10
+# .cshrc.paths 1.11
 # .cshrc.soda.csua.berkeley.edu 1.13
 
 if (! $?PATH) then
