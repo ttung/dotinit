@@ -1,89 +1,87 @@
-#default aliases
-
-    alias l		echo \!\*\{\*\}
-    alias rm		rm -i
-    alias cp		cp -i
-    alias mv		mv -i
-
-
-# custom aliases
-
-    alias ver		echo "cshrc package" $cp_version
+alias ver			echo "cshrc package" $cp_version
 
 # basic unix stuff
+alias rm			rm -i
+alias cp			cp -i
+alias mv			mv -i
 
-    alias ls		ls -F
-    alias ll		ls -l
-    alias lla		ls -al
+alias l				ls -F
+alias ls			ls -F
+alias ll			ls -l
+alias lla			ls -al
 
+# process control
+alias ups			ps -U $USER
+alias j				jobs
 if ($OSTYPE == linux) then
-    alias top		nice +2 top d 1
+    alias top			nice +2 top d 1
 else
-    alias top		nice +2 top -s 1
+    alias top			nice +2 top -s 1
 endif
 
-if (-e /bin/umask) then
-    alias umask	"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
-else if (-e /usr/bin/umask) then
-    alias umask	"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
-endif
+# pagers
+alias more			less -m -e -i
+alias less			less -m -i
 
-    alias more		less -m -e
-    alias less		less -m 
-    alias ups		ps -U $USER
-    alias j		jobs
+# other cmd line utilities
+alias cvsdiff			"cvs status | egrep 'Loc|Merg'"
+alias cvsstat			"cvs status | egrep 'Loc|Nee|conflicts|Unknown'"
 if ($?tcsh) then
     if (-X gmake) then
         alias make		gmake
     endif
 endif
 
-
-# editors
-
-    alias pico		pico -z -w
-    alias en		emacs -nw
-    alias em		emacs
-
-# x stuff
-
-if ($?USER && $?HOST) then
-    alias xterm	'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
-    alias bigxterm	'xterm -font 9x15 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+if (-x ${HOME}/software/bin/mcal) then
+    alias cal			mcal
 endif
 
-    alias xload	xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
+if (-e /bin/umask) then
+    alias umask			"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
+else if (-e /usr/bin/umask) then
+    alias umask			"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
+endif
 
-if ($OS == SunOS) then
-    alias asdf xmodmap .dvorak.keysym
-    alias aoeu echo "Cannot revert keysyms"
+
+# editors
+alias pico			pico -z -w
+alias en			emacs -nw
+alias em			emacs
+
+# x stuff
+alias xload			xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
+
+if ($?USER && $?HOST) then
+    alias xterm			'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+    alias bigxterm		'xterm -font 9x15 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+endif
+
+if ($OSTYPE == solaris) then
+    alias asdf			xmodmap .dvorak.keysym
+    alias aoeu			echo "Cannot revert keysyms"
 else
-    alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
-    alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
+    alias asdf			~/.xmodmap ~/.dvorak \| xmodmap -
+    alias aoeu			~/.xmodmap ~/.qwerty \| xmodmap -
 endif
 
 # conveniences
-
-    alias fha		setenv DISPLAY 12.232.92.215:0
-    alias motd		less -m -e /etc/motd
-    alias f		finger
-    alias i		finger iyaowu@csua.berkeley.edu
-    alias fc		finger ctung@csua.berkeley.edu
+alias fha			setenv DISPLAY 12.232.92.215:0
+alias motd			less -m -e /etc/motd
+alias f				finger
+alias i				finger iyaowu@csua.berkeley.edu
+alias fc			finger ctung@csua.berkeley.edu
 if (${user} == 'tonytung' || ${user} == 'ytung') then
-    alias csua		ssh csua.berkeley.edu -l tonytung
+    alias csua			ssh csua.berkeley.edu -l tonytung
 else if (${user} == 'iyaowu') then
-    alias csua		ssh csua.berkeley.edu -l iyaowu
+    alias csua			ssh csua.berkeley.edu -l iyaowu
 endif
-
-    alias cvsdiff	"cvs status | egrep 'Loc|Merg'"
-    alias cvsstat	"cvs status | egrep 'Loc|Nee|conflicts|Unknown'"
 
 if ($?HOME) then
-    alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
+    alias rp			'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
 endif
-    alias quake 'finger -l quake@quake.geo.berkeley.edu'
+alias quake			'finger -l quake@quake.geo.berkeley.edu'
 
 # tperiod
-    alias periodic	myfrm -s u -s n -t -n -r
+alias periodic			myfrm -s u -s n -t -n -r
 
 pstat "done\n"
