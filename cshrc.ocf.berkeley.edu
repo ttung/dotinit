@@ -7,7 +7,6 @@ set watch= (1 \
 
 umask 066
 
-#setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv EDITOR	"emacs-nw"
 
 quota

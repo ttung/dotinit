@@ -10,7 +10,6 @@ set watch= (1 \
 
 umask 066
 
-setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv PATH	"${PATH}:/csua/bin"
 setenv MANPATH	"${MANPATH}:/csua/man"
 setenv EDITOR	"emacs-nw"
