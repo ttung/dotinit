@@ -1,10 +1,10 @@
-set cp_version=0.9.26
+set cp_version=0.9.27
 
 # general initialization files
 # ----------------------------
 # .cshrc.aliases 1.43
 # .cshrc.complete 1.4
-# .cshrc.interactive 1.34
+# .cshrc.interactive 1.35
 # .cshrc.login 1.1
 # .cshrc.logout 1.1
 # .cshrc.paths 1.14
@@ -162,6 +162,7 @@ endif
 if ($?MAIL && ! $?tperiod) then
     set mail=(60 $MAIL)
 endif
+set echo_style=both
 
 if ($?WHOAMI) then
     unset WHOAMI

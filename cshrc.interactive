@@ -82,7 +82,6 @@ endif
 unset autologout
 set notify pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
-set echo_style=both
 set history=500
 set ignoreeof=3
 set savehist=100
