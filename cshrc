@@ -1,5 +1,5 @@
-set cp_version=0.5.18
-# .cshrc.aliases 1.10
+set cp_version=0.5.19
+# .cshrc.aliases 1.11
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
