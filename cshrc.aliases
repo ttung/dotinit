@@ -59,8 +59,8 @@ alias em			emacs
 alias xload			xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
 
 if ($?USER && $?HOST) then
-    alias xterm			'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"' -geometry 82x24
-    alias bigxterm		'xterm -font 9x15 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"' -geometry 82x24
+    alias xterm			'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"' -geometry 82x25
+    alias bigxterm		'xterm -font 9x15 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"' -geometry 82x25
 endif
 
 if ($OSTYPE == solaris) then
