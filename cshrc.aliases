@@ -50,3 +50,4 @@ endif
 	alias fc		ctung
 	alias csua		ssh csua.berkeley.edu -l tonytung
 	alias uiuc		ssh students.uiuc.edu -l ytung
+	alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
