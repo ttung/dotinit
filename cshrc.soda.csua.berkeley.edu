@@ -31,6 +31,8 @@ if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
     alias	skey		'key `keyinfo`'
     alias	skeyi	'key `keyinfo iyaowu`'
+    alias i	finger iyaowu
+    alias fc	finger ctung
 
     /usr/bin/quota -q
 endif

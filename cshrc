@@ -1,4 +1,4 @@
-set cp_version=0.9.23
+set cp_version=0.9.24
 
 # general initialization files
 # ----------------------------
@@ -14,7 +14,7 @@ set cp_version=0.9.23
 # .cshrc.allegrosys.com 1.14
 # .cshrc.crhc 1.11
 # .cshrc.OCF.Berkeley.EDU 1.3
-# .cshrc.soda.csua.berkeley.edu 1.20
+# .cshrc.soda.csua.berkeley.edu 1.21
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
