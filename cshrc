@@ -1,4 +1,4 @@
-set cp_version=0.11.7
+set cp_version=0.11.8
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
