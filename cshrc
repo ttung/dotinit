@@ -1,4 +1,4 @@
-set cp_version=0.6.1
+set cp_version=0.6.2
 # .cshrc.aliases 1.11
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
@@ -31,9 +31,7 @@ if (! $?HOME) then
 endif
 
 #interactive shell?
-#    if (! $?EMACS && ! $?0) then
 if (! $?INTERACTIVE) then
-#    if ( ($?prompt) && (! $?EMACS) ) then
     if ($?prompt) then
 	echo "cshrc package" $cp_version
         set INTERACTIVE
@@ -74,19 +72,11 @@ endif
 
 # Figure out the current host name and YP domain name
 if (! $?HOST) then
-    if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
-        if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
-                setenv HOST `hostname | sed 's/\..*//'`
-        else
-                setenv HOST `uname -n | sed 's/\..*//'`
-        endif
-    else
         if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
                 setenv HOST `hostname`
         else
                 setenv HOST `uname -n`
         endif
-    endif
 endif
 
 if (! $?YPDOMAIN) then
