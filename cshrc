@@ -1,7 +1,7 @@
-set cp_version=0.4.1
+set cp_version=0.4.2
 # .cshrc.aliases 1.2
 # .cshrc.cso.uiuc.edu 1.1
-# .cshrc.ews.uiuc.edu 1.1
+# .cshrc.ews.uiuc.edu 1.2
 # .cshrc.interactive 1.1
 # .cshrc.paths 1.2
 # .cshrc.soda.csua.berkeley.edu 1.1
