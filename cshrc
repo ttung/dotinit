@@ -1,37 +1,45 @@
-set cp_version=0.10.23
+set cp_version=0.11.0
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.49
-# .cshrc.complete 1.5
-# .cshrc.interactive 1.50
+# .cshrc.aliases 1.50
+# .cshrc.complete 1.6
+# .cshrc.interactive 1.51
 # .cshrc.login 1.1
 # .cshrc.logout 1.4
-# .cshrc.paths 1.14
+# .cshrc.paths 1.15
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.crhc 1.11
-# .cshrc.eng.cisco.com 1.11
-# .cshrc.OCF.Berkeley.EDU 1.3
-# .cshrc.soda.csua.berkeley.edu 1.23
+# .cshrc.crhc 1.12
+# .cshrc.eng.cisco.com 1.12
+# .cshrc.OCF.Berkeley.EDU 1.4
+# .cshrc.soda.csua.berkeley.edu 1.24
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
 endif
 
 #interactive shell?
+set echo_style=both
 if ($?prompt) then
-    echo "cshrc package" $cp_version
+    alias pstat 'echo -n \!*'
     set INTERACTIVE
+    unset prompt                # we'll set it later anyway...
 else
+    alias pstat 'echo \!* > /dev/null'
     limit coredumpsize 0
 endif
 
 if ($?INTERACTIVE) then
-    echo -n Initializing
-    echo -n "" arch
+    clear
+
+    alias pstat 'echo -n \!*'
+    pstat "cshrc package ${cp_version}\n\n"
+    pstat "Initializing...\n"
+    pstat "  main..."
 endif
+
 if (! $?ARCH) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
@@ -70,10 +78,7 @@ if (! $?OSTYPE) then
     setenv OSTYPE ${OS}
 endif
 
-# Figure out the current host name and YP domain name
-if ($?INTERACTIVE) then
-    echo -n "" hostname
-endif
+# Figure out the current host name and YP domain 
 if (! $?HOST) then
     if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
         setenv HOST `hostname`
@@ -81,19 +86,15 @@ if (! $?HOST) then
         setenv HOST `uname -n`
     endif
 endif
+pstat "."
 
-if ($?INTERACTIVE) then
-    echo -n "" machname
-endif
 if (! $?MACHNAME) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         setenv MACHNAME `echo $HOST | sed 's/\..*//'`
     endif
 endif
+pstat "."
 
-if ($?INTERACTIVE) then
-    echo -n "" domain
-endif
 if (! $?YPDOMAIN) then
     if (! $?YPDOMAIN && -r $HOME/.domainname) then
         setenv YPDOMAIN `cat $HOME/.domainname`
@@ -111,10 +112,8 @@ if (! $?YPDOMAIN) then
         setenv YPDOMAIN $HOST
     endif
 endif
-
-if ($?tcsh) then
-    set watch=(1 $user any)
-endif
+pstat "."
+pstat "done\n"
 
 if (! $?SHLVL) then
     set SETPATHS
@@ -127,65 +126,60 @@ endif
 if ($?SETPATHS) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
-            if ($?INTERACTIVE) then
-                echo -n "" paths
-            endif
+            pstat "  paths..."
 	    source $HOME/.cshrc.paths
         else
-            echo ""
-            echo "WARNING: $HOME/.cshrc.paths unavailable, using default:"
+            pstat ""
+            pstat "WARNING: $HOME/.cshrc.paths unavailable, using default:"
             set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
-            echo "   " $path
+            pstat "   " $path
         endif
     endif
 endif
 
 if ($?HOME) then
     if (-r $HOME/.cshrc.aliases) then
-        if ($?INTERACTIVE) then
-            echo -n "" aliases
-        endif
+        pstat "  aliases..."
         source $HOME/.cshrc.aliases
     else
-        echo ""
-        echo "WARNING: $HOME/.cshrc.aliases unavailable"
+        pstat ""
+        pstat "WARNING: $HOME/.cshrc.aliases unavailable"
     endif
 endif
 
 if ($?HOME && $?tcsh) then
     if (-r $HOME/.cshrc.complete) then
-        if ($?INTERACTIVE) then
-            echo -n "" complete
-        endif
+        pstat "  complete..."
         source $HOME/.cshrc.complete
     else
-        echo ""
-        echo "WARNING: $HOME/.cshrc.complete unavailable"
-    endif
-endif
-
-if ($?INTERACTIVE) then
-    echo "" interactive
-    if (-r $HOME/.cshrc.interactive) then
-	source $HOME/.cshrc.interactive
-    else
-        echo ""
-	echo "WARNING: cannot find $HOME/.cshrc.interactive"
+        pstat ""
+        pstat "WARNING: $HOME/.cshrc.complete unavailable"
     endif
 endif
 
 # do host dependent initialization
 if ($?YPDOMAIN) then
     if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
+        pstat "  domain-based..."
         source $HOME/.cshrc.$YPDOMAIN
     endif
 endif
 if (-r $HOME/.cshrc.$HOST) then
+    pstat "  host-based..."
     source $HOME/.cshrc.$HOST
 endif
 
-set echo_style=both
-setenv CVS_RSH ssh
+pstat "\n"
+
+pstat "Starting interactive login\n\n"
+if ($?INTERACTIVE) then
+    if (-r $HOME/.cshrc.interactive) then
+	source $HOME/.cshrc.interactive
+    else
+        pstat ""
+	pstat "WARNING: cannot find $HOME/.cshrc.interactive"
+    endif
+endif
 
 if ($?WHOAMI) then
     unset WHOAMI
@@ -193,6 +187,7 @@ endif
 
 if ($?INTERACTIVE) then
     unset INTERACTIVE
+    unalias pstat
 endif
 
 if ($?SETPATHS) then
