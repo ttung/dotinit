@@ -86,13 +86,4 @@ if ($?HOME) then
 endif
 alias quake			'finger -l quake@quake.geo.berkeley.edu'
 
-# tperiod
-if (-x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
-    alias periodic			myfrm -s u -s n -t -n -r
-else
-    if ($?MAIL && $?INTERACTIVE) then
-        set mail=(60 $MAIL)
-    endif
-endif
-
 cstat "done\n"

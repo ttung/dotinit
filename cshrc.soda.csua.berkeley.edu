@@ -30,25 +30,4 @@ if ($?INTERACTIVE) then
     cstat "."
 endif
 
-if ($?INTERACTIVE) then
-    if ($?WINDOW) then 
-        if ($WINDOW == 3) then
-            screen -X login
-            screen -X reportidle
-        endif
-    endif
-    if (! $?prompt && $?tcsh && $TERMTYPE == screen) then
-        if ($?WINDOW) then 
-            setenv WINDOW_NUM "-$WINDOW"
-            unsetenv WINDOW
-        else
-            setenv WINDOW_NUM 
-        endif
-
-        set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
-        alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
-        periodic
-    endif
-endif
-
 cstat "done\n"

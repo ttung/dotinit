@@ -51,6 +51,10 @@ if ($?INTERACTIVE) then
         alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
         periodic
     endif
+
+    if (-r ${HOME}/INBOX) then
+        setenv MAIL ${HOME}/INBOX
+    endif
 endif
 
 cstat "done\n"

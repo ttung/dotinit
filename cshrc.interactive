@@ -161,3 +161,8 @@ set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
 if (`alias periodic` != "") then
     set tperiod=1
 endif
+
+if ($?MAIL) then
+    set mail=(60 $MAIL)
+endif
+
