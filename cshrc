@@ -11,6 +11,7 @@ if ($?prompt) then
     alias cstat 'echo -n \!*'
     set INTERACTIVE
     unset prompt                # we'll set it later anyway...
+    limit coredumpsize 10240k
 else
     alias cstat 'echo \!* > /dev/null'
     limit coredumpsize 0
