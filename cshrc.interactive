@@ -96,4 +96,7 @@ if (-x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
     set tperiod=1
 else
     unalias periodic
+    if ($?MAIL) then
+        set mail=(60 $MAIL)
+    endif
 endif

@@ -1,10 +1,10 @@
-set cp_version=0.10.5
+set cp_version=0.10.6
 
 # general initialization files
 # ----------------------------
 # .cshrc.aliases 1.45
 # .cshrc.complete 1.4
-# .cshrc.interactive 1.37
+# .cshrc.interactive 1.38
 # .cshrc.login 1.1
 # .cshrc.logout 1.2
 # .cshrc.paths 1.14
@@ -184,10 +184,8 @@ if (-r $HOME/.cshrc.$HOST) then
     source $HOME/.cshrc.$HOST
 endif
 
-if ($?MAIL && ! $?tperiod) then
-    set mail=(60 $MAIL)
-endif
 set echo_style=both
+setenv CVS_RSH ssh
 
 if ($?WHOAMI) then
     unset WHOAMI
