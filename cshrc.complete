@@ -1,4 +1,8 @@
 complete	acroread	'p/*/f:*.pdf/'
+complete 	bt \
+				'c/-/(-max_upload_rate -responsefile -url)/' \
+					'n/--responsefile/f/'
+
 complete	cd		'p/1/d/'
 
 complete	cvs			'c/--/( help help-commands help-synonyms )/' 'p/1/( add admin annotate checkout commit diff edit editors export history import init log login logout rdiff release remove rtag status tag unedit update watch watchers )/' \
