@@ -314,19 +314,19 @@ AddToMenu "Applications" "Applications" Title
 # restart, or switch to another WM.
 AddToMenu "Quit-Verify" "Really Quit Fvwm?" Title
 +              "Yes, Really Quit" Quit
-+              "Restart fvwm2" Restart fvwm2
++              "Restart fvwm2" Restart
 +              "" Nop
 +              "No, Don't Quit" Nop
 
 AddToMenu "Hosts" "Hosts" Title
-+              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh mally
++              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mally
 +              "" Nop
-+              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh glenlivet
-+              "cryptonite-lnx" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh cryptonite-lnx
++              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh glenlivet
++              "cryptonite-lnx" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh cryptonite-lnx
 
 AddToMenu "Main" "Main" Title
-+              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15
-+              "Small Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on"
++              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on"
++              "Big Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15
 +              "Emacs" Exec exec emacs -bg black -fg white
 +              "Netscape" Exec exec netscape
 +              "" Nop
