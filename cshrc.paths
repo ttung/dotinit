@@ -71,10 +71,12 @@ if ($?LOCALROOT) then
 
 	if (-d $LOCALROOT/lib) then
 		setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOCALROOT}/lib"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOCALROOT}/lib"
 	endif
 
     	if (-d $LOCALROOT/include) then
 		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
+                setenv GCC_IFLAG "${GCC_IFLAG} -I${LOCALROOT}/include"
     	endif
 
 	if ($?unsetLOCALROOT) then
@@ -106,6 +108,7 @@ endif
 
 if (-d /usr/include/X11) then
 	setenv INCLUDE	"${INCLUDE}:/usr/include/X11"
+        setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/include/X11"
 endif
 
 if (-d /usr/share/man) then
@@ -114,6 +117,7 @@ endif
 
 if (-d /usr/lib/X11) then
 	setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/lib/X11"
+        setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/lib/X11"
 endif
 
 # openwin
@@ -124,6 +128,7 @@ if (-d /usr/openwin) then
 
 	if (-d /usr/openwin/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/openwin/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/openwin/lib"
 	endif
 
 	if (-d /usr/openwin/man) then
@@ -132,6 +137,7 @@ if (-d /usr/openwin) then
 
 	if (-d /usr/openwin/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/openwin/include"
+                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/openwin/include"
 	endif
 endif
 
@@ -143,6 +149,7 @@ if (-d /usr/dt) then
 
 	if (-d /usr/dt/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/dt/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/dt/lib"
 	endif
 
 	if (-d /usr/dt/man) then
@@ -151,6 +158,7 @@ if (-d /usr/dt) then
 
 	if (-d /usr/dt/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/dt/include"
+                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/dt/include"
 	endif
 endif
 
@@ -162,6 +170,7 @@ if (-d /usr/ccs) then
 
 	if (-d /usr/ccs/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/ccs/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/ccs/lib"
 	endif
 
 	if (-d /usr/ccs/man) then
@@ -170,6 +179,7 @@ if (-d /usr/ccs) then
 
 	if (-d /usr/ccs/include) then
 		setenv INCLUDE     "${INCLUDE}:/usr/ccs/include"
+                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/ccs/include"
 	endif
 endif
     
@@ -193,10 +203,12 @@ if ($?X11) then
 
     if (-d $X11/lib) then
 	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${X11}/lib"
+        setenv GCC_LFLAG "${GCC_LFLAG} -L${X11}/lib"
     endif
 
     if (-d $X11/include) then
 	setenv INCLUDE	"${INCLUDE}:${X11}/include"
+        setenv GCC_IFLAG "${GCC_IFLAG} -I${X11}/include"
     endif
 
     if ($?unsetX11) then
@@ -216,6 +228,7 @@ if ($OS == SunOS) then
 
 	if (-d /lang/SUNWspro/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/lang/SUNWspro/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/lang/SUNWspro/lib"
 	endif
 
 	if (-d /opt/SUNWspro/bin) then
@@ -228,6 +241,7 @@ if ($OS == SunOS) then
 
 	if (-d /opt/SUNWspro/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/SUNWspro/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/SUNWspro/lib"
 	endif
 
 	if (-d /opt/SUNWdtpcv/bin) then
@@ -236,6 +250,7 @@ if ($OS == SunOS) then
 
 	if (-d /opt/SUNWdtpcv/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/SUNWdtpcv/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/SUNWdtpcv/lib"
 	endif
 endif
 
@@ -258,10 +273,12 @@ if ($?CONTRIB) then
 
     if (-d $CONTRIB/lib) then
 	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${CONTRIB}/lib"
+        setenv GCC_LFLAG "${GCC_LFLAG} -L${CONTRIB}/lib"
     endif
 
     if (-d $CONTRIB/include) then
 	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
+        setenv GCC_IFLAG "${GCC_IFLAG} -I${CONTRIB}/include"
     endif
 
     if ($?unsetCONTRIB) then
