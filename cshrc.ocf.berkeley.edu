@@ -9,6 +9,4 @@ umask 066
 
 setenv EDITOR	"emacs-nw"
 
-quota
-
 pstat "done\n"

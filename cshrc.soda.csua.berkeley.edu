@@ -38,7 +38,6 @@ if ($?INTERACTIVE) then
     alias	fc	finger ctung
     alias	mw	'motdwatch -u "beep; diff -b -B -C 3"'
 
-    /usr/bin/quota -q
     pstat "."
 endif
 
