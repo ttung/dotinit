@@ -14,7 +14,6 @@ setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv PATH	"${PATH}:/csua/bin"
 setenv EDITOR	"emacs-nw"
 alias	ncftp	ncftp2
-alias	emacs	emacs-20.2
 alias	skey	'key `keyinfo`'
 
 /usr/bin/quota -q
