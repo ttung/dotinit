@@ -50,4 +50,6 @@ endif
 	alias motd		less -m -e /etc/motd
 	alias iyaowu		finger iyaowu@csua.berkeley.edu
 	alias i			iyaowu
+	alias ctung		finger ctung@csua.berkeley.edu
+	alias fc		ctung
 	alias csua		ssh csua.berkeley.edu -l tonytung
