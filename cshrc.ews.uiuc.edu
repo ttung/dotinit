@@ -12,3 +12,5 @@ endif
 if (-d /homesta/classdata/bin) then
 	setenv PATH	"/homesta/classdata/bin:$PATH"
 endif
+
+setenv MAIL ${HOME}/.INBOX
