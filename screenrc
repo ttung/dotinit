@@ -51,3 +51,5 @@ bind ^h
 bind h
 #make them better
 bind 'K' kill
+bind 'w' windowlist -b
+
