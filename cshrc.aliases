@@ -63,17 +63,15 @@ endif
 # conveniences
 
     alias fha		setenv DISPLAY 130.126.76.212:0.0
-    alias tempest	setenv DISPLAY tempest.crhc.uiuc.edu:0.0
     alias motd		less -m -e /etc/motd
-    alias iyaowu	finger iyaowu@csua.berkeley.edu
     alias f		finger
-    alias i		iyaowu
-    alias ctung	finger ctung@csua.berkeley.edu
-    alias fc		ctung
+    alias i		finger iyaowu@csua.berkeley.edu
+    alias fc		finger ctung@csua.berkeley.edu
     alias csua		ssh csua.berkeley.edu -l tonytung
     alias uiuc		ssh students.uiuc.edu -l ytung
     alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
-    alias ssha		'eval `ssh-agent -c`; ssh-add'
+
+    alias cvsdiff	"cvs status | egrep 'Loc|Merg'"
 
 if ($?HOME) then
     alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
@@ -81,4 +79,3 @@ endif
 
 # tperiod
     alias periodic	myfrm -s u -s n -t -n -r
-
