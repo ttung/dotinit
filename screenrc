@@ -13,6 +13,13 @@ termcap vt100 Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 # this magically allows the hardstatus to be put to the xterm title
 termcap xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 
+# set the status line and let screen extract the current commmand into the
+# title
+#caption always "%{+b wb}  %M %d %C%a %=%w"
+caption always "%{wb}%M %d %C%a %L=%=%-Lw%50L>%{+b wb}%n%f* %t%{-}%+Lw%<"
+#caption always "%{ky} %D %d %M %{ry}%C %?%F%{.C.}%? %n %8t %{-} %L= %{-b rg}%-w%50L>%{+b gr} %n %{+b wr} %t %{-} %{-b rg}%+w%50L< %{ky}  %= %H  "
+shelltitle '> |tcsh'
+
 # keymappings specific to each terminal
 termcap xterm 'kb=^?:kD=\E[3~'
 termcap vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
@@ -24,6 +31,7 @@ termcap vt100|xterm 'op=\E[37;40m'
 
 msgminwait 5
 msgwait 30
+vbell_msg "^GBell in window %n"
 
 #bindkey -d -k k1 stuff \033[11~
 #bindkey -d -k k2 stuff \033[12~
@@ -31,3 +39,14 @@ msgwait 30
 #bindkey -d -k k4 stuff \033[14~
 
 bindkey "^[OI" stuff "^I"
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+#make them better
+bind 'K' kill
