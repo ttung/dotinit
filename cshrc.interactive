@@ -80,7 +80,7 @@ if ($?TERM) then
 endif
 
 unset autologout
-set notify pushdtohome notify noclobber listjobs autolist
+set pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
 set history=500
 set ignoreeof=3
