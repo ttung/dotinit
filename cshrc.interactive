@@ -1,9 +1,5 @@
-if (`alias rm` == "") then
-    set normalias
-else
-    set rmalias=`alias rm`
-    unalias rm
-endif
+set rmalias=`alias rm`
+unalias rm
 
 echo "Performing clean-up:"
     echo "  Pine debug files..."
@@ -15,12 +11,8 @@ echo "Performing clean-up:"
     echo "  saves..."
     rm -f ~/.saves-* >& /dev/null
 
-if ($?normalias) then
-    unset normalias
-else
-    alias rm $rmalias
-    unset rmalias
-endif
+alias rm $rmalias
+unset rmalias
 
 stty erase '^H' kill '^U' intr '^C'
 
@@ -33,7 +25,7 @@ if (! $?EMACS ) then
 endif
 
 if ($?SHLVL) then
-    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) && (-X ssh-agent)) then
+    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) && (-x ssh-agent)) then
 	eval `ssh-agent -c`
 	if (-r ${HOME}/.ssh/identity) then
 	    ssh-add
@@ -55,7 +47,7 @@ endif
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
 
 echo ""
-if (-X frm) then
+if (-x frm) then
     frm -s n -s u -t -n
 endif
 

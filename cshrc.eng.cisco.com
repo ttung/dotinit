@@ -73,8 +73,10 @@ alias	cc_rmview	cc_rmview -vob /vob/ace -view
 # disable copyright check on clearcase
 setenv	CC_DISABLE_COPYRIGHT_CHECK
 
-complete	ct			'p/1/( describe diff lshistory lsvtree mklabel setview )/'
-complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel setview )/'
+if ($?tcsh) then
+    complete	ct			'p/1/( describe diff lshistory lsvtree mklabel setview )/'
+    complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel setview )/'
+endif
 
 unset SYS
 unset dotdir
