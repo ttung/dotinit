@@ -1,0 +1,13 @@
+set watch= (1 \
+	ctung any \
+	iyaowu any \
+	ihsuan any \
+	mhchu any \
+	$user any)
+
+umask 066
+
+#setenv TZ :/usr/share/zoneinfo/CST6CDT
+setenv EDITOR	"emacs-nw"
+
+/usr/bin/quota -q
