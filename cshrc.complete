@@ -9,8 +9,8 @@ complete	cvs			'c/--/( help help-commands help-synonyms )/' 'p/1/( add admin ann
 					'n/-a/( edit unedit commit all none )/' \
 					'n/watch/( on off add remove )/'
 
-complete	emacs		'n/*/f:^*.[oa]/'
-complete	en		'n/*/f:^*.[oa]/'
+complete	emacs		'n/*/f:^*.{o,a,pyc}/'
+complete	en		'n/*/f:^*.{o,a,pyc}/'
 
 complete 	find \
 				'c/-/(user group type name print exec ctime atime mtime fstype perm size links nouser nogroup inum ok cpio newer anewer cnewer depth prune mount local follow)/' \
