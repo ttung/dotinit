@@ -72,6 +72,7 @@ endif
     alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
 
     alias cvsdiff	"cvs status | egrep 'Loc|Merg'"
+    alias cvsstat	"cvs status | egrep 'Loc|Nee|conflicts|Unknown'"
 
 if ($?HOME) then
     alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
