@@ -8,7 +8,14 @@ XTerm*VT100*Translations:	#override \
         Shift<Key>Home:		scroll-back(100,page) \n\
         Shift<Key>End:		scroll-forw(100,page) \n\
         <Key>BackSpace:		string(0x7F)\n\
-        <Key>Delete:		string("\033[3~")\n
+        <Key>Delete:		string(\033[3~)\n\
+	Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n\
+	Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n\
+	Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n\
+	Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n\
+	<Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
+	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
+
 XTerm*scrollBar:		on
 XTerm*rightScrollBar:		true
 XTerm*scrollTtyOutput:		false
@@ -18,8 +25,34 @@ XTerm*cursorColor:		green
 XTerm*foreground:		white
 XTerm*background:		black
 
+XTerm-ansi*VT100*Translations:	#override \
+        ~Shift<Key>Home:	string(\033[1~)\n\
+        ~Shift<Key>End:		string(\033[4~)\n\
+        ~Shift<Key>Prior:	string(\033[5~)\n\
+        ~Shift<Key>Next:	string(\033[6~)\n\
+        Shift<Key>Prior:	scroll-back(1,page) \n\
+        Shift<Key>Next:		scroll-forw(1,page) \n\
+        Shift<Key>Home:		scroll-back(100,page) \n\
+        Shift<Key>End:		scroll-forw(100,page) \n\
+        <Key>BackSpace:		string(0x7F)\n\
+        <Key>Delete:		string(\033[3~)\n\
+	Shift<Btn4Down>,<Btn4Up>:scroll-back(1,line)\n\
+	Shift<Btn5Down>,<Btn5Up>:scroll-forw(1,line)\n\
+	Ctrl<Btn4Down>,<Btn4Up>:scroll-back(1,page)\n\
+	Ctrl<Btn5Down>,<Btn5Up>:scroll-forw(1,page)\n\
+	<Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
+	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
+
+XTerm-ansi*scrollBar:		on
+XTerm-ansi*rightScrollBar:		true
+XTerm-ansi*scrollTtyOutput:		false
+XTerm-ansi*scrollKey:		true
+XTerm-ansi*saveLines:		1024
+XTerm-ansi*cursorColor:		green
+XTerm-ansi*foreground:		white
+XTerm-ansi*background:		black
+
 Xclock*update:			1
 
 Emacs*font:			-misc-fixed-medium-r-normal--14-130-75-75-c-70-*-1
 Emacs*toolBar:			off
-
