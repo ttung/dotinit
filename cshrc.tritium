@@ -1,9 +1,9 @@
-setenv NOMOTD
+set NOMESG NOMOTD NOQUOTACHECK
 setenv RSYNC_RSH ssh
 setenv CVS_RSH ssh
 
 if ($?INTERACTIVE) then
-    complete	ssh	'p/1/(aurora-borealis.dyndns.org ssh-sj1.cisco.com)/'
+    complete	ssh	'p/1/(merly.org ssh-sj1.cisco.com)/'
 
     cstat "."
 
@@ -19,6 +19,7 @@ if ($?INTERACTIVE) then
     endif
 
     alias em /Applications/Emacs.app/Contents/MacOS/Emacs
+    alias dailyshow rsync -avP --delete csua.berkeley.edu:/csua/tmp/dailyshow ${HOME}/Desktop
 endif
 
-cstat "done"
+cstat "done\n"
