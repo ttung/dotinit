@@ -1,4 +1,11 @@
-set watch= (1 ctung any iyaowu any reblee any $user any)
+set watch= (1 \
+	ctung any \
+	iyaowu any \
+	reblee any \
+	braden any \
+	ngjeff any \
+	mhchu any \
+	$user any)
 
 umask 066
 
