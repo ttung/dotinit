@@ -56,9 +56,11 @@ if ($?SETPATHS) then
 endif
 
 setenv CVSROOT /wbu-sw/dev/synergy
+setenv VIEWER emacsclient
 
 alias	quake	'finger -l quake@quake.geo.berkeley.edu'
 alias	stock	'finger stocks@qotd2.cisco.com | egrep -i "^Company|^cisco|quotes" | head -3'
+alias	mito	setenv DISPLAY 171.69.39.175:0
 
 # clearcase aliases
 alias	ct	cleartool
@@ -76,6 +78,7 @@ setenv	CC_DISABLE_COPYRIGHT_CHECK
 if ($?tcsh) then
     complete	ct			'p/1/( describe diff lshistory lsvtree mklabel setview )/'
     complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel setview )/'
+    complete	ssh			'p/1/( ptooie needles dundee )/' 
 endif
 
 unset SYS
