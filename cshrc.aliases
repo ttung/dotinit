@@ -81,7 +81,7 @@ endif
 alias cell			mail 5103646142@mobile.att.net
 alias cellc			mail 5103646961@mobile.att.net
 alias celly			mail 5109188372@mobile.att.net
-alias tagit			'cvs tag -d LATEST \!* ; cvs tag LATEST \!*'
+alias tagit			'cvs tag -F LATEST \!*'
 
 if ($?HOME) then
     alias rp			'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
