@@ -33,7 +33,7 @@ Style "*" BackColor SlateBlue
 *FvwmPagerFore Black
 *FvwmPagerFont none
 *FvwmPagerHilight LimeGreen
-*FvwmPagerGeometry 75x50+5+5
+*FvwmPagerGeometry 150x50+5+5
 *FvwmPagerSmallFont -*-times-medium-r-*-*-*-80-*-*-*-*-*-*
 *FvwmPagerDeskTopScale 32
 #! Now start pager
@@ -73,7 +73,7 @@ IconFont		-adobe-helvetica-medium-r-*-*-*-120-*-*-*-*-*-*
 ########################      ICON STUFF     ##############################
 # Auto Place Icons is a nice feature, it's creates a place for your icons
 # to initially try and place themselves.
-Style "*" IconBox 190 5 -200 60
+Style "*" IconBox 280 5 -200 60
 #Style "*" IconBox 85 -5 -1 -80
 
 # If you uncomment this, and make sure that the WindowList is bound to
@@ -237,7 +237,7 @@ Style "trn"	   Icon News.xpm
 #	Exec	"I"	exec xmh -font fixed -geometry 507x750+0+0 &
 #	Wait	"I"	xmh
 #	Desk 	"I"	0 0
-AddToFunc "InitFunction" "I" Exec ssh -q -f skoda xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+95+5
+AddToFunc "InitFunction" "I" Exec xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+170+5
 +              "I" Exec xclock -geometry -5+5 -digital -update 1 -bg black -fg white
 +              "I" Exec xscreensaver-command -exit
 +              "M" Exec xscreensaver -no-splash -timeout 3600
@@ -327,9 +327,10 @@ AddToMenu "Hosts" "Hosts" Title
 
 AddToMenu "Main" "Main" Title
 +              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on"
-+              "Emacs" Exec exec emacs21 -bg black -fg white
-+              "DDTS" Exec exec xddts
-+              "VNC Viewer" Exec exec vncviewer
++              "Emacs" Exec exec emacs -bg black -fg white
++              "Evolution" Exec exec evolution
++              "Firefox" Exec exec firefox
++              "Open Office" Exec exec ooffice
 +              "" Nop
 +              "Save Screen" Exec xscreensaver-command -activate
 +              "Lock Screen" Exec xscreensaver-command -lock
