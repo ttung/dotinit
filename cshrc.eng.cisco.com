@@ -55,9 +55,30 @@ if ($?SETPATHS) then
     endif
 endif
 
+setenv CVSROOT /wbu-sw/dev/synergy
+
+alias	quake	'finger -l quake@quake.geo.berkeley.edu'
 alias	stock	'finger stocks@qotd2.cisco.com | egrep -i "^Company|^cisco|quotes" | head -3'
-alias	tagit	'cvs tag -d BUILD \!* ; cvs tag BUILD \!*'
+
+# clearcase aliases
 alias	ct	cleartool
+alias	lsv	'ct lsview | grep ${user}'
+alias	ctstat	ct lscheckout -cview -avobs
+alias	ctdiff	ct diff -pre
+alias	start_task	start_task -v /vob/ace -d /vws/xel
+alias	mkview	mkview -v /vob/ace -s /vws/xel
+alias	tagit	ct mklabel -replace BUILD
+alias	cc_rmview	cc_rmview -vob /vob/ace -view 
+
+# disable copyright check on clearcase
+setenv	CC_DISABLE_COPYRIGHT_CHECK
+
+complete	ct			'p/1/( describe diff lshistory lsvtree mklabel setview )/'
+complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel setview )/'
 
 unset SYS
 unset dotdir
+
+if ($?CLEARCASE_ROOT && $?INTERACTIVE) then
+    cd /vob/ace
+endif

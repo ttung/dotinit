@@ -42,10 +42,14 @@ if ($?SHLVL) then
 endif
 
 if ($?tcsh) then
-    bindkey "^[[1~" beginning-of-line        # home
-    bindkey "^[[4~" end-of-line              # end
-    bindkey "^[[5~" history-search-backward  # pageup
-    bindkey "^[[6~" history-search-forward   # pagedown
+    bindkey	"^[[1~"	beginning-of-line		# home
+    bindkey	"^[[4~"	end-of-line			# end
+    bindkey	"^[[5~"	history-search-backward		# pageup
+    bindkey	"^[[6~"	history-search-forward		# pagedown
+    bindkey	"^B"	backward-word
+    bindkey	"^F"	forward-word
+    bindkey	"^[b"	backward-char
+    bindkey	"^[f"	forward-char
 endif
 
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
