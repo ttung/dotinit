@@ -1,15 +1,9 @@
 set rmalias=`alias rm`
 unalias rm
 
-echo "Performing clean-up:"
-    echo "  Pine debug files..."
-    rm -f ~/.pine-debug* >& /dev/null
-    echo "  dead letters..."
-    rm -f ~/dead.letter
-    echo "  x-session errors..."
-    rm -f ~/.xsession-errors
-    echo "  saves..."
-    rm -f ~/.saves-* >& /dev/null
+rm -f ~/.pine-debug* >& /dev/null
+rm -f ~/dead.letter
+rm -f ~/.saves-* >& /dev/null
 
 alias rm $rmalias
 unset rmalias
@@ -18,16 +12,13 @@ stty erase '^H' kill '^U' intr '^C'
 
 if (! $?EMACS ) then
     set noglob
-        eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
+        eval `tset -s - | sed -e '1d'`
     unset noglob
     mesg y
-else
-    if ($TERM == "eterm") then
-        setenv TERM vt100
-        set noglob
-            eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
-        unset noglob
-    endif
+else if ($TERM == "eterm") then
+    set noglob
+        eval `tset -s - vt100 | sed -e '1d'`
+    unset noglob
 else
     
 endif
@@ -60,7 +51,7 @@ if ($?tcsh) then
     bindkey	"^[f"	forward-char
 endif
 
-if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
+if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
 
 echo ""
 if ($?tcsh) then
@@ -75,13 +66,16 @@ endif
 
 # application setup
 setenv ENSCRIPT -G
-setenv EDITOR emacs
+if (! $?EDITOR) then
+    setenv EDITOR emacs
+endif
 setenv BLOCKSIZE K
+setenv CVS_RSH ssh
 
 # shell stuff
 
 # set the prompt
-if ($?TERM) then
+if (! $?prompt) then
     if ($?tcsh) then
         if ($TERM == xterm) then
             set prompt='%{\e]0\;[%m %n] \!:%~>^g%}[%m %n] \!:%B%~%b%# '
@@ -91,6 +85,10 @@ if ($?TERM) then
     else
         set prompt='[\!] '
     endif
+endif
+
+if (! $?watch) then
+    set watch=(1 $user any)
 endif
 
 unset autologout
