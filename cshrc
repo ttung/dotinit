@@ -1,4 +1,4 @@
-set CP_VERSION="cshrc package 0.1.0"
+set CP_VERSION="cshrc package 0.3.0"
 
 if (! $?WHOAMI) then
         if (-x /usr/ucb/whoami) then
