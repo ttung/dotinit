@@ -1,34 +1,34 @@
 #!/bin/tcsh
 cd ${HOME}
-'rm' .cshrc
-'rm' .cshrc.OCF.Berkeley.EDU
-'rm' .cshrc.aliases
-'rm' .cshrc.complete
-'rm' .cshrc.crhc
-'rm' .cshrc.cso.uiuc.edu
-'rm' .cshrc.eng.cisco.com
-'rm' .cshrc.ews.uiuc.edu
-'rm' .cshrc.interactive
-'rm' .cshrc.login
-'rm' .cshrc.logout
-'rm' .cshrc.paths
-'rm' .cshrc.soda.csua.berkeley.edu
-'rm' .emacs
-'rm' .xstart
-'rm' .dvorak
-'rm' .xsession
-'rm' .qwerty
-'rm' .fvwm2rc
-'rm' .xmodmap
-'rm' .dvorak.keysym
-'rm' .Xdefaults
-'rm' .hushlogin
+'rm' -f .cshrc
+'rm' -f .cshrc.OCF.Berkeley.EDU
+'rm' -f .cshrc.aliases
+'rm' -f .cshrc.complete
+'rm' -f .cshrc.crhc
+'rm' -f .cshrc.cso.uiuc.edu
+'rm' -f .cshrc.eng.cisco.com
+'rm' -f .cshrc.ews.uiuc.edu
+'rm' -f .cshrc.interactive
+'rm' -f .cshrc.login
+'rm' -f .cshrc.logout
+'rm' -f .cshrc.paths
+'rm' -f .cshrc.soda.csua.berkeley.edu
+'rm' -f .emacs
+'rm' -f .xstart
+'rm' -f .dvorak
+'rm' -f .xsession
+'rm' -f .qwerty
+'rm' -f .fvwm2rc
+'rm' -f .xmodmap
+'rm' -f .dvorak.keysym
+'rm' -f .Xdefaults
+'rm' -f .hushlogin
 
-'rm' .aliases
-'rm' .login
-'rm' .logout
+'rm' -f .aliases
+'rm' -f .login
+'rm' -f .logout
 
-'rm' .xinitrc
+'rm' -f .xinitrc
 
 ln -sf .init/cshrc .cshrc
 ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
