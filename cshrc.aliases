@@ -52,8 +52,13 @@ endif
 
     alias xload	xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
 
+if ($OS == SunOS) then
+    alias asdf xmodmap .dvorak.keysym
+    alias aoeu echo "Cannot revert keysyms"
+else
     alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
     alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
+endif
 
 # conveniences
 
