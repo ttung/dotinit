@@ -68,16 +68,17 @@ else
 endif
 
 # conveniences
-alias fha			setenv DISPLAY 12.232.92.215:0
+alias fha			setenv DISPLAY 12.234.134.128:0
 alias motd			less -m -e /etc/motd
 alias f				finger
-alias i				finger iyaowu@csua.berkeley.edu
-alias fc			finger ctung@csua.berkeley.edu
 if (${user} == 'tonytung' || ${user} == 'ytung') then
     alias csua			ssh csua.berkeley.edu -l tonytung
 else if (${user} == 'iyaowu') then
     alias csua			ssh csua.berkeley.edu -l iyaowu
 endif
+alias cell			mail 5103646142@mobile.att.net
+alias cellc			mail 5103646961@mobile.att.net
+alias celly			mail 5109188372@mobile.att.net
 
 if ($?HOME) then
     alias rp			'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
