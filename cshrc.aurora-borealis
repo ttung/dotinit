@@ -1,4 +1,4 @@
-set users = (iyaowu ctung reblee ihsuan ngjeff inkwings tonytung sandydoto)
+set users = (christinewu ctung reblee ihsuan ngjeff inkwings tonytung sandydoto mhchu)
 set fastremotehosts = (linux.csua.berkeley.edu csua.berkeley.edu ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org ssh-sj1.cisco.com)
 set remotehosts = (${fastremotehosts} coke.csua.berkeley.edu seltzer.csua.berkeley.edu beer.csua.berkeley.edu rum.csua.berkeley.edu martini.csua.berkeley.edu)
 set watch = (1 any any)
@@ -11,7 +11,7 @@ setenv CVSROOT	/home/CVSROOT
 setenv NNTPSERVER localhost:1190
 
 if ($?INTERACTIVE) then
-    alias	fc	finger iyaowu
+    alias	fc	finger christinewu
     alias	fy	finger ctung
     alias	idle	midle ${users}
     foreach rhost (${fastremotehosts})
@@ -50,10 +50,6 @@ if ($?INTERACTIVE) then
         set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
         alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
         periodic
-    endif
-
-    if (-r ${HOME}/INBOX) then
-        setenv MAIL ${HOME}/INBOX
     endif
 endif
 
