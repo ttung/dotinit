@@ -30,7 +30,7 @@ endif
 
     alias more		less -m -e
     alias less		less -m 
-    alias ps		ps -U $USER
+    alias ups		ps -U $USER
     alias j		jobs
 if ($?tcsh) then
     if (-X gmake) then
@@ -64,10 +64,7 @@ endif
 
 # conveniences
 
-    alias fha		setenv DISPLAY 24.11.130.104:0
-    alias duck		setenv DISPLAY 24.176.252.147:0
-    alias pingduck	ping -c 5 24.176.252.147
-    alias traceduck	traceroute 24.176.252.147
+    alias fha		setenv DISPLAY 12.232.92.215:0
     alias motd		less -m -e /etc/motd
     alias f		finger
     alias i		finger iyaowu@csua.berkeley.edu
