@@ -11,3 +11,5 @@ XTerm*scrollBar:on
 XTerm*rightScrollBar:true
 XTerm*scrollTtyOutput:false
 XTerm*scrollKey:true
+
+emacs*font: -misc-fixed-medium-r-normal--15-140-*-*-c-*-*-1
