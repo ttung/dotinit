@@ -1,4 +1,4 @@
-set CP_VERSION="cshrc package 0.3.1"
+set CP_VERSION="cshrc package 0.3.2"
 # .cshrc.aliases 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.1
@@ -151,8 +151,8 @@ endif
 
 set notify pushdtohome ignoreeof notify noclobber listjobs
 unset autologout
-set history=100
-set savehist=25
+set history=500
+set savehist=100
 
 if ($?MAIL) then
 	set mail=(60 $MAIL)
