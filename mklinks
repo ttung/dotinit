@@ -13,6 +13,7 @@ else
     set addr_user = ${USER}
 endif
 
+echo "Addressbook..."
 if (-d .init/${addr_user}-addressbook/) then
     foreach addrbook (.init/${addr_user}-addressbook/addr*)
         set addrbookdest = `echo $addrbook | sed -e 's/.*\/\([^\/]*\)/.\1/'`
@@ -41,6 +42,7 @@ if (-d .init/${addr_user}-addressbook/) then
     end
 endif
 
+echo "cshrc..."
 foreach cshrc (.init/cshrc*)
     set cshrcdest = `echo ${cshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
     if (-e ${cshrcdest}) then
@@ -68,6 +70,7 @@ end
 set fileset = ( emacs xstart dvorak xsession qwerty fvwm2rc xmodmap \
              dvorak.keysym Xdefaults hushlogin screenrc )
 
+echo "Miscellaneous..."
 foreach df ( ${fileset} )
     set dfdest = .${df}
     if (-e ${dfdest}) then
