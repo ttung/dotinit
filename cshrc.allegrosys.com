@@ -20,3 +20,18 @@ endif
 if (-d /usr/local/sde4/bin) then
     setenv PATH ${PATH}:/usr/local/sde4/bin
 endif
+
+if ($?TERM) then
+    if ($?tcsh) then
+        if ($TERM == xterm) then
+            set prompt='%{\e]0\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%c03%b%# '
+        else
+            set prompt='[%n %m] \!:%B%c03%b%# '
+        endif
+    else
+        set prompt='[\!] '
+    endif
+endif
+
+set ellipsis
+stty erase '^?'
