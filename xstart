@@ -1,5 +1,5 @@
 #!/bin/tcsh
-if ($OS == SunOS) then
+if ($OSTYPE == solaris) then
     xmodmap .dvorak.keysym
 else
     ~/.xmodmap ~/.dvorak | xmodmap -
