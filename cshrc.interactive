@@ -56,7 +56,7 @@ if ($?tcsh) then
     endif
 endif
 
-if ($?DISPLAY) then
+if ($?DISPLAY && !$?SSH_DISPLAY) then
     setenv SSH_DISPLAY $DISPLAY
 endif
 
