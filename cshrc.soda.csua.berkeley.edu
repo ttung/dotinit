@@ -1,0 +1,10 @@
+set watch= (1 ctung any iyaowu any $user any)
+
+umask 066
+
+setenv TZ :/usr/share/zoneinfo/CST6CDT
+setenv PATH	"${PATH}:/csua/bin"
+alias	ncftp	ncftp2
+alias	emacs	emacs-20.2
+
+quota -q

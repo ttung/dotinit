@@ -1,0 +1,52 @@
+#default aliases
+
+        alias l                 echo \!\*\{\*\}
+        alias rm                rm -i
+        alias cp                cp -i
+	alias mv		mv -i
+
+
+# custom aliases
+
+	# basic unix stuff
+
+	alias ls                ls -F
+	alias ll		ls -l
+	alias top		nice +2 /usr/bin/top -s 1
+if (-e /bin/umask) then
+	alias umask             'umask \!* ; /bin/umask -S'
+endif
+	alias more		less -m -e
+	alias less		less -m 
+	alias ps                ps -U $WHOAMI
+	alias which		where
+
+
+	# editors
+
+	alias pico		pico -z -w
+	alias bigemacs		emacs -font 10x20 
+	alias en		emacs -nw
+
+
+	# x stuff
+
+	alias xterm		'xterm -bg black -fg white -cr green -sl 1024 -T '$WHOAMI'@`hostname` -xrm "xterm*scrollBar: on"'
+	alias bigxterm		'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '$WHOAMI'@`hostname` -xrm "xterm*scrollBar: on"'
+	alias xload		xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
+
+	if ($OS == SunOS) then
+		alias asdf xmodmap .dvorak.keysym
+	else
+		alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
+	endif
+	alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
+	alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
+
+	# conveniences
+
+	alias fha		setenv DISPLAY 130.126.76.101:0.0
+	alias motd		less -m -e /etc/motd
+	alias iyaowu		finger iyaowu@csua.berkeley.edu
+	alias i			iyaowu
+	alias csua		ssh csua.berkeley.edu -l tonytung

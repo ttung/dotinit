@@ -1,0 +1,241 @@
+setenv PATH .:/usr/bin:/bin:/etc:/sbin:/usr/sbin
+setenv MANPATH /usr/man
+setenv LD_LIBRARY_PATH  /lib:/usr/lib
+setenv INCLUDE .:/usr/include
+
+# initialize random usr paths
+if (-d /usr/ucb) then
+	setenv PATH	"${PATH}:/usr/ucb"
+endif
+
+if (-d /usr/etc) then
+        setenv PATH     "${PATH}:/usr/etc"
+endif
+
+if (-d /usr/bin/X11) then
+	setenv PATH	"${PATH}:/usr/bin/X11"
+endif
+
+if (-d /usr/include/X11) then
+	setenv INCLUDE	"${INCLUDE}:/usr/include/X11"
+endif
+
+if (-d /usr/share/man) then
+	setenv MANPATH	"${MANPATH}:/usr/share/man"
+endif
+
+if (-d /usr/lib/X11) then
+	setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/lib/X11"
+endif
+
+# openwin
+if (-d /usr/openwin) then
+	if (-d /usr/openwin/bin) then
+		setenv PATH     "${PATH}:/usr/openwin/bin"
+	endif
+
+	if (-d /usr/openwin/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/openwin/lib"
+	endif
+
+	if (-d /usr/openwin/man) then
+		setenv MANPATH	"${MANPATH}:/usr/openwin/man"
+	endif
+
+	if (-d /usr/openwin/include) then
+		setenv INCLUDE     "${INCLUDE}:/usr/openwin/include"
+	endif
+endif
+
+# dt
+if (-d /usr/dt) then
+	if (-d /usr/dt/bin) then
+		setenv PATH     "${PATH}:/usr/dt/bin"
+	endif
+
+	if (-d /usr/dt/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/dt/lib"
+	endif
+
+	if (-d /usr/dt/man) then
+		setenv MANPATH	"${MANPATH}:/usr/dt/man"
+	endif
+
+	if (-d /usr/dt/include) then
+		setenv INCLUDE     "${INCLUDE}:/usr/dt/include"
+	endif
+endif
+
+# ccs
+if (-d /usr/ccs) then
+	if (-d /usr/ccs/bin) then
+		setenv PATH     "${PATH}:/usr/ccs/bin"
+	endif
+
+	if (-d /usr/ccs/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/ccs/lib"
+	endif
+
+	if (-d /usr/ccs/man) then
+		setenv MANPATH	"${MANPATH}:/usr/ccs/man"
+	endif
+
+	if (-d /usr/ccs/include) then
+		setenv INCLUDE     "${INCLUDE}:/usr/ccs/include"
+	endif
+endif
+    
+
+# initialize path variables for unified X11 subsystem
+if (! $?X11) then
+    if (-d /usr/X11) then
+	set X11 = /usr/X11
+	set unsetX11
+    endif
+endif
+
+if ($?X11) then
+    if (-d $X11/bin) then
+	setenv PATH	"${PATH}:${X11}/bin"
+    endif
+
+    if (-d $X11/man) then
+	setenv MANPATH	"${MANPATH}:${X11}/man"
+    endif
+
+    if (-d $X11/lib) then
+	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${X11}/lib"
+    endif
+
+    if (-d $X11/include) then
+	setenv INCLUDE	"${INCLUDE}:${X11}/include"
+    endif
+
+    if ($?unsetX11) then
+	unset unsetX11
+	unset X11
+    endif
+endif
+
+# initialize path variables for unified contrib subsystem
+if (! $?CONTRIB) then
+    if (-d /usr/contrib) then
+	set CONTRIB = /usr/contrib
+	set unsetCONTRIB
+    endif
+endif
+
+if ($?CONTRIB) then
+    if (-d $CONTRIB/bin) then
+	setenv PATH	"${PATH}:${CONTRIB}/bin"
+    endif
+
+    if (-d $CONTRIB/man) then
+	setenv MANPATH	"${MANPATH}:${CONTRIB}/man"
+    endif
+
+    if (-d $CONTRIB/lib) then
+	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${CONTRIB}/lib"
+    endif
+
+    if (-d $CONTRIB/include) then
+	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
+    endif
+
+    if ($?unsetCONTRIB) then
+	unset unsetCONTRIB
+	unset CONTRIB
+    endif
+endif
+
+# initialize path variables for LOCAL subsystem
+if (! $?LOCALROOT) then
+    if (-d /usr/local) then
+        set LOCALROOT = /usr/local
+	set unsetLOCALROOT
+    endif
+endif
+
+if ($?LOCALROOT) then
+	if (-d $LOCALROOT/bin) then
+		setenv PATH	"${PATH}:${LOCALROOT}/bin"
+	else
+		setenv PATH	"${PATH}:${LOCALROOT}"
+	endif
+
+	if (-d $LOCALROOT/java) then
+		setenv PATH	"${PATH}:${LOCALROOT}/java"
+	endif
+
+	if (-d $LOCALROOT/man) then
+		setenv MANPATH  "${MANPATH}:${LOCALROOT}/man"
+	endif
+
+	if (-d $LOCALROOT/lib) then
+		setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOCALROOT}/lib"
+	endif
+
+    	if (-d $LOCALROOT/include) then
+		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
+    	endif
+
+	if ($?unsetLOCALROOT) then
+		unset unsetLOCALROOT
+		unset LOCALROOT
+	endif
+endif
+
+# initialize path variables for HOME subsystem
+if ($?LOGHOME) then
+        if (-d $LOGHOME/software/bin) then
+                setenv PATH     "${PATH}:${LOGHOME}/software/bin"
+        endif
+        if (-d $LOGHOME/software/bin-$ARCH) then
+                setenv PATH     "${PATH}:${LOGHOME}/software/bin-${ARCH}"
+        endif
+        if (-d $LOGHOME/software/lib-$ARCH) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib-${ARCH}"
+        endif
+        if (-d $LOGHOME/software/man) then
+                setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man"
+        endif
+
+    	if (-d $LOGHOME/software/include) then
+		setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include"
+    	endif
+
+endif
+
+if ($OS == SunOS) then
+	if (-d /lang/SUNWspro/bin) then
+		setenv PATH	"${PATH}:/lang/SUNWspro/bin"
+	endif
+
+	if (-d /lang/SUNWspro/man) then
+		setenv MANPATH	"${MANPATH}:/lang/SUNWspro/man"
+	endif
+
+	if (-d /lang/SUNWspro/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/lang/SUNWspro/lib"
+	endif
+
+	if (-d /opt/SUNWspro/bin) then
+		setenv PATH	"${PATH}:/opt/SUNWspro/bin"
+	endif
+
+	if (-d /opt/SUNWspro/man) then
+		setenv MANPATH	"${MANPATH}:/opt/SUNWspro/man"
+	endif
+
+	if (-d /opt/SUNWspro/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/SUNWspro/lib"
+	endif
+
+	if (-d /opt/SUNWdtpcv/bin) then
+		setenv PATH	"${PATH}:/opt/SUNWdtpcv/bin"
+	endif
+
+	if (-d /opt/SUNWdtpcv/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/SUNWdtpcv/lib"
+	endif
+endif

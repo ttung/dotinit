@@ -1,0 +1,29 @@
+echo "Performing clean-up:"
+    echo "  core files..."
+    rm -f ~/core
+    echo "  Pine debug files..."
+    rm -f ~/.pine-debug* >& /dev/null
+    echo "  dead letters..."
+    rm -f ~/dead.letter
+    echo "  x-session errors..."
+    rm -f ~/.xsession-errors
+    echo "  saves..."
+    rm -f ~/.saves-* >& /dev/null
+
+stty erase '^H' kill '^U' intr '^C'
+
+set noglob
+    eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
+unset noglob
+
+mesg y
+biff y
+
+if ($?tcsh) then
+    bindkey "^[[1~" beginning-of-line        # home
+    bindkey "^[[4~" end-of-line              # end
+    bindkey "^[[5~" history-search-backward  # pageup
+    bindkey "^[[6~" history-search-forward   # pagedown
+endif
+
+if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
