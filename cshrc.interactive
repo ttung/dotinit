@@ -43,7 +43,7 @@ setenv BLOCKSIZE K
 # set the prompt
 if ($?TERM) then
     if ($TERM == xterm) then
-	set prompt='%{\e]2\;%n@%m - %/^g%}[%n %m] \!:%B%~%b%# '
+	set prompt='%{\e]2\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%~%b%# '
     else
 	set prompt='[%n %m] \!:%B%~%b%# '
     endif
@@ -53,3 +53,4 @@ set notify pushdtohome ignoreeof notify noclobber listjobs
 unset autologout
 set history=500
 set savehist=100
+set cdpath=${HOME}
