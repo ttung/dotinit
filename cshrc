@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.11.14
+set cp_version=0.11.15
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -8,18 +8,18 @@ endif
 #interactive shell?
 set echo_style=both
 if ($?prompt) then
-    alias pstat 'echo -n \!*'
+    alias cstat 'echo -n \!*'
     set INTERACTIVE
     unset prompt                # we'll set it later anyway...
 else
-    alias pstat 'echo \!* > /dev/null'
+    alias cstat 'echo \!* > /dev/null'
     limit coredumpsize 0
 endif
 
 if ($?INTERACTIVE) then
-    pstat "cshrc package ${cp_version}\n\n"
-    pstat "Initializing...\n"
-    pstat "  main..."
+    cstat "cshrc package ${cp_version}\n\n"
+    cstat "Initializing...\n"
+    cstat "  main..."
 endif
 
 if (! $?MACHTYPE) then
@@ -60,14 +60,14 @@ if (! $?HOST) then
         setenv HOST `uname -n`
     endif
 endif
-pstat "."
+cstat "."
 
 if (! $?MACHNAME) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         setenv MACHNAME `echo $HOST | sed 's/\..*//'`
     endif
 endif
-pstat "."
+cstat "."
 
 if (! $?YPDOMAIN) then
     if (! $?YPDOMAIN && -r $HOME/.domainname) then
@@ -86,72 +86,76 @@ if (! $?YPDOMAIN) then
         setenv YPDOMAIN $HOST
     endif
 endif
-pstat "."
-pstat "done\n"
+cstat "."
+cstat "done\n"
 
 if (! $?SHLVL) then
     set SETPATHS
 else
     if ($SHLVL == 1) then
         set SETPATHS
+    else if ($?TERM && $?INTERACTIVE) then
+        if ($TERM == "screen") then
+            set SETPATHS
+        endif
     endif
 endif
 
 if ($?SETPATHS) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
-            pstat "  paths..."
+            cstat "  paths..."
 	    source $HOME/.cshrc.paths
         else
-            pstat ""
-            pstat "WARNING: $HOME/.cshrc.paths unavailable, using default:"
+            cstat ""
+            cstat "WARNING: $HOME/.cshrc.paths unavailable, using default:"
             set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
-            pstat "   " $path
+            cstat "   " $path
         endif
     endif
 endif
 
 if ($?HOME) then
     if (-r $HOME/.cshrc.aliases) then
-        pstat "  aliases..."
+        cstat "  aliases..."
         source $HOME/.cshrc.aliases
     else
-        pstat ""
-        pstat "WARNING: $HOME/.cshrc.aliases unavailable"
+        cstat ""
+        cstat "WARNING: $HOME/.cshrc.aliases unavailable"
     endif
 endif
 
 if ($?HOME && $?tcsh) then
     if (-r $HOME/.cshrc.complete) then
-        pstat "  complete..."
+        cstat "  complete..."
         source $HOME/.cshrc.complete
     else
-        pstat ""
-        pstat "WARNING: $HOME/.cshrc.complete unavailable"
+        cstat ""
+        cstat "WARNING: $HOME/.cshrc.complete unavailable"
     endif
 endif
 
 # do host dependent initialization
 if ($?YPDOMAIN) then
     if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
-        pstat "  domain-based..."
+        cstat "  domain-based..."
         source $HOME/.cshrc.$YPDOMAIN
     endif
 endif
 if (-r $HOME/.cshrc.$HOST) then
-    pstat "  host-based..."
+    cstat "  host-based..."
     source $HOME/.cshrc.$HOST
 endif
 
-pstat "\n"
+cstat "\n"
 
-pstat "Starting interactive login\n\n"
+cstat "Starting interactive login\n\n"
 if ($?INTERACTIVE) then
     if (-r $HOME/.cshrc.interactive) then
 	source $HOME/.cshrc.interactive
     else
-        pstat ""
-	pstat "WARNING: cannot find $HOME/.cshrc.interactive"
+        cstat ""
+	cstat "WARNING: cannot find $HOME/.cshrc.interactive"
     endif
 endif
 
@@ -161,7 +165,7 @@ endif
 
 if ($?INTERACTIVE) then
     unset INTERACTIVE
-    unalias pstat
+    unalias cstat
 endif
 
 if ($?SETPATHS) then
