@@ -76,6 +76,10 @@ alias	tagit	ct mklabel -replace BUILD
 alias	cc_rmview	cc_rmview -vob /vob/ace -view 
 
 # squish ssh2 stuff
+
+set rmalias=`alias rm`
+unalias rm
+
 if ($?ssh_agent_started) then
     if ($?SSH2_AGENT_PID) then
         kill ${SSH2_AGENT_PID}
@@ -83,6 +87,9 @@ if ($?ssh_agent_started) then
         unsetenv SSH2_AGENT_PID SSH2_AUTH_SOCK
     endif
 endif
+
+alias rm $rmalias
+unset rmalias
 
 # alias to ssh1
 alias	ssh		ssh1

@@ -1,9 +1,5 @@
-if (`alias rm` == "") then
-    set normalias
-else
-    set rmalias=`alias rm`
-    unalias rm
-endif
+set rmalias=`alias rm`
+unalias rm
 
 if ($?ssh_agent_started) then
     if ($?SSH2_AGENT_PID) then
@@ -14,9 +10,5 @@ if ($?ssh_agent_started) then
     endif
 endif
 
-if ($?normalias) then
-    unset normalias
-else
-    alias rm $rmalias
-    unset rmalias
-endif
+alias rm $rmalias
+unset rmalias
