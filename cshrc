@@ -1,20 +1,20 @@
-set cp_version=0.11.2
+set cp_version=0.11.3
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.51
-# .cshrc.complete 1.7
-# .cshrc.interactive 1.51
+# .cshrc.aliases 1.52
+# .cshrc.complete 1.8
+# .cshrc.interactive 1.52
 # .cshrc.login 1.1
 # .cshrc.logout 1.4
-# .cshrc.paths 1.15
+# .cshrc.paths 1.16
 
 # site-specific initialization files
 # ----------------------------------
 # .cshrc.crhc 1.13
-# .cshrc.eng.cisco.com 1.13
-# .cshrc.OCF.Berkeley.EDU 1.4
-# .cshrc.soda.csua.berkeley.edu 1.25
+# .cshrc.eng.cisco.com 1.14
+# .cshrc.OCF.Berkeley.EDU 1.5
+# .cshrc.soda.csua.berkeley.edu 1.26
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -40,42 +40,34 @@ if ($?INTERACTIVE) then
     pstat "  main..."
 endif
 
-if (! $?ARCH) then
+if (! $?MACHTYPE) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-            setenv ARCH `arch | sed 's/\//-/'`
+            setenv MACHTYPE `arch | sed 's/\//-/'`
         else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-            setenv ARCH `mach | sed 's/\//-/'`
+            setenv MACHTYPE `mach | sed 's/\//-/'`
         else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-            setenv ARCH `uname -m | sed 's/\//-/'`
+            setenv MACHTYPE `uname -p | sed 's/\//-/'`
         else
-            setenv ARCH UNKNOWN
+            setenv MACHTYPE UNKNOWN
         endif
     else
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-            setenv ARCH `arch`
+            setenv MACHTYPE `arch`
         else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-            setenv ARCH `mach`
+            setenv MACHTYPE `mach`
         else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-            setenv ARCH `uname -m`
+            setenv MACHTYPE `uname -p`
         else
-            setenv ARCH UNKNOWN
+            setenv MACHTYPE UNKNOWN
         endif
     endif
 endif
 
-if (! $?OS) then
-    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-        setenv OS `uname -s`
-    endif
-endif
-
-if (! $?MACHTYPE) then
-    setenv MACHTYPE ${ARCH}
-endif
-
 if (! $?OSTYPE) then
-    setenv OSTYPE ${OS}
+    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+        setenv OSTYPE `uname -s`
+    endif
 endif
 
 # Figure out the current host name and YP domain 
