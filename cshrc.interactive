@@ -134,7 +134,7 @@ unset autologout
 set pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
 set history=500
-set ignoreeof=3
+set ignoreeof=2
 set savehist=100
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
