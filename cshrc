@@ -1,11 +1,13 @@
-set cp_version=0.5.19
+set cp_version=0.6.0
 # .cshrc.aliases 1.11
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.5
-# .cshrc.paths 1.4
+# .cshrc.paths 1.5
 # .cshrc.soda.csua.berkeley.edu 1.7
+
+set path = (/bin /usr/bin)
 
 if (! $?WHOAMI) then
         if (-x /usr/ucb/whoami) then
@@ -41,42 +43,26 @@ if (! $?INTERACTIVE) then
 endif
 
 if (! $?ARCH) then
-        if (-x /bin/arch) then
-                setenv ARCH `/bin/arch`
-        else if (-x /usr/bin/arch) then
-                setenv ARCH `/usr/bin/arch`
-        else if (-x /bin/mach) then
-                setenv ARCH `/bin/mach`
-        else if (-x /usr/bin/mach) then
-                setenv ARCH `/usr/bin/mach`
-        else if (-x /bin/machine) then
-                setenv ARCH `/bin/machine`
-        else if (-x /usr/bin/machine) then
-                setenv ARCH `/usr/bin/machine`
-        else if (-x /bin/uname) then
-                setenv ARCH `/bin/uname -m`
-        else if (-x /usr/bin/uname) then
-                setenv ARCH `/usr/bin/uname -m`
+        if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
+                setenv ARCH `arch | sed 's/\//-/'`
+        else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
+                setenv ARCH `mach | sed 's/\//-/'`
+        else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+                setenv ARCH `uname -m | sed 's/\//-/'`
         else
                 setenv ARCH UNKNOWN
         endif
 endif
 
 if (! $?OS) then
-        if (-x /bin/uname) then
-                setenv OS `/bin/uname -s`
-        else if (-x /usr/bin/uname) then
-                setenv OS `/usr/bin/uname -s`
+        if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+                setenv OS `uname -s`
 	endif
-endif
-
-if (! $?OSTYPE) then
-        setenv OSTYPE `uname -s`
 endif
 
 # Figure out the current host name and YP domain name
 if (! $?HOST) then
-        if (-x /usr/bin/hostname || -x /bin/hostname) then
+        if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
                 setenv HOST `hostname | sed 's/\..*//'`
         else
                 setenv HOST `uname -n | sed 's/\..*//'`
