@@ -10,4 +10,4 @@ umask 066
 #setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv EDITOR	"emacs-nw"
 
-/usr/bin/quota -q
+quota
