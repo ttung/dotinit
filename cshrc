@@ -1,4 +1,4 @@
-set cp_version=0.8.3
+set cp_version=0.8.4
 # .cshrc.aliases 1.18
 # .cshrc.complete 1.2
 # .cshrc.crhc 1.6
@@ -139,7 +139,7 @@ if (-r $HOME/.cshrc.$HOST) then
         source $HOME/.cshrc.$HOST
 endif
 
-if ($?MAIL) then
+if ($?MAIL && ! $?tperiod) then
 	set mail=(60 $MAIL)
 endif
 
