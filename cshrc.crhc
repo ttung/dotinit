@@ -4,3 +4,4 @@ alias	gmake	make
 
 umask 026
 set watch=(1 any any)
+setenv CVSROOT	/home/titan/CVSROOT
