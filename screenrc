@@ -11,7 +11,7 @@ termcap vt100 Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 #termcap xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 
 # this magically allows the hardstatus to be put to the xterm title
-termcap xterm 'hs:ts=\E]0;:fs=\007:ds=\E]2;screen\007'
+termcapinfo xterm 'hs:ts=\E]0;:fs=\007:ds=\E]2;screen\007'
 
 # set the status line and let screen extract the current commmand into the
 # title
