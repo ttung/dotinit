@@ -1,10 +1,10 @@
-set cp_version=0.6.3
+set cp_version=0.6.4
 # .cshrc.aliases 1.11
 # .cshrc.crhc 1.2
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.5
-# .cshrc.paths 1.5
+# .cshrc.paths 1.6
 # .cshrc.soda.csua.berkeley.edu 1.7
 
 set path = (/bin /usr/bin)
@@ -68,6 +68,14 @@ if (! $?OS) then
         if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
                 setenv OS `uname -s`
 	endif
+endif
+
+if (! $?MACHTYPE) then
+    setenv MACHTYPE ${ARCH}
+endif
+
+if (! $?OSTYPE) then
+    setenv OSTYPE ${OS}
 endif
 
 # Figure out the current host name and YP domain name
