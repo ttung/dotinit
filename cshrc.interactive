@@ -30,3 +30,24 @@ if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
 if ($?DISPLAY) then
 	setenv SSH_DISPLAY $DISPLAY
 endif
+
+# application setup
+setenv ENSCRIPT -G
+setenv EDITOR emacs
+setenv BLOCKSIZE K
+
+# shell stuff
+
+# set the prompt
+if ($?TERM) then
+    if ($TERM == xterm) then
+	set prompt='%{\e]2\;%n@%M^g%}[%n %m] \!:%B%~%b%# '
+    else
+	set prompt='[%n %m] \!:%B%~%b%# '
+    endif
+endif
+
+set notify pushdtohome ignoreeof notify noclobber listjobs
+unset autologout
+set history=500
+set savehist=100

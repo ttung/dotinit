@@ -1,9 +1,9 @@
-set cp_version=0.5.14
+set cp_version=0.5.15
 # .cshrc.aliases 1.9
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive 1.3
+# .cshrc.interactive 1.4
 # .cshrc.paths 1.4
 # .cshrc.soda.csua.berkeley.edu 1.7
 
@@ -140,26 +140,6 @@ endif
 if (-r $LOGHOME/.cshrc.$HOST) then
         source $LOGHOME/.cshrc.$HOST
 endif
-
-# application setup
-setenv ENSCRIPT -G
-setenv EDITOR emacs
-
-# shell stuff
-
-# set the prompt
-if ($?TERM) then
-    if ($TERM == xterm) then
-	set prompt='%{\e]2\;%n@%M^g%}[%n %m] \!:%B%~%b%# '
-    else
-	set prompt='[%n %m] \!:%B%~%b%# '
-    endif
-endif
-
-set notify pushdtohome ignoreeof notify noclobber listjobs
-unset autologout
-set history=500
-set savehist=100
 
 if ($?MAIL) then
 	set mail=(60 $MAIL)
