@@ -11,6 +11,10 @@ if ($?SETPATHS) then
         if (-d /asi/local/bin) then
             setenv PATH ${PATH}:/asi/local/bin
         endif
+
+        if (-d /asi/local/man) then
+            setenv MANPATH ${MANPATH}:/asi/local/man
+        endif
     endif
 
     if (-d /usr/X11R6/bin) then
