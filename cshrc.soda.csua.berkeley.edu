@@ -19,6 +19,7 @@ endif
 setenv EDITOR	"emacs-nw"
 setenv CVSROOT	${HOME}/.CVSROOT
 setenv NOFRM
+setenv NNTPSERVER	agate.berkeley.edu
 
 if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
@@ -34,10 +35,18 @@ if ($?INTERACTIVE) then
     pstat "."
 endif
 
-if ($?WINDOW && $?INTERACTIVE) then 
-    if ($WINDOW == 3) then
-        screen -X login
-        screen -X reportidle
+if ($?INTERACTIVE) then
+    if ($?WINDOW) then 
+        if ($WINDOW == 3) then
+            screen -X login
+            screen -X reportidle
+        endif
+    endif
+    if ($?TERM) then
+        if ($TERM == screen) then
+            alias periodic	'if (-r '${HOME}'/tmp/tonytung-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/tonytung-DISPLAY`'
+            periodic
+        endif
     endif
 endif
 
