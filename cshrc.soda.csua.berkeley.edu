@@ -12,9 +12,9 @@ umask 066
 limit maxproc 256
 
 if ($?SETPATHS) then
-    setenv PATH	"${PATH}:/csua/bin:/usr/local/jdk1.1.8/bin"
+    setenv PATH		"${PATH}:/csua/bin"
     setenv MANPATH	"${MANPATH}:/csua/man"
-    setenv CLASSPATH "${CLASSPATH}:${HOME}/office/software/mm.mysql-2.0.7/mm.mysql-2.0.7-bin.jar"
+    setenv CLASSPATH	"${CLASSPATH}:${HOME}/office/software/mm.mysql-2.0.7/mm.mysql-2.0.7-bin.jar"
 endif
 setenv EDITOR	"emacs-nw"
 setenv CVSROOT	${HOME}/.CVSROOT
@@ -32,7 +32,7 @@ if ($?INTERACTIVE) then
     complete	finger	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
     complete	f	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
 
-    pstat "."
+    cstat "."
 endif
 
 if ($?INTERACTIVE) then
@@ -50,4 +50,4 @@ if ($?INTERACTIVE) then
     endif
 endif
 
-pstat "done\n"
+cstat "done\n"
