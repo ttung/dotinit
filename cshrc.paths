@@ -18,7 +18,7 @@ if ($?gatherpaths) then
     cstat "."
 
     # miscellaneous paths
-    set C_PATH			= (${C_PATH} /usr/bin /bin /etc /sbin /usr/sbin \
+    set C_PATH			= (${C_PATH} /usr/bin /bin /usr/sbin /sbin /etc \
                                     /usr/ucb /usr/etc /usr/bin/X11)
     set C_MANPATH		= (${C_MANPATH} /usr/man /usr/share/man)
     set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11)
@@ -32,21 +32,8 @@ if ($?gatherpaths) then
 
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib)
     endif
-    cstat "done\n"
 
-else if ($?setpaths) then
-
-    setenv PATH .
-    setenv MANPATH .
-    setenv LD_LIBRARY_PATH  .
-    setenv INCLUDE .
-    setenv CLASSPATH .
-
-    setenv GCC_DFLAG ""
-    setenv GCC_IFLAG ""
-    setenv GCC_LFLAG ""
-
-    # initialize path variables for HOME subsystem
+    # initialize path variables for HOME subsystem.
     if ($?HOME) then
         set C_PATH		= (${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE} ${C_PATH})
     
@@ -59,10 +46,25 @@ else if ($?setpaths) then
         set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
     endif
     cstat "."
+endif
+
+# even if we are just gathering, we should probably set the paths, in case
+# later init files require things that are in the path.  we just have to set it 
+# twice.
+if ($?setpaths) then
+    setenv PATH .
+    setenv MANPATH .
+    setenv LD_LIBRARY_PATH  .
+    setenv INCLUDE .
+    setenv CLASSPATH .
+
+    setenv GCC_DFLAG ""
+    setenv GCC_IFLAG ""
+    setenv GCC_LFLAG ""
 
     foreach bin (${C_PATH})
         if (-d ${bin}) then
-            setenv PATH		"${PATH}:${bin}"
+            setenv PATH			"${PATH}:${bin}"
         endif
     end
     cstat "."
@@ -75,14 +77,14 @@ else if ($?setpaths) then
     foreach lib (${C_LD_LIBRARY_PATH})
         if (-d ${lib}) then
             setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:${lib}"
-            setenv GCC_LFLAG	"${GCC_LFLAG} -L${lib}"
+            setenv GCC_LFLAG		"${GCC_LFLAG} -L${lib}"
         endif
     end
     cstat "."
     foreach include (${C_INCLUDE})
         if (-d ${include}) then
             setenv INCLUDE		"${INCLUDE}:${include}"
-            setenv GCC_IFLAG	"${GCC_IFLAG} -I${include}"
+            setenv GCC_IFLAG		"${GCC_IFLAG} -I${include}"
         endif
     end
     cstat "."
@@ -90,7 +92,9 @@ else if ($?setpaths) then
     setenv GCC_LFLAG		"${GCC_LFLAG} -L."
     setenv GCC_IFLAG		"${GCC_IFLAG} -I."
 
-    unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE
+    if (! $?gatherpaths) then
+        unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
+    endif
 
     cstat "done\n"
 endif
