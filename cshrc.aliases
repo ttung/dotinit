@@ -67,9 +67,11 @@ endif
     alias f		finger
     alias i		finger iyaowu@csua.berkeley.edu
     alias fc		finger ctung@csua.berkeley.edu
+if (${user} == 'tonytung' || ${user} == 'ytung') then
     alias csua		ssh csua.berkeley.edu -l tonytung
-    alias uiuc		ssh students.uiuc.edu -l ytung
-    alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
+else if (${user} == 'iyaowu') then
+    alias csua		ssh csua.berkeley.edu -l iyaowu
+endif
 
     alias cvsdiff	"cvs status | egrep 'Loc|Merg'"
     alias cvsstat	"cvs status | egrep 'Loc|Nee|conflicts|Unknown'"
