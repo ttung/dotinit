@@ -1,5 +1,6 @@
 alias	lynx	lynx -cfg=${HOME}/software/lynx2-8-2/lynx.cfg
 alias	olympia	setenv DISPLAY olympia:0
+alias   sbsim   "setenv PATH /usr/local/sbtools-mips64-sb1sim-1.7.8/bin:${PATH}"
 unalias	more
 
 if ($?SETPATHS) then
