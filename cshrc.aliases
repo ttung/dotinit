@@ -71,6 +71,6 @@ if ($?HOME) then
 endif
 
 # tperiod
-if (! $?tperiod) then
+if ($?tperiod) then
 	alias periodic		myfrm -s new -t -n
 endif

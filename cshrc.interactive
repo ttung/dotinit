@@ -83,6 +83,6 @@ set cdpath=${HOME}
 set echo_style=both
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
-if (! -x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
+if (-x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
 	set tperiod=1
 endif
