@@ -14,5 +14,6 @@ setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv PATH	"${PATH}:/csua/bin"
 alias	ncftp	ncftp2
 alias	emacs	emacs-20.2
+alias	skey	key `keyinit`
 
 quota -q
