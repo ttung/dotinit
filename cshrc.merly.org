@@ -1,56 +1,58 @@
-set users = (christinewu ctung bsp reblee ihsuan ngjeff inkwings tonytung sandydoto mhchu)
-set fastremotehosts = (linux.csua.berkeley.edu csua.berkeley.edu ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org ssh-sj1.cisco.com)
-set remotehosts = (${fastremotehosts} coke.csua.berkeley.edu seltzer.csua.berkeley.edu beer.csua.berkeley.edu rum.csua.berkeley.edu martini.csua.berkeley.edu)
-set watch = (1 any any)
+if (! $?gatherpaths) then
+    set users = (christinewu ctung bsp reblee ihsuan ngjeff inkwings tonytung sandydoto mhchu)
+    set fastremotehosts = (linux.csua.berkeley.edu csua.berkeley.edu ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org ssh-sj1.cisco.com)
+    set remotehosts = (${fastremotehosts} coke.csua.berkeley.edu seltzer.csua.berkeley.edu beer.csua.berkeley.edu rum.csua.berkeley.edu martini.csua.berkeley.edu)
+    set watch = (1 any any)
 
-umask 066
+    umask 066
 
-setenv EDITOR	"emacs-nw"
-setenv CVSROOT	/home/CVSROOT
-#setenv NNTPSERVER news.comcast.giganews.com
-setenv NNTPSERVER localhost:1190
+    setenv EDITOR	"emacs-nw"
+    setenv CVSROOT	/home/CVSROOT
+    #setenv NNTPSERVER news.comcast.giganews.com
+    setenv NNTPSERVER localhost:1190
 
-if ($?INTERACTIVE) then
-    alias	fc	finger christinewu
-    alias	fy	finger ctung
-    alias	idle	midle ${users}
-    foreach rhost (${fastremotehosts})
-        set srhost = `echo $rhost | sed 's/\..*//'`
+    if ($?INTERACTIVE) then
+        alias	fc	finger christinewu
+        alias	fy	finger ctung
+        alias	idle	midle ${users}
+        foreach rhost (${fastremotehosts})
+            set srhost = `echo $rhost | sed 's/\..*//'`
 
-        alias	${srhost}	ssh ${rhost}
-    end
-    unset srhost
-    alias	csua	ssh -L 1190:agate.berkeley.edu:119 csua.berkeley.edu 
-    alias	mangairc	BitchX bjones_15 irc.mircx.com
-    alias	tvirc	BitchX bjones_15 irc.irchighway.net
+            alias	${srhost}	ssh ${rhost}
+        end
+        unset srhost
+        alias	csua	ssh -L 1190:agate.berkeley.edu:119 csua.berkeley.edu 
+        alias	mangairc	BitchX bjones_15 irc.mircx.com
+        alias	tvirc	BitchX bjones_15 irc.irchighway.net
 
-    if (-X btdownloadcurses.py) then
-        alias bt			btdownloadcurses.py
-    endif
-    complete	ssh	"p/1/(${remotehosts})/"
-    complete	finger	"p/1/(${users})/"
-    complete	f	"p/1/(${users})/"
-
-    cstat "."
-
-    if ($?WINDOW) then 
-        if ($WINDOW == 0) then
-            screen -X login
-            screen -X reportidle
+        if (-X btdownloadcurses.py) then
+            alias bt			btdownloadcurses.py
         endif
-    endif
-    if (! $?prompt && $?tcsh && $TERMTYPE == screen) then
+        complete	ssh	"p/1/(${remotehosts})/"
+        complete	finger	"p/1/(${users})/"
+        complete	f	"p/1/(${users})/"
+
+        cstat "."
+
         if ($?WINDOW) then 
-            setenv WINDOW_NUM "-$WINDOW"
-            unsetenv WINDOW
-        else
-            setenv WINDOW_NUM 
+            if ($WINDOW == 0) then
+                screen -X login
+                screen -X reportidle
+            endif
         endif
+        if (! $?prompt && $?tcsh && $TERMTYPE == screen) then
+            if ($?WINDOW) then 
+                setenv WINDOW_NUM "-$WINDOW"
+                unsetenv WINDOW
+            else
+                setenv WINDOW_NUM 
+            endif
 
-        set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
-        alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
-        periodic
+            set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
+            alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
+            periodic
+        endif
     endif
-endif
 
-cstat "done\n"
+    cstat "done\n"
+endif

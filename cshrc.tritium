@@ -1,26 +1,27 @@
-set complete=enhance
-set NOMESG NOMOTD NOQUOTACHECK
-setenv RSYNC_RSH ssh
-setenv CVS_RSH ssh
+if (! $?gatherpaths) then
+    set complete=enhance
+    set NOMESG NOMOTD NOQUOTACHECK
+    setenv RSYNC_RSH ssh
+    setenv CVS_RSH ssh
 
-if ($?INTERACTIVE) then
-    complete	ssh	'p/1/(merly.org ssh-sj1.cisco.com)/'
+    if ($?INTERACTIVE) then
+        complete	ssh	'p/1/(merly.org ssh-sj1.cisco.com)/'
 
-    cstat "."
+        cstat "."
 
-    if ($?TERM) then
-        if ($TERM == xterm) then
-            setenv TERM xterm-color
+        if ($?TERM) then
+            if ($TERM == xterm) then
+                setenv TERM xterm-color
+            endif
         endif
-    endif
-    set dontshowproc
+        set dontshowproc
 
-    if (! $?DISPLAY) then
-        setenv DISPLAY :0
+        if (! $?DISPLAY) then
+            setenv DISPLAY :0
+        endif
+
+        alias em /Applications/Emacs.app/Contents/MacOS/Emacs
     endif
 
-    alias em /Applications/Emacs.app/Contents/MacOS/Emacs
-    alias dailyshow rsync -avP --delete csua.berkeley.edu:/csua/tmp/dailyshow ${HOME}/Desktop
+    cstat "done\n"
 endif
-
-cstat "done\n"

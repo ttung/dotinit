@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.12.15
+set cp_version=0.12.16
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -8,8 +8,8 @@ endif
 #interactive shell?
 set echo_style=both
 if ($?prompt) then
-    #alias cstat 'echo -n \!*'
-    alias cstat 'echo \!* > /dev/null'
+    alias cstat 'echo -n \!*'
+    #alias cstat 'echo \!* > /dev/null'
     set INTERACTIVE
     unset prompt                # we'll set it later anyway...
     limit coredumpsize 15360k
@@ -129,6 +129,39 @@ if ($?gatherpaths) then
 	    source $HOME/.cshrc.paths
         endif
     endif
+
+    # do host dependent initialization, but silently.  we're just gathering paths.
+    if ($?YPDOMAIN) then
+        if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
+            source $HOME/.cshrc.$YPDOMAIN
+        endif
+    endif
+    if (-r $HOME/.cshrc.$HOST) then
+        source $HOME/.cshrc.$HOST
+    endif
+endif
+
+if ($?setpaths) then
+    unset gatherpaths           # go into the setting mode
+    if ($?HOME) then
+        if (-r $HOME/.cshrc.paths) then
+            cstat "  set-paths..."
+	    source $HOME/.cshrc.paths
+            set pathsset
+        endif
+    endif
+
+    if (! $?pathsset) then
+        cstat ""
+        if ($?HOME) then
+            cstat "WARNING: ${HOME}/.cshrc.paths not available, using default:"
+        else
+            cstat "WARNING: .cshrc.paths not available, using default:"
+        endif
+        set path = (${HOME}/bin /bin /usr/bin /usr/local/bin)
+        cstat "	" $path
+    endif
+    unset setpaths pathsset
 endif
 
 if ($?HOME) then
@@ -161,29 +194,6 @@ endif
 if (-r $HOME/.cshrc.$HOST) then
     cstat "  host-based..."
     source $HOME/.cshrc.$HOST
-endif
-
-if ($?setpaths) then
-    unset gatherpaths           # go into the setting mode
-    if ($?HOME) then
-        if (-r $HOME/.cshrc.paths) then
-            cstat "  set-paths..."
-	    source $HOME/.cshrc.paths
-            set pathsset
-        endif
-    endif
-
-    if (! $?pathsset) then
-        cstat ""
-        if ($?HOME) then
-            cstat "WARNING: ${HOME}/.cshrc.paths not available, using default:"
-        else
-            cstat "WARNING: .cshrc.paths not available, using default:"
-        endif
-        set path = (${HOME}/bin /bin /usr/bin /usr/local/bin)
-        cstat "	" $path
-    endif
-    unset setpaths pathsset
 endif
 
 cstat "\n"

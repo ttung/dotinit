@@ -1,34 +1,34 @@
-set users = (iyaowu ctung reblee ihsuan braden kwhung mhchu ngjeff tonytung)
-set watch = 1
-foreach user (${users})
-    set watch = (${watch} ${user} {any})
-end
-
-umask 066
-limit maxproc 256
-
 if ($?gatherpaths) then
     set C_PATH		= (${C_PATH} /csua/bin)
     set C_MANPATH	= (${C_MANPATH} /csua/man)
     set C_CLASSPATH	= (${C_CLASSPATH} ${HOME}/office/software/mm.mysql-2.0.7/mm.mysql-2.0.7-bin.jar)
+else
+    set users = (iyaowu ctung reblee ihsuan braden kwhung mhchu ngjeff tonytung)
+    set watch = 1
+    foreach user (${users})
+        set watch = (${watch} ${user} {any})
+    end
+
+    umask 066
+    limit maxproc 256
+
+    setenv EDITOR	"emacs-nw"
+    setenv CVSROOT	${HOME}/.CVSROOT
+    setenv NOFRM
+    setenv NNTPSERVER	agate.berkeley.edu
+
+    if ($?INTERACTIVE) then
+        alias	ncftp	ncftp2
+        alias	fc	finger iyaowu
+        alias	fy	finger ctung
+        alias	mw	'motdwatch -u "beep; diff -b -B -C 3"'
+        alias	idle	midle ${users}
+        complete	ssh	'p/1/(coke seltzer beer linux rum martini ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org)/'
+        complete	finger	"p/1/\(${users}\)/"
+        complete	f	"p/1/\(${users}\)/"
+
+        cstat "."
+    endif
+
+    cstat "done\n"
 endif
-
-setenv EDITOR	"emacs-nw"
-setenv CVSROOT	${HOME}/.CVSROOT
-setenv NOFRM
-setenv NNTPSERVER	agate.berkeley.edu
-
-if ($?INTERACTIVE) then
-    alias	ncftp	ncftp2
-    alias	fc	finger iyaowu
-    alias	fy	finger ctung
-    alias	mw	'motdwatch -u "beep; diff -b -B -C 3"'
-    alias	idle	midle ${users}
-    complete	ssh	'p/1/(coke seltzer beer linux rum martini ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org)/'
-    complete	finger	"p/1/\(${users}\)/"
-    complete	f	"p/1/\(${users}\)/"
-
-    cstat "."
-endif
-
-cstat "done\n"
