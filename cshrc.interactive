@@ -47,7 +47,7 @@ endif
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
 
 echo ""
-frm -s new -t -n
+frm -s n -s u -t -n
 
 if ($?DISPLAY) then
 	setenv SSH_DISPLAY $DISPLAY

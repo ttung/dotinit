@@ -72,5 +72,5 @@ endif
 
 # tperiod
 if ($?tperiod) then
-	alias periodic		myfrm -s unread -t -n
+	alias periodic		myfrm -s u -s n -t -n -r
 endif
