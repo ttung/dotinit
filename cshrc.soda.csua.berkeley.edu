@@ -10,7 +10,7 @@ set watch= (1 \
 
 umask 066
 
-setenv TZ :/usr/share/zoneinfo/CST6CDT
+#setenv TZ :/usr/share/zoneinfo/CST6CDT
 setenv PATH	"${PATH}:/csua/bin"
 setenv EDITOR	"emacs -nw"
 alias	ncftp	ncftp2

@@ -6,7 +6,7 @@ set cp_version=0.8.11
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.22
 # .cshrc.paths 1.9
-# .cshrc.soda.csua.berkeley.edu 1.9
+# .cshrc.soda.csua.berkeley.edu 1.10
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
