@@ -2,6 +2,7 @@ setenv PATH .
 setenv MANPATH .
 setenv LD_LIBRARY_PATH  .
 setenv INCLUDE .
+setenv CLASSPATH .
 
 setenv GCC_DFLAG ""
 setenv GCC_IFLAG "-I."
@@ -43,6 +44,10 @@ if ($?HOME) then
         if (-d $HOME/software/include-${MACHTYPE}-${OSTYPE}) then
                 setenv INCLUDE	"${INCLUDE}:${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
 		setenv GCC_IFLAG "${GCC_IFLAG} -L${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
+        endif
+
+        if (-d $HOME/software/classes) then
+                setenv CLASSPATH	"${CLASSPATH}:${HOME}/software/classes"
         endif
 endif
 
