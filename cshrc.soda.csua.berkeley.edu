@@ -1,13 +1,8 @@
-set watch= (1 \
-	iyaowu any \
-	ctung any \
-	reblee any \
-	ihsuan any \
-	braden any \
-	kwhung any \
-	mhchu any \
-	ngjeff any \
-	tonytung any)
+set users = (iyaowu ctung reblee ihsuan braden kwhung mhchu ngjeff tonytung)
+set watch = 1
+foreach user (${users})
+    set watch = (${watch} ${user} {any})
+end
 
 umask 066
 limit maxproc 256
@@ -24,14 +19,13 @@ setenv NNTPSERVER	agate.berkeley.edu
 
 if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
-    alias	skey	'key `keyinfo`'
-    alias	skeyi	'key `keyinfo iyaowu`'
     alias	fc	finger iyaowu
     alias	fy	finger ctung
     alias	mw	'motdwatch -u "beep; diff -b -B -C 3"'
+    alias	idle	midle ${users}
     complete	ssh	'p/1/(coke seltzer beer linux rum martini ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org)/'
-    complete	finger	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
-    complete	f	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
+    complete	finger	"p/1/\(${users}\)/"
+    complete	f	"p/1/\(${users}\)/"
 
     cstat "."
 endif
@@ -52,7 +46,7 @@ if ($?INTERACTIVE) then
         endif
 
         set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
-        alias periodic	'if (-r '${HOME}'/tmp/tonytung-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/tonytung-DISPLAY`'
+        alias periodic	'if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
         periodic
     endif
 endif
