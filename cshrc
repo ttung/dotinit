@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.12.8
+set cp_version=0.12.9
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -82,9 +82,9 @@ cstat "."
 if (! $?MACHNAME) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         setenv MACHNAME `echo $HOST | sed 's/\..*//'`
-        setenv PROMPT_MACHNAME $MACHNAME
     endif
 endif
+setenv PROMPT_MACHNAME $MACHNAME
 cstat "."
 
 if (-r $HOME/.domainname) then
