@@ -10,29 +10,44 @@ unset rmalias
 
 stty erase '^?' kill '^U' intr '^C'
 
-if (! $?TERMTYPE) then
-    set getterm mesgy
-else if ($TERMTYPE == "eterm") then
-    set getterm
-else if ($TERMTYPE == screen && $SHLVL != 1) then
-    set mesgy
-else if ($?EMACS) then
-    #nothing!
-else
-    set getterm mesgy
+# set the term if it hasn't already been set, or if it was set to dumb
+if (! $?TERM) then
+    set setterm
+else if ($TERM == dumb) then
+    set setterm
 endif
 
-if ($?getterm) then
+if ($?setterm) then
     set noglob
         eval `tset -s - | sed -e '1d'`
     unset noglob
-    unset getterm
-    if ($TERM == screen || $TERM == screen-w) then
-        set TERMTYPE = screen
-    else
-        set TERMTYPE = $TERM
-    endif
+    unset setterm
 endif
+
+# in case term is changed, we should reset TERMTYPE.  this block should be 
+# identical to the one in cshrc
+if ($?TERM) then
+    if ($TERM == screen || $TERM == screen-w) then
+        setenv TERMTYPE screen
+    else if ($TERM == xterm-color) then
+        setenv TERMTYPE xterm
+    else
+        setenv TERMTYPE $TERM
+    endif
+else
+    setenv TERMTYPE dumb
+endif
+
+if ($TERMTYPE == "eterm") then
+    # do nothing
+else if ($?EMACS) then
+    # do nothing
+else if ($TERMTYPE == screen && $SHLVL != 1) then
+    set mesgy
+else
+    set mesgy
+endif
+
 if ($?mesgy) then
     mesg y
     unset mesgy
