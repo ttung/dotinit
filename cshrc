@@ -1,4 +1,4 @@
-set cp_version=0.9.13
+set cp_version=0.9.14
 
 # general initialization files
 # ----------------------------
@@ -11,7 +11,7 @@ set cp_version=0.9.13
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.allegrosys.com 1.9
+# .cshrc.allegrosys.com 1.10
 # .cshrc.crhc 1.11
 # .cshrc.OCF.Berkeley.EDU 1.3
 # .cshrc.soda.csua.berkeley.edu 1.18
