@@ -127,15 +127,16 @@ else
     setenv USR_CLR $HOST
 endif
 
-if ($?TERM) then
+if ($?TERMTYPE) then
     if ($?tcsh) then
         if ($?WINDOW) then 
             setenv WINDOW_NUM ":$WINDOW"
+            unsetenv WINDOW
         else
             setenv WINDOW_NUM 
         endif
 
-        if ($TERM == xterm || $TERM == screen) then
+        if ($TERMTYPE == xterm || $TERMTYPE == screen) then
             set prompt='%{\e]0\;['${USR_CLR}${WINDOW_NUM}'] \!:%c03>^g%}['${USR_CLR}${WINDOW_NUM}'] \!:%B%c03%b%# '
         else
             set prompt='['${USR_CLR}${WINDOW_NUM}'] \!:%B%c03%b%# '
