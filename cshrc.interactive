@@ -48,7 +48,9 @@ endif
 if ($?tcsh && ! $?NO_SSH_AGENT) then
     if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
 	eval `ssh-agent -c`
-	if (-r ${HOME}/.ssh/identity) then
+	if (-r ${HOME}/.ssh/identity || \
+            -r ${HOME}/.ssh/id_dsa || \
+            -r ${HOME}/.ssh/id_rsa) then
 	    ssh-add
 	endif
         set ssh_agent_started
