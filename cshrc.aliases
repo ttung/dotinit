@@ -49,6 +49,7 @@ endif
 	alias fha		setenv DISPLAY 130.126.76.101:0.0
 	alias motd		less -m -e /etc/motd
 	alias iyaowu		finger iyaowu@csua.berkeley.edu
+	alias f			finger
 	alias i			iyaowu
 	alias ctung		finger ctung@csua.berkeley.edu
 	alias fc		ctung
