@@ -3,6 +3,8 @@
 
 #set sys = `uname -n | sed 's/\..*$//'`
 
+umask 066
+
 if (-d /usr/local/ews) then
 	setenv PATH	"/usr/local/ews:$PATH"
 endif
