@@ -20,11 +20,14 @@ if (-d .init/${addr_user}-addressbook/) then
         if (-e ${addrbookdest}) then
             if (! -l ${addrbookdest}) then
                 set skiplink
-                echo "Warning: ${addrbookdest} is in the way."
-            endif
-
-            if ($?clean || -l ${addrbookdest}) then
-                unset skiplink
+                echo "Warning: ${addrbookdest} is in the way and may need to be checked into CVS."
+                if ($?clean) then
+                    unset skiplink
+                    mkdir -p .init/${addr_user}-addressbook/
+                    'mv' -f ${addrbookdest} ${addrbook}
+                    echo "Cleaning by moving ${addrbookdest} to ${addrbook}."
+                endif
+            else
                 'rm' -f ${addrbookdest}
             endif
         endif
@@ -38,27 +41,18 @@ if (-d .init/${addr_user}-addressbook/) then
     end
 endif
 
-foreach addrbook (.address*[^\.][^l][^u])
-    if (-e $addrbook && ! -l $addrbook) then
-        echo "Warning: $addrbook may need to be checked into CVS."
-        if ($?clean) then
-            set addrbookdest = `echo $addrbook | sed -e 's/\.\(.*\)/\1/'`
-            mkdir -p .init/${addr_user}-addressbook/
-            'mv' -f ${addrbook} .init/${addr_user}-addressbook/${addrbookdest}
-            ln -s f .init/${addr_user}-addressbook/${addrbookdest} ${addrbook}
-        endif
-    endif
-end
-
 foreach cshrc (.init/cshrc*)
     set cshrcdest = `echo ${cshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
     if (-e ${cshrcdest}) then
         if (! -l ${cshrcdest}) then
             set skiplink
-            echo "Warning: ${cshrcdest} is in the way."
-        endif
-
-        if ($?clean || -l ${cshrcdest}) then
+            echo "Warning: ${cshrcdest} is in the way and may need to be checked into CVS."
+            if ($?clean) then
+                unset skiplink
+                'mv' -f ${cshrcdest} ${cshrc}
+                echo "Cleaning by moving ${cshrcdest} to ${cshrc}."
+            endif            
+        else
             unset skiplink
             'rm' -f ${cshrcdest}
         endif
@@ -71,24 +65,29 @@ foreach cshrc (.init/cshrc*)
     endif
 end
 
-foreach df ( emacs xstart dvorak xsession qwerty fvwm2rc xmodmap \
+set fileset = ( emacs xstart dvorak xsession qwerty fvwm2rc xmodmap \
              dvorak.keysym Xdefaults hushlogin screenrc )
-    if (-e .${df}) then
-        if (! -l .${df}) then
-            set skiplink
-            echo "Warning: .${df} is in the way."
-        endif
 
-        if ($?clean || -l .${df}) then
-            unset skiplink
-            'rm' -f .${df}
+foreach df ( ${fileset} )
+    set dfdest = .${df}
+    if (-e ${dfdest}) then
+        if (! -l ${dfdest}) then
+            set skiplink
+            echo "Warning: ${dfdest} is in the way and may need to be checked into CVS."
+            if ($?clean) then
+                unset skiplink
+                'mv' -f ${dfdest} .init/${df}
+                echo "Cleaning by moving ${dfdest} to .init/${df}."
+            endif
+        else
+            'rm' -f ${dfdest}
         endif
     endif
 
     if ($?skiplink) then
         unset skiplink
     else
-        ln -sf .init/${df} .${df}
+        ln -sf .init/${df} ${dfdest}
     endif
 end
 
