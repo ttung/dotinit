@@ -45,7 +45,7 @@ if ($?TERMCAP && $TERMTYPE != screen) then
     unset noglob
 endif
 
-if ($?tcsh) then
+if ($?tcsh && ! $?NO_SSH_AGENT) then
     if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
 	eval `ssh-agent -c`
 	if (-r ${HOME}/.ssh/identity) then

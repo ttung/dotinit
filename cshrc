@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.11.23
+set cp_version=0.11.24
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
