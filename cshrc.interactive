@@ -72,10 +72,14 @@ if ($?tcsh) then
 endif
 
 echo ""
-if ($OSTYPE == solaris) then
-    quota
-else
-    quota -q
+if ($?tcsh) then
+    if (-X quota) then
+        if ($OSTYPE == solaris) then
+            quota
+        else
+            quota -q
+        endif
+    endif
 endif
 
 if ($?DISPLAY && ! $?SSH_DISPLAY) then
@@ -96,8 +100,13 @@ setenv PAGER "less -m -e -i"
 # set the prompt
 if (! $?prompt) then
     if ($?tcsh) then
-        if ($TERM == xterm) then
-            set prompt='%{\e]0\;[%m %n] \!:%~>^g%}[%m %n] \!:%B%~%b%# '
+        if ($TERM == xterm || $TERM == screen) then
+            if ($?WINDOW) then 
+                setenv WINDOW_NUM ":$WINDOW"
+            else
+                setenv WINDOW_NUM 
+            endif
+            set prompt='%{\e]0\;[%m'$WINDOW_NUM' %n] \!:%~>^g%}[%m'$WINDOW_NUM' %n] \!:%B%~%b%# '
         else
             set prompt='[%m %n] \!:%B%~%b%# '
         endif

@@ -35,6 +35,9 @@ endif
 if (-x ${HOME}/software/bin/mcal) then
     alias cal			mcal
 endif
+if (-X ${HOME}/software/bin/mscreen) then
+    alias screen		mscreen
+endif
 
 if (-e /bin/umask) then
     alias umask			"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"

@@ -96,8 +96,8 @@ endif
 
 if ($?TERM) then
     if ($?tcsh) then
-        if ($TERM == xterm) then
-            set prompt='%{\e]0\;[%n %m] \!:%c03>^g%}[%n %m] \!:%B%c03%b%# '
+        if ($TERM == xterm || $TERM == screen) then
+            set prompt='%{\e]0\;[%n:'$WINDOW_NUM' %m] \!:%c03>^g%}[%n'$WINDOW_NUM' %m] \!:%B%c03%b%# '
         else
             set prompt='[%n %m] \!:%B%c03%b%# '
         endif
