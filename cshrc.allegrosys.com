@@ -41,7 +41,10 @@ endif
 
 setenv	CVSROOT	/asi/db/cvsroot
 setenv	CVSREAD	1
+setenv	PYTHONPATH	/asi/local/bin
+if ($?LESSOPEN) then
+    unsetenv LESSOPEN
+endif
 
 set ellipsis
 stty erase '^?'
-setenv PYTHONPATH /asi/local/bin
