@@ -23,14 +23,14 @@ endif
 cstat "."
 
 # initialize path variables for all prefixed subsystem
-foreach prefix (/usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
+foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
     setenv C_PATH	        "${C_PATH} ${prefix}/bin ${prefix}/sbin"
 
     setenv C_MANPATH	        "${C_MANPATH} ${prefix}/man"
 
     setenv C_LD_LIBRARY_PATH    "${C_LD_LIBRARY_PATH} ${prefix}/lib"
 
-    setenv C_INCLUDE	        "${C_INCLUDE} ${prefix}/include"
+#    setenv C_INCLUDE	        "${C_INCLUDE} ${prefix}/include"
     cstat "."
 end
 
@@ -38,7 +38,7 @@ end
 setenv C_PATH		        "${C_PATH} /usr/bin /bin /etc /sbin /usr/sbin /usr/ucb /usr/etc /usr/bin/X11"
 setenv C_MANPATH	        "${C_MANPATH} /usr/man /usr/share/man"
 setenv C_LD_LIBRARY_PATH        "${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11"
-setenv C_INCLUDE	        "${C_INCLUDE} /usr/include /usr/include/X11"
+#setenv C_INCLUDE	        "${C_INCLUDE} /usr/include /usr/include/X11"
 cstat "."
 
 if ($OSTYPE == solaris) then
@@ -69,7 +69,7 @@ end
 foreach include (${C_INCLUDE})
     if (-d ${include}) then
         setenv INCLUDE		"${INCLUDE}:${include}"
-#        setenv GCC_IFLAG	"${GCC_IFLAG} -I${include}"
+        setenv GCC_IFLAG	"${GCC_IFLAG} -I${include}"
     endif
 end
 

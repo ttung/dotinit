@@ -1,1 +1,3 @@
 setenv NOMOTD
+setenv RSYNC_RSH ssh
+setenv CVS_RSH ssh
