@@ -46,7 +46,7 @@ if ($?INTERACTIVE) then
         endif
 
         set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
-        alias periodic	'if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
+        alias periodic	'unsetenv DISPLAY && if (-r '${HOME}'/tmp/'${USER}'-DISPLAY) setenv DISPLAY `cat '${HOME}'/tmp/'${USER}'-DISPLAY`'
         periodic
     endif
 endif
