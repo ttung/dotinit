@@ -20,7 +20,9 @@ if (! $?EMACS ) then
 	set noglob
 	    eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
 	unset noglob
-
+	set noglob
+            setenv TERMCAP ${TERMCAP}'pa#64:Co#8:AF=\E[3%dm:AB=\E[4%dm:op=\E[39;49m:'
+	unset noglob
 	mesg y
 endif
 
