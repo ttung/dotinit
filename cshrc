@@ -1,4 +1,10 @@
-set CP_VERSION="cshrc package 0.3.0"
+set CP_VERSION="cshrc package 0.3.1"
+# .cshrc.aliases 1.1
+# .cshrc.cso.uiuc.edu 1.1
+# .cshrc.ews.uiuc.edu 1.1
+# .cshrc.interactive 1.1
+# .cshrc.paths 1.1
+# .cshrc.soda.csua.berkeley.edu 1.1
 
 if (! $?WHOAMI) then
         if (-x /usr/ucb/whoami) then
@@ -67,9 +73,6 @@ endif
 
 # Figure out the current host name and YP domain name
 if (! $?HOST) then
-        setenv HOST ""
-endif
-if ("$HOST" == "") then
         if (-x /usr/bin/hostname || -x /bin/hostname) then
                 setenv HOST `hostname | sed 's/\..*//'`
         else
@@ -138,10 +141,12 @@ setenv ENSCRIPT -G
 # shell stuff
 
 # set the prompt
-if ($TERM == xterm) then
+if ($?TERM) then
+    if ($TERM == xterm) then
 	set prompt='%{\e]2\;%n@%M^g%}[%n %m] \!:%B%~%b%# '
-else
+    else
 	set prompt='[%n %m] \!:%B%~%b%# '
+    endif
 endif
 
 set notify pushdtohome ignoreeof notify noclobber listjobs
