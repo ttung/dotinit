@@ -19,7 +19,7 @@ set dotdir = ${HOME}/.files
 if ( $SYS != "" ) then
     set osenv=${dotdir}/${SYS}/cshenv
     if ( -f $osenv ) source $osenv
-    pstat "."
+    cstat "."
 
     # Some of these variables are set up by sub-scripts.
     if ( $?SETPATHS ) then
@@ -153,4 +153,4 @@ setenv NOMOTD
 setenv NOFRM
 setenv NOQUOTACHECK
 
-pstat "done\n"
+cstat "done\n"
