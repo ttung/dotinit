@@ -1,5 +1,6 @@
-set cp_version=0.7.15
+set cp_version=0.8.0
 # .cshrc.aliases 1.16
+# .cshrc.complete 1.1
 # .cshrc.crhc 1.6
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
@@ -117,6 +118,14 @@ if ($?HOME) then
 	    source $HOME/.cshrc.aliases
     else
 	    echo WARNING: $HOME/.cshrc.aliases unavailable
+    endif
+endif
+
+if ($?HOME && $?tcsh) then
+    if (-r $HOME/.cshrc.complete) then
+	    source $HOME/.cshrc.complete
+    else
+	    echo WARNING: $HOME/.cshrc.complete unavailable
     endif
 endif
 
