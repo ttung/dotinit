@@ -31,15 +31,15 @@ if ($?HOME) then
     if (-d $HOME/software/man) then
             setenv MANPATH  "${MANPATH}:${HOME}/software/man"
     endif
-
+    
     if (-d $HOME/software/man-${MACHTYPE}-${OSTYPE}) then
             setenv MANPATH  "${MANPATH}:${HOME}/software/man-${MACHTYPE}-${OSTYPE}"
     endif
 
-	if (-d $HOME/software/include) then
+    if (-d $HOME/software/include) then
     	setenv INCLUDE	"${INCLUDE}:${HOME}/software/include"
     	setenv GCC_IFLAG "${GCC_IFLAG} -I${HOME}/software/include"
-	endif
+    endif
 
     if (-d $HOME/software/include-${MACHTYPE}-${OSTYPE}) then
             setenv INCLUDE	"${INCLUDE}:${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
