@@ -1,5 +1,35 @@
-#!/bin/sh
+#!/bin/tcsh
 cd ${HOME}
+'rm' .cshrc
+'rm' .cshrc.OCF.Berkeley.EDU
+'rm' .cshrc.aliases
+'rm' .cshrc.complete
+'rm' .cshrc.crhc
+'rm' .cshrc.cso.uiuc.edu
+'rm' .cshrc.eng.cisco.com
+'rm' .cshrc.ews.uiuc.edu
+'rm' .cshrc.interactive
+'rm' .cshrc.login
+'rm' .cshrc.logout
+'rm' .cshrc.paths
+'rm' .cshrc.soda.csua.berkeley.edu
+'rm' .emacs
+'rm' .xstart
+'rm' .dvorak
+'rm' .xsession
+'rm' .qwerty
+'rm' .fvwm2rc
+'rm' .xmodmap
+'rm' .dvorak.keysym
+'rm' .Xdefaults
+'rm' .hushlogin
+
+'rm' .aliases
+'rm' .login
+'rm' .logout
+
+'rm' .xinitrc
+
 ln -sf .init/cshrc .cshrc
 ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
 ln -sf .init/cshrc.aliases .cshrc.aliases
@@ -29,3 +59,4 @@ ln -sf .cshrc.login .login
 ln -sf .cshrc.logout .logout
 
 ln -sf .xsession .xinitrc 
+cd -
