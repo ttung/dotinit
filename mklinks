@@ -10,7 +10,7 @@ if ($user == "cwu") then
 else if ($user == "tungc") then
     set addr_user = ctung
 else
-    set addr_user = tonytung
+    set addr_user = ${USER}
 endif
 
 if (-d .init/${addr_user}-addressbook/) then
