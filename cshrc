@@ -1,10 +1,10 @@
-set cp_version=0.8.31
-# .cshrc.aliases 1.30
+set cp_version=0.8.32
+# .cshrc.aliases 1.31
 # .cshrc.complete 1.4
 # .cshrc.crhc 1.9
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive 1.25
+# .cshrc.interactive 1.26
 # .cshrc.paths 1.11
 # .cshrc.soda.csua.berkeley.edu 1.13
 
@@ -113,14 +113,6 @@ if ($?HOME) then
     endif
 endif
 
-if ($?INTERACTIVE) then
-    if (-r $HOME/.cshrc.interactive) then
-	source $HOME/.cshrc.interactive
-    else
-	echo "WARNING: cannot find $HOME/.cshrc.interactive"
-    endif
-endif
-
 if ($?HOME) then
     if (-r $HOME/.cshrc.aliases) then
 	    source $HOME/.cshrc.aliases
@@ -134,6 +126,14 @@ if ($?HOME && $?tcsh) then
 	    source $HOME/.cshrc.complete
     else
 	    echo WARNING: $HOME/.cshrc.complete unavailable
+    endif
+endif
+
+if ($?INTERACTIVE) then
+    if (-r $HOME/.cshrc.interactive) then
+	source $HOME/.cshrc.interactive
+    else
+	echo "WARNING: cannot find $HOME/.cshrc.interactive"
     endif
 endif
 
