@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.12.11
+set cp_version=0.12.12
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -7,7 +7,7 @@ endif
 
 #interactive shell?
 set echo_style=both
-if ($?prompt) then
+if ($?prompt && ! $?QUIET_CSHRC) then
     alias cstat 'echo -n \!*'
     set INTERACTIVE
     unset prompt                # we'll set it later anyway...
@@ -15,6 +15,7 @@ if ($?prompt) then
 else
     alias cstat 'echo \!* > /dev/null'
     limit coredumpsize 0
+    set prompt=${HOST}':\!> '
 endif
 
 if ($?INTERACTIVE) then
