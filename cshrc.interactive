@@ -20,6 +20,16 @@ if (! $?EMACS ) then
 	mesg y
 endif
 
+#fix ssh problems
+if (`where ssh1` != "") then
+	alias scp	scp1
+	alias ssh	ssh1
+	alias ssh-add	ssh-add1
+	alias ssh-agent	ssh-agent1
+	alias ssh-askpass	ssh-askpass1
+	alias ssh-keygen	ssh-keygen1
+endif
+
 if ($?SHLVL) then
     if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) ) then
 	    eval `ssh-agent -c`
