@@ -1,4 +1,4 @@
-set cp_version=0.5.8
+set cp_version=0.5.9
 # .cshrc.aliases 1.8
 # .cshrc.csil 1.1
 # .cshrc.cso.uiuc.edu 1.1
@@ -98,6 +98,10 @@ if (! $?YPDOMAIN) then
         if (! $?YPDOMAIN) then
                 setenv YPDOMAIN $HOST
         endif
+endif
+
+if ($?tcsh) then
+    set watch=(1 $user any)
 endif
 
 if ($?LOGHOME) then
