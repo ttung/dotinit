@@ -120,7 +120,7 @@ MenuStyle * mwm
 # mwm-style border reliefs (less deep than default fvwm) ?
 Style "*" MWMBorder
 # Maximize button does mwm-inversion thingy
-Style "*" MWMButtons
+#Style "*" MWMButtons
 
 ########################      MISCELLANEOUS STUFF     #######################
 # If you don't like the default 150 msec click delay for the complex functions
@@ -186,8 +186,7 @@ DeskTopSize 3x3
 # For echoes
 #! (ModulePath command commented out)
 #ModulePath /usr/lib/X11/fvwm
-PixmapPath /usr/local/include/X11/pixmaps/:/usr/include/X11/pixmaps/
-IconPath   /usr/include/X11/bitmaps/
+ImagePath /usr/local/include/X11/pixmaps/:/usr/include/X11/pixmaps/:/usr/include/X11/bitmaps/
 
 ############################################################################
 # Set the decoration styles and window options
@@ -238,7 +237,7 @@ Style "trn"	   Icon News.xpm
 #	Exec	"I"	exec xmh -font fixed -geometry 507x750+0+0 &
 #	Wait	"I"	xmh
 #	Desk 	"I"	0 0
-AddToFunc "InitFunction" "I" Exec xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+5+70
+AddToFunc "InitFunction" "I" Exec ssh1 -f glenlivet xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+5+70
 +              "I" Exec xclock -geometry -5-5 -digital -update 1 -bg black -fg white
 +              "I" Exec xscreensaver-command -exit
 +              "M" Exec xscreensaver -no-splash -timeout 3600
@@ -302,13 +301,12 @@ AddToFunc "set-solid-back" "I" Exec exec xsetroot -solid black
 #now define the menus - defer bindings until later
 
 AddToMenu "Applications" "Applications" Title
-+              "Ghostview" Exec exec ghostview
++              "DDTS-g" Exec exec ssh1 -f glenlivet xddts
++              "Aethereal" Exec exec aethereal
 +              "GNU Emacs" Exec exec emacs -bg black -fg white
-+              "XEmacs" Exec exec xemacs
 +              "Netscape" Exec exec netscape
++              "Ghostview" Exec exec ghostview
 +              "Adobe Acrobat" Exec exec acroread
-+              "XV" Exec exec xv
-+              "Xman" Exec exec xman
 
 # This menu is invoked as a sub-menu - it allows you to quit,
 # restart, or switch to another WM.
@@ -319,16 +317,16 @@ AddToMenu "Quit-Verify" "Really Quit Fvwm?" Title
 +              "No, Don't Quit" Nop
 
 AddToMenu "Hosts" "Hosts" Title
-+              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mally
++              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mally-lnx
++              "mary" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mary-lnx
 +              "" Nop
-+              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh glenlivet
++              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh1 glenlivet
 +              "cryptonite-lnx" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh cryptonite-lnx
 
 AddToMenu "Main" "Main" Title
++              "Xterm-g" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh1 glenlivet
 +              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on"
-+              "Big Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15
-+              "Emacs" Exec exec emacs -bg black -fg white
-+              "Netscape" Exec exec netscape
++              "Emacs-g" Exec exec ssh1 -f glenlivet emacs -bg black -fg white
 +              "" Nop
 +              "Save Screen" Exec xscreensaver-command -activate
 +              "Lock Screen" Exec xscreensaver-command -lock
@@ -339,7 +337,7 @@ AddToMenu "Main" "Main" Title
 +              "" Nop
 +              "Exit Fvwm" Popup Quit-Verify
 +              "" Nop
-+              "Restart fvwm2" Restart fvwm2
++              "Restart fvwm2" Restart
 +              "" Nop
 +              "Refresh Screen" Refresh
 
@@ -397,8 +395,8 @@ AddToFunc "window_ops_func" "C" PopUp Window-Ops2
 
 #     Button	Context Modifi 	Function
 Mouse 1		R   	A       PopUp "Main"
-Mouse 2		R    	A      	PopUp "Window-Ops"
-Mouse 3         R       A       WindowList
+Mouse 2		R    	A      	WindowList
+Mouse 3         R       A       PopUp "Window-Ops"
 #Mouse 3		R    	A      	Module "winlist" FvwmWinList transient
 
 
