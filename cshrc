@@ -1,4 +1,4 @@
-set cp_version=0.7.4
+set cp_version=0.7.5
 # .cshrc.aliases 1.13
 # .cshrc.crhc 1.4
 # .cshrc.cso.uiuc.edu 1.1
@@ -139,4 +139,4 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\033]0;[${USER} ${HOST}]:> \!-0\007"'
+if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${HOST}]:> \!-0\a"'
