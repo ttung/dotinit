@@ -11,6 +11,7 @@ cd ${HOME}
 'rm' -f .dvorak.keysym
 'rm' -f .Xdefaults
 'rm' -f .hushlogin
+'rm' -f .screenrc
 
 'rm' -f .aliases
 'rm' -f .login
@@ -18,32 +19,27 @@ cd ${HOME}
 
 'rm' -f .xinitrc
 
-if ($user == 'tonytung') then
-    if (! -l .addressbook) 'mv' -f .addressbook .init/cabb-addressbook/addressbook
-    if (! -l .addressbook-college-00-01) 'mv' -f .addressbook-college-00-01 .init/cabb-addressbook/addressbook-college-00-01
-    if (! -l .addressbook-college-95-96) 'mv' -f .addressbook-college-95-96 .init/cabb-addressbook/addressbook-college-95-96
-    if (! -l .addressbook-college-96-97) 'mv' -f .addressbook-college-96-97 .init/cabb-addressbook/addressbook-college-96-97
-    if (! -l .addressbook-college-97-98) 'mv' -f .addressbook-college-97-98 .init/cabb-addressbook/addressbook-college-97-98
-    if (! -l .addressbook-college-98-99) 'mv' -f .addressbook-college-98-99 .init/cabb-addressbook/addressbook-college-98-99
-    if (! -l .addressbook-college-99-00) 'mv' -f .addressbook-college-99-00 .init/cabb-addressbook/addressbook-college-99-00
-    if (! -l .addressbook-high-school) 'mv' -f .addressbook-high-school .init/cabb-addressbook/addressbook-high-school
-    if (! -l .addressbook-other-friends) 'mv' -f .addressbook-other-friends .init/cabb-addressbook/addressbook-other-friends
-    if (! -l .addressbook-relatives) 'mv' -f .addressbook-relatives .init/cabb-addressbook/addressbook-relatives
-    if (! -l .addressbook-work) 'mv' -f .addressbook-work .init/cabb-addressbook/addressbook-work
-    if (! -l .addressbook-01) 'mv' -f .addressbook-01 .init/cabb-addressbook/addressbook-01
+if ($user == "cwu") then
+    set addr_user = iyaowu
+else if ($user == "tungc") then
+    set addr_user = ctung
+else
+    set addr_user = tonytung
 endif
 
-ln -sf .init/cshrc .cshrc
-ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
-ln -sf .init/cshrc.aliases .cshrc.aliases
-ln -sf .init/cshrc.complete .cshrc.complete
-ln -sf .init/cshrc.crhc .cshrc.crhc
-ln -sf .init/cshrc.eng.cisco.com .cshrc.eng.cisco.com
-ln -sf .init/cshrc.interactive .cshrc.interactive
-ln -sf .init/cshrc.login .cshrc.login
-ln -sf .init/cshrc.logout .cshrc.logout
-ln -sf .init/cshrc.paths .cshrc.paths
-ln -sf .init/cshrc.soda.csua.berkeley.edu .cshrc.soda.csua.berkeley.edu
+foreach addrbook (.addressbook*[^\.][^l][^u])
+    set addrbookdest = `echo $addrbook | sed -e 's/\.\(.*\)/\1/'`
+    if (! -l $addrbook) then
+        mkdir -p .init/${addr_user}-addressbook/
+        'mv' -f $addrbook .init/${addr_user}-addressbook/${addrbookdest}
+    endif
+end
+
+foreach cshrc (.init/cshrc*)
+    set cshrcdest = `echo $cshrc | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+    ln -sf $cshrc $cshrcdest
+end
+
 ln -sf .init/emacs .emacs
 ln -sf .init/xstart .xstart
 ln -sf .init/dvorak .dvorak
@@ -54,6 +50,7 @@ ln -sf .init/xmodmap .xmodmap
 ln -sf .init/dvorak.keysym .dvorak.keysym
 ln -sf .init/Xdefaults .Xdefaults
 ln -sf .init/hushlogin .hushlogin
+ln -sf .init/screenrc .screenrc
 
 ln -sf .cshrc.aliases .aliases
 ln -sf .cshrc.login .login
@@ -61,19 +58,11 @@ ln -sf .cshrc.logout .logout
 
 ln -sf .xsession .xinitrc 
 
-if ($user == 'tonytung') then
-    ln -sf .init/cabb-addressbook/addressbook .addressbook
-    ln -sf .init/cabb-addressbook/addressbook-college-00-01 .addressbook-college-00-01
-    ln -sf .init/cabb-addressbook/addressbook-college-95-96 .addressbook-college-95-96
-    ln -sf .init/cabb-addressbook/addressbook-college-96-97 .addressbook-college-96-97
-    ln -sf .init/cabb-addressbook/addressbook-college-97-98 .addressbook-college-97-98
-    ln -sf .init/cabb-addressbook/addressbook-college-98-99 .addressbook-college-98-99
-    ln -sf .init/cabb-addressbook/addressbook-college-99-00 .addressbook-college-99-00
-    ln -sf .init/cabb-addressbook/addressbook-high-school .addressbook-high-school
-    ln -sf .init/cabb-addressbook/addressbook-other-friends .addressbook-other-friends
-    ln -sf .init/cabb-addressbook/addressbook-relatives .addressbook-relatives
-    ln -sf .init/cabb-addressbook/addressbook-work .addressbook-work
-    ln -sf .init/cabb-addressbook/addressbook-01 .addressbook-01
+if (-d .init/${addr_user}-addressbook/) then
+    foreach addrbook (.init/${addr_user}-addressbook/*)
+        set addrbookdest = `echo $addrbook | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+        ln -sf $addrbook $addrbookdest
+    end
 endif
 
 cd -
