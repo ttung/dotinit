@@ -47,7 +47,7 @@ endif
 
 if ($?USER && $?HOST) then
     alias xterm	'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
-    alias bigxterm	'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+    alias bigxterm	'xterm -font 9x15 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
 endif
 
     alias xload	xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
