@@ -1,5 +1,5 @@
-set cp_version=0.7.6
-# .cshrc.aliases 1.13
+set cp_version=0.7.7
+# .cshrc.aliases 1.14
 # .cshrc.crhc 1.5
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
@@ -90,11 +90,15 @@ endif
 
 if ($?HOME) then
     if (-r $HOME/.cshrc.paths) then
+	if (! $?SHLVL) then
 	    source $HOME/.cshrc.paths
+	else if ($SHLVL == 1) then
+	    source $HOME/.cshrc.paths
+	endif
     else
-	    echo WARNING: $HOME/.cshrc.paths unavailable, using default:
-	    set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
-	    echo "   " $path
+	echo WARNING: $HOME/.cshrc.paths unavailable, using default:
+	set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
+	echo "   " $path
     endif
 endif
 
