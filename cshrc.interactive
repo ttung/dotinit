@@ -119,6 +119,7 @@ if (! $?EDITOR) then
 endif
 setenv BLOCKSIZE K
 setenv CVS_RSH ssh
+setenv RSYNC_RSH ssh
 setenv PAGER "less -m -e -i"
 
 # shell stuff
@@ -150,6 +151,7 @@ endif
 unset autologout
 set pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
+#set complete=enhance
 set history=500
 set ignoreeof=2
 set savehist=100
