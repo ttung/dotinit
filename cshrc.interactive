@@ -21,14 +21,12 @@ if (! $?EMACS ) then
 endif
 
 #fix ssh problems
-if (`where ssh1` != "") then
-	alias scp	scp1
-	alias ssh	ssh1
-	alias ssh-add	ssh-add1
-	alias ssh-agent	ssh-agent1
-	alias ssh-askpass	ssh-askpass1
-	alias ssh-keygen	ssh-keygen1
-endif
+if (`where scp1` != "") 	alias scp		scp1
+if (`where ssh1` != "")		alias ssh		ssh1
+if (`where ssh-add1` != "")	alias ssh-add		ssh-add1
+if (`where ssh-agent1` != "")	alias ssh-agent		ssh-agent1
+if (`where ssh-askpass1` != "")	alias ssh-askpass	ssh-askpass1
+if (`where ssh-keygen1` != "")	alias ssh-keygen	ssh-keygen1
 
 if ($?SHLVL) then
     if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) ) then
