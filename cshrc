@@ -1,4 +1,5 @@
-set cp_version=0.11.12
+unalias postcmd
+set cp_version=0.11.13
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -170,4 +171,4 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm || $TERM == screen) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM}']:`pwd`> \!-0\a"'
+if ( ($?prompt) && ($TERM == xterm || $TERM == screen) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM}']:`pwd`> \!-0:q\a"'
