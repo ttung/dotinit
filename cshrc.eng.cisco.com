@@ -8,70 +8,30 @@ if ( $?NNTPSERVER == 0 ) then
 endif
 
 # initialize path variables for HOME subsystem
-if ($?SETPATHS) then
-    if (-d /asi/local/bin) then
-        setenv PATH "${PATH}:/asi/local/bin"
-    endif
+if ($?gatherpaths) then
+    set C_PATH		= (/router/bin ${C_PATH} /asi/local/bin /sw/current/solaris2bin \
+                            /usr/atria/bin /usr/local/ddts/bin)
+    set C_MANPATH	= (${C_MANPATH} /usr/atria/doc/man /sw/current/man \
+                            /usr/local/ddts/doc/man /usr/local/contrib/man)
 
-    if (-d /router/bin) then
-        setenv PATH "/router/bin:${PATH}"
-    endif
-
-    if (-d /sw/current/solaris2bin) then
-        setenv PATH "${PATH}:/sw/current/solaris2bin"
-    endif
-
-    if (-d /usr/atria/bin) then
-        setenv PATH "${PATH}:/usr/atria/bin"
-    endif
-
-    if (-d /usr/local/ddts/bin) then
-        setenv PATH "${PATH}:/usr/local/ddts/bin"
-    endif
-
-    if (-d /usr/atria/doc/man) then
-        setenv MANPATH "${MANPATH}:/usr/atria/doc/man"
-    endif
-
-    if (-d /sw/current/man) then
-        setenv MANPATH "${MANPATH}:/sw/current/man"
-    endif
-
-    if (-d /usr/local/ddts/doc/man) then
-        setenv MANPATH "${MANPATH}:/usr/local/ddts/doc/man"
-    endif
-
-    if (-d /usr/local/contrib/man) then
-        setenv MANPATH "${MANPATH}:/usr/local/contrib/man"
-    endif
-
-    if (${OSTYPE} == "linux" && -d /usr/local/sbtools/x86-linux-rh6.0/mips64-sb1sim-2.1.1) then
+    if (${OSTYPE} == "linux") then
         setenv SBTOOLS_BASE /usr/local/sbtools/x86-linux-rh6.0/mips64-sb1sim-2.1.1
     else if (${OSTYPE} == "solaris" && -d /vws/xnw/sbtools/sparc-solaris-5.6/mips64-sb1sim-2.3.1) then
         setenv SBTOOLS_BASE /vws/xnw/sbtools/sparc-solaris-5.6/mips64-sb1sim-2.3.1
     endif
 
     if ($?SBTOOLS_BASE) then
-        if (-d ${SBTOOLS_BASE}/bin) then
-            setenv PATH "${SBTOOLS_BASE}/bin/:${PATH}"
-        endif
-
-        if (-d ${SBTOOLS_BASE}/man) then
-            setenv MANPATH "${SBTOOLS_BASE}/man/:${MANPATH}"
-        endif
+        set C_PATH	= (${SBTOOLS_BASE}/bin ${C_PATH})
+        set C_MANPATH	= (${SBTOOLS_BASE}/man ${C_MANPATH})
     endif
 
-    if (-d /sw/packages/gcc/c2.95.3-p4/bin) then
-        setenv PATH ${PATH}:/sw/packages/gcc/c2.95.3-p4/bin
-    endif
-
-    if (-d /auto/macedon_tools/asi-utils) then
-        setenv PATH "${PATH}:/auto/macedon_tools/asi-utils"
-    endif
+    set C_PATH		= (${C_PATH} /sw/packages/gcc/c2.95.3-p4/bin \
+                            /auto/macedon_tools/asi-utils)
 endif
 
 cstat "."
 
+setenv CC_DISABLE_MAKE_HINTS 1
 setenv CVSROOT /vws/xel/work/CVSROOT
 setenv VIEWER emacsclient-ret
 setenv LPDEST e2-f2-4
@@ -82,11 +42,12 @@ endif
 
 alias	quake	'finger -l quake@quake.geo.berkeley.edu'
 alias	stock	'finger stocks@qotd2.cisco.com | egrep -i "^Company|^cisco|quotes" | head -3'
-alias	mito	setenv DISPLAY 171.69.39.175:0
 
 if (-x /usr/xpg4/bin/cp) alias cp '/usr/xpg4/bin/cp -i'
 if (-x /usr/xpg4/bin/mv) alias mv '/usr/xpg4/bin/mv -i'
 if (-x /usr/xpg4/bin/rm) alias rm '/usr/xpg4/bin/rm -i'
+
+unalias gmake
 
 # clearcase aliases
 alias	ct		cleartool
@@ -143,12 +104,18 @@ if ($?CLEARCASE_ROOT && $?INTERACTIVE) then
         if (-e /vob/ace/Utils) then
             cd /vob/ace
         else if (-e /vob/ios/sys) then
-            cd /vob/ios
+            cd /vob/ios/sys
         endif
     endif
     setenv PROMPT_MACHNAME "`echo $CLEARCASE_ROOT | sed -e 's/\/view\///'`"
 else
     setenv PROMPT_MACHNAME $MACHNAME
+endif
+
+if ($?TERM) then
+    if ($TERM == "xterm-color") then
+        setenv TERM xterm
+    endif
 endif
 
 if ($?TERMTYPE) then
@@ -175,8 +142,9 @@ if ($?TERMTYPE) then
 endif
 
 if ($?TERMTYPE && $?tcsh) then
-    if ($TERM == 'xterm' && -X resize && $SHLVL == 1) then
+    if ($TERMTYPE == 'xterm' && -X resize && $SHLVL == 1) then
         eval `resize`
+        set setterm
     endif
 endif
 
@@ -190,5 +158,13 @@ setenv NOFRM
 setenv NOQUOTACHECK
 
 setenv IXIA_VERSION 3.65.284
+
+cstat "."
+
+if ($?INTERACTIVE && $SHLVL == 1 && \
+    -e /sw/packages/ccache/current/bin/setup-ccache && \
+    -w /auto/ccache) then
+    source /sw/packages/ccache/current/bin/setup-ccache
+endif
 
 cstat "done\n"

@@ -1,81 +1,96 @@
-setenv PATH .
-setenv MANPATH .
-setenv LD_LIBRARY_PATH  .
-setenv INCLUDE .
-setenv CLASSPATH .
+if ($?gatherpaths) then
+    set C_PATH
+    set C_MANPATH
+    set C_LD_LIBRARY_PATH
+    set C_INCLUDE
+    set C_CLASSPATH
 
-setenv GCC_DFLAG ""
-setenv GCC_IFLAG ""
-setenv GCC_LFLAG ""
+    # initialize path variables for all prefixed subsystem
+    foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
+        set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
-# initialize path variables for HOME subsystem
-if ($?HOME) then
-    setenv C_PATH      "${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}"
+        set C_MANPATH		= (${C_MANPATH} ${prefix}/man)
 
-    setenv C_LD_LIBRARY_PATH   "${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
+        set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
 
-    setenv C_MANPATH	       "${HOME}/software/man ${HOME}/software/man-${MACHTYPE}-${OSTYPE}"
-
-    setenv C_INCLUDE	       "${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
-
-    setenv C_CLASSPATH	       "${HOME}/software/classes"
-endif
-cstat "."
-
-# initialize path variables for all prefixed subsystem
-foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
-    setenv C_PATH	        "${C_PATH} ${prefix}/bin ${prefix}/sbin"
-
-    setenv C_MANPATH	        "${C_MANPATH} ${prefix}/man"
-
-    setenv C_LD_LIBRARY_PATH    "${C_LD_LIBRARY_PATH} ${prefix}/lib"
-
-#    setenv C_INCLUDE	        "${C_INCLUDE} ${prefix}/include"
+#        set C_INCLUDE		= (${C_INCLUDE} ${prefix}/include)
+    end
     cstat "."
-end
 
-# miscellaneous paths
-setenv C_PATH		        "${C_PATH} /usr/bin /bin /etc /sbin /usr/sbin /usr/ucb /usr/etc /usr/bin/X11"
-setenv C_MANPATH	        "${C_MANPATH} /usr/man /usr/share/man"
-setenv C_LD_LIBRARY_PATH        "${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11"
-#setenv C_INCLUDE	        "${C_INCLUDE} /usr/include /usr/include/X11"
-cstat "."
+    # miscellaneous paths
+    set C_PATH			= (${C_PATH} /usr/bin /bin /etc /sbin /usr/sbin \
+                                    /usr/ucb /usr/etc /usr/bin/X11)
+    set C_MANPATH		= (${C_MANPATH} /usr/man /usr/share/man)
+    set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11)
+#    set C_INCLUDE		= (${C_INCLUDE} /usr/include /usr/include/X11)
+    cstat "."
 
-if ($OSTYPE == solaris) then
-    setenv C_PATH	        "${C_PATH} /lang/SUNWspro/bin /opt/SUNWspro/bin /opt/SUNWdtpcv/bin"
+    if ($OSTYPE == solaris) then
+        set C_PATH		= (${C_PATH} /lang/SUNWspro/bin /opt/SUNWspro/bin /opt/SUNWdtpcv/bin)
 
-    setenv C_MANPATH            "${C_MANPATH} /lang/SUNWspro/man /opt/SUNWspro/man"
+        set C_MANPATH		= (${C_MANPATH} /lang/SUNWspro/man /opt/SUNWspro/man)
 
-    setenv C_LD_LIBRARY_PATH    "${C_LD_LIBRARY_PATH} /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib"
+        set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib)
+    endif
+    cstat "done\n"
+
+else if ($?setpaths) then
+
+    setenv PATH .
+    setenv MANPATH .
+    setenv LD_LIBRARY_PATH  .
+    setenv INCLUDE .
+    setenv CLASSPATH .
+
+    setenv GCC_DFLAG ""
+    setenv GCC_IFLAG ""
+    setenv GCC_LFLAG ""
+
+    # initialize path variables for HOME subsystem
+    if ($?HOME) then
+        set C_PATH		= (${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE} ${C_PATH})
+    
+        set C_LD_LIBRARY_PATH	= (${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE} ${C_LD_LIBRARY_PATH})
+
+        set C_MANPATH		= (${HOME}/software/man ${HOME}/software/man-${MACHTYPE}-${OSTYPE} ${C_MANPATH})
+
+        set C_INCLUDE		= (${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE} ${C_INCLUDE})
+
+        set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
+    endif
+    cstat "."
+
+    foreach bin (${C_PATH})
+        if (-d ${bin}) then
+            setenv PATH		"${PATH}:${bin}"
+        endif
+    end
+    cstat "."
+    foreach man (${C_MANPATH})
+        if (-d ${man}) then
+            setenv MANPATH		"${MANPATH}:${man}"
+        endif
+    end
+    cstat "."
+    foreach lib (${C_LD_LIBRARY_PATH})
+        if (-d ${lib}) then
+            setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:${lib}"
+            setenv GCC_LFLAG	"${GCC_LFLAG} -L${lib}"
+        endif
+    end
+    cstat "."
+    foreach include (${C_INCLUDE})
+        if (-d ${include}) then
+            setenv INCLUDE		"${INCLUDE}:${include}"
+            setenv GCC_IFLAG	"${GCC_IFLAG} -I${include}"
+        endif
+    end
+    cstat "."
+
+    setenv GCC_LFLAG		"${GCC_LFLAG} -L."
+    setenv GCC_IFLAG		"${GCC_IFLAG} -I."
+
+    unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE
+
+    cstat "done\n"
 endif
-cstat "."
-
-foreach bin (${C_PATH})
-    if (-d ${bin}) then
-        setenv PATH		"${PATH}:${bin}"
-    endif
-end
-foreach man (${C_MANPATH})
-    if (-d ${man}) then
-        setenv MANPATH		"${MANPATH}:${man}"
-    endif
-end
-foreach lib (${C_LD_LIBRARY_PATH})
-    if (-d ${lib}) then
-        setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:${lib}"
-        setenv GCC_LFLAG	"${GCC_LFLAG} -L${lib}"
-    endif
-end
-foreach include (${C_INCLUDE})
-    if (-d ${include}) then
-        setenv INCLUDE		"${INCLUDE}:${include}"
-        setenv GCC_IFLAG	"${GCC_IFLAG} -I${include}"
-    endif
-end
-
-setenv GCC_LFLAG		"${GCC_LFLAG} -L."
-setenv GCC_IFLAG		"${GCC_IFLAG} -I."
-
-unsetenv C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE
-
-cstat "done\n"

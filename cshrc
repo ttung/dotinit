@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.12.9
+set cp_version=0.12.10
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -109,27 +109,22 @@ cstat "."
 cstat "done\n"
 
 if (! $?SHLVL) then
-    set setpaths
+    set gatherpaths setpaths
 else
     if ($SHLVL == 1) then
-        set setpaths
+        set gatherpaths setpaths
     else if ($?TERMTYPE && $?INTERACTIVE) then
         if ($TERMTYPE == "screen") then
-            set setpaths
+            set gatherpaths setpaths
         endif
     endif
 endif
 
-if ($?setpaths) then
+if ($?gatherpaths) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
-            cstat "  paths..."
+            cstat "  gather-paths..."
 	    source $HOME/.cshrc.paths
-        else
-            cstat ""
-            cstat "WARNING: $HOME/.cshrc.paths unavailable, using default:"
-            set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
-            cstat "   " $path
         endif
     endif
 endif
@@ -166,10 +161,33 @@ if (-r $HOME/.cshrc.$HOST) then
     source $HOME/.cshrc.$HOST
 endif
 
+if ($?setpaths) then
+    unset gatherpaths           # go into the setting mode
+    if ($?HOME) then
+        if (-r $HOME/.cshrc.paths) then
+            cstat "  set-paths..."
+	    source $HOME/.cshrc.paths
+            set pathsset
+        endif
+    endif
+
+    if (! $?pathsset) then
+        cstat ""
+        if ($?HOME) then
+            cstat "WARNING: ${HOME}/.cshrc.paths not available, using default:"
+        else
+            cstat "WARNING: .cshrc.paths not available, using default:"
+        endif
+        set path = (${HOME}/bin /bin /usr/bin /usr/local/bin)
+        cstat "	" $path
+    endif
+    unset setpaths pathsset
+endif
+
 cstat "\n"
 
-cstat "Starting interactive login\n\n"
 if ($?INTERACTIVE) then
+    cstat "Starting interactive login\n\n"
     if (-r $HOME/.cshrc.interactive) then
 	source $HOME/.cshrc.interactive
     else
@@ -177,8 +195,6 @@ if ($?INTERACTIVE) then
 	cstat "WARNING: cannot find $HOME/.cshrc.interactive"
     endif
 endif
-
-if ($?setpaths) unset setpaths
 
 if ($?INTERACTIVE) then
     setenv INTERACTIVE_PARENT
