@@ -27,3 +27,7 @@ if ($?tcsh) then
 endif
 
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
+
+if ($?DISPLAY) then
+	setenv SSH_DISPLAY $DISPLAY
+endif
