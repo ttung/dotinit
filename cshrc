@@ -1,4 +1,4 @@
-set cp_version=0.5.16
+set cp_version=0.5.17
 # .cshrc.aliases 1.9
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
@@ -119,7 +119,7 @@ if ($?INTERACTIVE) then
     if (-r $LOGHOME/.cshrc.interactive) then
 	source $LOGHOME/.cshrc.interactive
     else
-	echo "Warning: cannot find $LOGHOME/.cshrc.interactive"
+	echo "WARNING: cannot find $LOGHOME/.cshrc.interactive"
     endif
 endif
 
