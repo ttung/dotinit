@@ -1,4 +1,4 @@
-set cp_version=0.8.37
+set cp_version=0.8.38
 # .cshrc.aliases 1.33
 # .cshrc.complete 1.4
 # .cshrc.crhc 1.9
@@ -8,7 +8,7 @@ set cp_version=0.8.37
 # .cshrc.login 1.1
 # .cshrc.logout 1.1
 # .cshrc.OCF.Berkeley.EDU 1.2
-# .cshrc.paths 1.11
+# .cshrc.paths 1.12
 # .cshrc.soda.csua.berkeley.edu 1.13
 
 if (! $?PATH) then

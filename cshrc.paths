@@ -217,6 +217,27 @@ if ($?X11) then
     endif
 endif
 
+# /opt/local
+if (-d /opt/local) then
+	if (-d /opt/local/bin) then
+		setenv PATH     "${PATH}:/opt/local/bin"
+	endif
+
+	if (-d /opt/local/lib) then
+		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/local/lib"
+                setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/local/lib"
+	endif
+
+	if (-d /opt/local/man) then
+		setenv MANPATH	"${MANPATH}:/opt/local/man"
+	endif
+
+	if (-d /opt/local/include) then
+		setenv INCLUDE     "${INCLUDE}:/opt/local/include"
+#                setenv GCC_IFLAG "${GCC_IFLAG} -I/opt/local/include"
+	endif
+endif
+
 if ($OS == SunOS) then
 	if (-d /lang/SUNWspro/bin) then
 		setenv PATH	"${PATH}:/lang/SUNWspro/bin"
