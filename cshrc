@@ -1,4 +1,4 @@
-set cp_version=0.10.0
+set cp_version=0.10.1
 
 # general initialization files
 # ----------------------------
@@ -12,7 +12,7 @@ set cp_version=0.10.0
 # site-specific initialization files
 # ----------------------------------
 # .cshrc.crhc 1.11
-# .cshrc.eng.cisco.com 1.1
+# .cshrc.eng.cisco.com 1.2
 # .cshrc.OCF.Berkeley.EDU 1.3
 # .cshrc.soda.csua.berkeley.edu 1.21
 
