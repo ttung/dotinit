@@ -31,7 +31,8 @@ termcap vt100|xterm 'op=\E[37;40m'
 
 msgminwait 5
 msgwait 30
-vbell_msg "^GBell in window %n"
+bell_msg "^GBell in window %n"
+vbell off
 
 #bindkey -d -k k1 stuff \033[11~
 #bindkey -d -k k2 stuff \033[12~
