@@ -1,77 +1,79 @@
 #default aliases
 
-        alias l                 echo \!\*\{\*\}
-        alias rm                rm -i
-        alias cp                cp -i
-	alias mv		mv -i
+    alias l		echo \!\*\{\*\}
+    alias rm		rm -i
+    alias cp		cp -i
+    alias mv		mv -i
 
 
 # custom aliases
 
-	alias ver		echo "cshrc package" $cp_version
+    alias ver		echo "cshrc package" $cp_version
 
-	# basic unix stuff
+# basic unix stuff
 
-	alias ls                ls -F
-	alias ll		ls -l
-	alias lla		ls -al
+    alias ls		ls -F
+    alias ll		ls -l
+    alias lla		ls -al
 
 if ($OSTYPE == linux) then
-	alias top		nice +2 top d 1
+    alias top		nice +2 top d 1
 else
-	alias top		nice +2 top -s 1
+    alias top		nice +2 top -s 1
 endif
 
 if (-e /bin/umask) then
-	alias umask		"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
+    alias umask	"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
 else if (-e /usr/bin/umask) then
-	alias umask		"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
+    alias umask	"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
 endif
 
-	alias more		less -m -e
-	alias less		less -m 
-	alias ps                ps -U $USER
-	alias j			jobs
-        alias make		gmake
+    alias more		less -m -e
+    alias less		less -m 
+    alias ps		ps -U $USER
+    alias j		jobs
+if (-e `which gmake`) then
+    alias make		gmake
+endif
 
 
-	# editors
+# editors
 
-	alias pico		pico -z -w
-	alias bigemacs		emacs -font 10x20 
-	alias en		emacs -nw
+    alias pico		pico -z -w
+    alias bigemacs	emacs -font 10x20 
+    alias en		emacs -nw
 
-	# x stuff
+# x stuff
 
 if ($?USER && $?HOST) then
-	alias xterm		'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
-	alias bigxterm		'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+    alias xterm	'xterm -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
+    alias bigxterm	'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '${USER}@${HOST}' -xrm "xterm*scrollBar: on"'
 endif
 
-	alias xload		xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
+    alias xload	xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
 
-	alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
-	alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
+    alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
+    alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
 
-	# conveniences
+# conveniences
 
-	alias fha		setenv DISPLAY 130.126.76.212:0.0
-	alias tempest		setenv DISPLAY tempest.crhc.uiuc.edu:0.0
-	alias motd		less -m -e /etc/motd
-	alias iyaowu		finger iyaowu@csua.berkeley.edu
-	alias f			finger
-	alias i			iyaowu
-	alias ctung		finger ctung@csua.berkeley.edu
-	alias fc		ctung
-	alias csua		ssh csua.berkeley.edu -l tonytung
-	alias uiuc		ssh students.uiuc.edu -l ytung
-	alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
-	alias ssha		'eval `ssh-agent -c`; ssh-add'
+    alias fha		setenv DISPLAY 130.126.76.212:0.0
+    alias tempest	setenv DISPLAY tempest.crhc.uiuc.edu:0.0
+    alias motd		less -m -e /etc/motd
+    alias iyaowu	finger iyaowu@csua.berkeley.edu
+    alias f		finger
+    alias i		iyaowu
+    alias ctung	finger ctung@csua.berkeley.edu
+    alias fc		ctung
+    alias csua		ssh csua.berkeley.edu -l tonytung
+    alias uiuc		ssh students.uiuc.edu -l ytung
+    alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
+    alias ssha		'eval `ssh-agent -c`; ssh-add'
 
 if ($?HOME) then
-	alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
+    alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
 endif
 
 # tperiod
-	alias periodic		myfrm -s u -s n -t -n -r
+    alias periodic	myfrm -s u -s n -t -n -r
 
