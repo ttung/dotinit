@@ -1,6 +1,8 @@
 #!/bin/tcsh
 if ($OSTYPE == solaris) then
     xmodmap .dvorak.keysym
+else if ($OSTYPE == darwin) then
+    # do nothing
 else
     ~/.xmodmap ~/.dvorak | xmodmap -
 endif
