@@ -12,7 +12,6 @@ alias ls			ls -F
 alias ll			ls -l
 alias lla			ls -al
 
-alias dirs			dirs -v
 
 # process control
 alias ups			ps -U $USER
