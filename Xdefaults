@@ -16,7 +16,8 @@ XTerm*VT100*Translations:	#override \
 	<Btn4Down>,<Btn4Up>:scroll-back(1,halfpage)\n\
 	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
 
-XTerm*scrollBar:		on
+XTerm*utmpInhibit:              true
+XTerm*scrollBar:		true
 XTerm*rightScrollBar:		true
 XTerm*scrollTtyOutput:		false
 XTerm*scrollKey:		true
@@ -24,6 +25,8 @@ XTerm*saveLines:		1024
 XTerm*cursorColor:		green
 XTerm*foreground:		white
 XTerm*background:		black
+XTerm*colorBDMode:		false
+
 
 XTerm-ansi*VT100*Translations:	#override \
         ~Shift<Key>Home:	string(\033[1~)\n\
@@ -44,15 +47,17 @@ XTerm-ansi*VT100*Translations:	#override \
 	<Btn5Down>,<Btn5Up>:scroll-forw(1,halfpage)\n\
 
 XTerm-ansi*scrollBar:		on
-XTerm-ansi*rightScrollBar:		true
-XTerm-ansi*scrollTtyOutput:		false
+XTerm-ansi*rightScrollBar:	true
+XTerm-ansi*scrollTtyOutput:	false
 XTerm-ansi*scrollKey:		true
 XTerm-ansi*saveLines:		1024
 XTerm-ansi*cursorColor:		green
 XTerm-ansi*foreground:		white
 XTerm-ansi*background:		black
+XTerm-ansi*colorBDMode:		false
 
 Xclock*update:			1
 
 Emacs*font:			-misc-fixed-medium-r-normal--14-130-75-75-c-70-*-1
 Emacs*toolBar:			off
+Emacs.verticalScrollBars:       right
