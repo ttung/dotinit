@@ -15,8 +15,8 @@ termcapinfo xterm 'kb=^?:kD=\E[3~'
 termcapinfo vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
 termcapinfo vt100 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
 
-# by default, wait half a minute before deciding a window is silent
-silencewait 30
+msgminwait 5
+msgwait 30
 
 #bindkey -d -k k1 stuff \033[11~
 #bindkey -d -k k2 stuff \033[12~
