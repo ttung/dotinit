@@ -1,10 +1,10 @@
-set cp_version=0.10.16
+set cp_version=0.10.17
 
 # general initialization files
 # ----------------------------
 # .cshrc.aliases 1.48
 # .cshrc.complete 1.5
-# .cshrc.interactive 1.46
+# .cshrc.interactive 1.47
 # .cshrc.login 1.1
 # .cshrc.logout 1.2
 # .cshrc.paths 1.14
@@ -202,4 +202,4 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${MACHNAME}]:`pwd`> \!-0\a"'
+if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${MACHNAME} ${USER}]:`pwd`> \!-0\a"'
