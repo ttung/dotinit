@@ -1,2 +1,5 @@
 alias   ps      ps -u ${USER}
 alias	lynx	lynx -cfg=${LOGHOME}/software/lynx2-8-2/lynx.cfg
+
+umask 026
+set watch=(1 any any)
