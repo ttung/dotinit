@@ -19,7 +19,7 @@ else if ($TERM == "eterm") then
     set noglob
         eval `tset -s - vt100 | sed -e '1d'`
     unset noglob
-else if ($TERM == screen || $?EMACS) then
+else if ( ($TERM == screen && $SHLVL != 1) || $?EMACS) then
     # do nothing in these cases....
 else
     set noglob
@@ -61,14 +61,6 @@ endif
 if (! $?NOMOTD && -r /etc/motd) then
     more /etc/motd
     setenv NOMOTD
-endif
-
-if (-e ${HOME}/TODO && ! -z ${HOME}/TODO && ! $?EMACS) then
-    echo ""
-    echo "TODO:"
-    echo "-----"
-    echo ""
-    more ${HOME}/TODO
 endif
 
 if ($?tcsh) then
