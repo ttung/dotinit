@@ -73,7 +73,7 @@ IconFont		-adobe-helvetica-medium-r-*-*-*-120-*-*-*-*-*-*
 ########################      ICON STUFF     ##############################
 # Auto Place Icons is a nice feature, it's creates a place for your icons
 # to initially try and place themselves.
-Style "*" IconBox 5 135 80 -1
+Style "*" IconBox 190 5 -200 60
 #Style "*" IconBox 85 -5 -1 -80
 
 # If you uncomment this, and make sure that the WindowList is bound to
@@ -237,8 +237,8 @@ Style "trn"	   Icon News.xpm
 #	Exec	"I"	exec xmh -font fixed -geometry 507x750+0+0 &
 #	Wait	"I"	xmh
 #	Desk 	"I"	0 0
-AddToFunc "InitFunction" "I" Exec ssh1 -f glenlivet xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+5+70
-+              "I" Exec xclock -geometry -5-5 -digital -update 1 -bg black -fg white
+AddToFunc "InitFunction" "I" Exec ssh -q -f skoda xload -bg black -fg white -hl green -update 1 -nolabel -geometry 75x50+95+5
++              "I" Exec xclock -geometry -5+5 -digital -update 1 -bg black -fg white
 +              "I" Exec xscreensaver-command -exit
 +              "M" Exec xscreensaver -no-splash -timeout 3600
 
@@ -301,7 +301,6 @@ AddToFunc "set-solid-back" "I" Exec exec xsetroot -solid black
 #now define the menus - defer bindings until later
 
 AddToMenu "Applications" "Applications" Title
-+              "DDTS-g" Exec exec ssh1 -f glenlivet xddts
 +              "Aethereal" Exec exec aethereal
 +              "GNU Emacs" Exec exec emacs -bg black -fg white
 +              "Netscape" Exec exec netscape
@@ -317,16 +316,20 @@ AddToMenu "Quit-Verify" "Really Quit Fvwm?" Title
 +              "No, Don't Quit" Nop
 
 AddToMenu "Hosts" "Hosts" Title
-+              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mally-lnx
-+              "mary" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh mary-lnx
++              "skoda" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh skoda
++              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh glenlivet
++              "yugo" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh yugo
 +              "" Nop
-+              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh1 glenlivet
++              "ptooie" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -geometry 82x25 -e ssh ptooie
++              "needles" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh needles
++              "" Nop
 +              "cryptonite-lnx" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh cryptonite-lnx
 
 AddToMenu "Main" "Main" Title
-+              "Xterm-g" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -e ssh1 glenlivet
 +              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on"
-+              "Emacs-g" Exec exec ssh1 -f glenlivet emacs -bg black -fg white
++              "Emacs" Exec exec emacs21 -bg black -fg white
++              "DDTS" Exec exec xddts
++              "VNC Viewer" Exec exec vncviewer
 +              "" Nop
 +              "Save Screen" Exec xscreensaver-command -activate
 +              "Lock Screen" Exec xscreensaver-command -lock
@@ -423,11 +426,11 @@ Mouse 0		6	A	Iconify
 # Now the rest of the frame
 # Here I invoke my complex functions for Move-or-lower, Move-or-raise,
 # and Resize-or-Raise. 
-# Button 1 in the corner pieces, with any modifiers, gives resize or raise
+# Button 1 in the edges gives resize or raise
 Mouse 1		FS	N	Function "Resize-or-Raise"
 # Button 1 in the title, sides, or icon, w/ any modifiers, gives move or raise
-Mouse 1		FS	C	Function "Move-or-Raise"
 Mouse 1		T	A	Function "Move-or-Raise"
+Mouse 2		FS	A	Function "Move-or-Raise"
 
 # Button 1 in an icons gives move for a drag, de-iconify for a double-click,
 # nothing for a single click
@@ -437,7 +440,7 @@ Mouse 1		I	A	Function "Move-or-Iconify"
 Mouse 2		I	A	Iconify
 
 # Button 2 in the corners, sides, or title-bar gives the window ops menu
-Mouse 2		FST	A	Function "window_ops_func"
+Mouse 2		T	A	Function "window_ops_func"
 # Button 3 anywhere in the decoration (except the title-bar buttons)
 # does a raise-lower
 Mouse 3		TSIF	A	RaiseLower
