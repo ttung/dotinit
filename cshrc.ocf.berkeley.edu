@@ -8,5 +8,6 @@ set watch= (1 \
 umask 066
 
 setenv EDITOR	"emacs-nw"
+setenv NOFRM
 
 pstat "done\n"
