@@ -1,4 +1,4 @@
-set cp_version=0.7.7
+set cp_version=0.7.8
 # .cshrc.aliases 1.14
 # .cshrc.crhc 1.5
 # .cshrc.cso.uiuc.edu 1.1
@@ -7,7 +7,9 @@ set cp_version=0.7.7
 # .cshrc.paths 1.9
 # .cshrc.soda.csua.berkeley.edu 1.8
 
-set path = (/bin /usr/bin)
+if (! $?PATH) then
+    set path = (/bin /usr/bin)
+endif
 
 #interactive shell?
 if (! $?INTERACTIVE) then
