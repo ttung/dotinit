@@ -1,4 +1,4 @@
-set cp_version=0.6.0
+set cp_version=0.6.1
 # .cshrc.aliases 1.11
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
@@ -43,6 +43,7 @@ if (! $?INTERACTIVE) then
 endif
 
 if (! $?ARCH) then
+    if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
                 setenv ARCH `arch | sed 's/\//-/'`
         else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
@@ -52,6 +53,17 @@ if (! $?ARCH) then
         else
                 setenv ARCH UNKNOWN
         endif
+    else
+        if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
+                setenv ARCH `arch`
+        else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
+                setenv ARCH `mach`
+        else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+                setenv ARCH `uname -m`
+        else
+                setenv ARCH UNKNOWN
+        endif
+    endif
 endif
 
 if (! $?OS) then
@@ -62,11 +74,19 @@ endif
 
 # Figure out the current host name and YP domain name
 if (! $?HOST) then
+    if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
                 setenv HOST `hostname | sed 's/\..*//'`
         else
                 setenv HOST `uname -n | sed 's/\..*//'`
         endif
+    else
+        if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
+                setenv HOST `hostname`
+        else
+                setenv HOST `uname -n`
+        endif
+    endif
 endif
 
 if (! $?YPDOMAIN) then
