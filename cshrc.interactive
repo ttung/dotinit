@@ -60,7 +60,7 @@ if ($?TERM) then
     endif
 endif
 
-set notify pushdtohome ignoreeof notify noclobber listjobs
+set notify pushdtohome ignoreeof notify noclobber listjobs autolist
 unset autologout
 set history=500
 set savehist=100
