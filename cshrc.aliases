@@ -80,6 +80,7 @@ endif
 if ($?HOME) then
     alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
 endif
+    alias quake 'finger -l quake@quake.geo.berkeley.edu'
 
 # tperiod
     alias periodic	myfrm -s u -s n -t -n -r

@@ -1,8 +1,8 @@
-set cp_version=0.10.1
+set cp_version=0.10.2
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.43
+# .cshrc.aliases 1.44
 # .cshrc.complete 1.4
 # .cshrc.interactive 1.36
 # .cshrc.login 1.1
@@ -12,7 +12,7 @@ set cp_version=0.10.1
 # site-specific initialization files
 # ----------------------------------
 # .cshrc.crhc 1.11
-# .cshrc.eng.cisco.com 1.2
+# .cshrc.eng.cisco.com 1.3
 # .cshrc.OCF.Berkeley.EDU 1.3
 # .cshrc.soda.csua.berkeley.edu 1.21
 
