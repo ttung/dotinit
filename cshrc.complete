@@ -17,9 +17,9 @@ complete 	find \
 					'n/{-exec,-ok}/c/' \
 					'n/*/f/'
 
-complete	ghostview	'p/*/f:*.ps/'
+complete	ghostview	'p/*/f:*.{ps,eps}/'
 complete	gunzip		'p/*/f:*.{gz,Z,tgz,taz}/'
-complete	gv		'p/*/f:*.ps/'
+complete	gv		'p/*/f:*.{ps,eps}/'
 complete	gzip		'n/-d/f:*.{gz,Z,tgz,taz}/' 'n/*/f:^*.{gz,Z,tgz,taz}/'
 complete	pico		'n/*/f:^*.[oa]/'
 complete	pushd		'p/1/d/'

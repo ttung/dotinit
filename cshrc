@@ -1,6 +1,6 @@
-set cp_version=0.8.20
+set cp_version=0.8.21
 # .cshrc.aliases 1.27
-# .cshrc.complete 1.2
+# .cshrc.complete 1.3
 # .cshrc.crhc 1.6
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
