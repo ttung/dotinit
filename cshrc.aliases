@@ -22,7 +22,7 @@ endif
 	alias more		less -m -e
 	alias less		less -m 
 	alias ps                ps -U $USER
-#	alias which		where
+	alias j			jobs
 
 	# editors
 
