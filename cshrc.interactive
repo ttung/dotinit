@@ -8,8 +8,6 @@ rm -f ~/.saves-* >& /dev/null
 alias rm $rmalias
 unset rmalias
 
-stty erase '^?' kill '^U' intr '^C'
-
 # set the term if it hasn't already been set, or if it was set to dumb
 if (! $?TERM) then
     set setterm
@@ -48,7 +46,7 @@ else
     set mesgy
 endif
 
-if ($?mesgy) then
+if (! $?NOMESG && $?mesgy) then
     mesg y
     unset mesgy
 endif
@@ -71,6 +69,8 @@ if ($?tcsh && ! $?NO_SSH_AGENT) then
         set ssh_agent_started
     endif
 endif
+
+stty erase '^?' kill '^U' intr '^C'
 
 if ($?tcsh) then
     bindkey	"^[[1~"	beginning-of-line		# home
@@ -142,9 +142,10 @@ if (! $?prompt) then
             set prompt='[%m'${WINDOW_NUM:q}']:%B%~%b%# '
         endif
     else
-        set prompt='[\!] '
+        set prompt=${HOST}':\!> '
     endif
 endif
+unset promptchars
 
 if (! $?watch) then
     set watch=(1 $user any)
@@ -153,7 +154,6 @@ endif
 unset autologout
 set pushdtohome notify noclobber listjobs autolist
 set cdpath=${HOME}
-#set complete=enhance
 set history=500
 set ignoreeof=2
 set savehist=(100 merge)
