@@ -18,7 +18,20 @@ cd ${HOME}
 
 'rm' -f .xinitrc
 
-'rm' -f .addressbook*
+if ($user == 'tonytung') then
+    if (! -l .addressbook) 'mv' -f .addressbook .init/cabb-addressbook/addressbook
+    if (! -l .addressbook-college-00-01) 'mv' -f .addressbook-college-00-01 .init/cabb-addressbook/addressbook-college-00-01
+    if (! -l .addressbook-college-95-96) 'mv' -f .addressbook-college-95-96 .init/cabb-addressbook/addressbook-college-95-96
+    if (! -l .addressbook-college-96-97) 'mv' -f .addressbook-college-96-97 .init/cabb-addressbook/addressbook-college-96-97
+    if (! -l .addressbook-college-97-98) 'mv' -f .addressbook-college-97-98 .init/cabb-addressbook/addressbook-college-97-98
+    if (! -l .addressbook-college-98-99) 'mv' -f .addressbook-college-98-99 .init/cabb-addressbook/addressbook-college-98-99
+    if (! -l .addressbook-college-99-00) 'mv' -f .addressbook-college-99-00 .init/cabb-addressbook/addressbook-college-99-00
+    if (! -l .addressbook-high-school) 'mv' -f .addressbook-high-school .init/cabb-addressbook/addressbook-high-school
+    if (! -l .addressbook-other-friends) 'mv' -f .addressbook-other-friends .init/cabb-addressbook/addressbook-other-friends
+    if (! -l .addressbook-relatives) 'mv' -f .addressbook-relatives .init/cabb-addressbook/addressbook-relatives
+    if (! -l .addressbook-work) 'mv' -f .addressbook-work .init/cabb-addressbook/addressbook-work
+    if (! -l .addressbook-01) 'mv' -f .addressbook-01 .init/cabb-addressbook/addressbook-01
+endif
 
 ln -sf .init/cshrc .cshrc
 ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
