@@ -1,0 +1,10 @@
+if ($?SHLVL) then
+    if ($SHLVL == 1) then
+        if ($?SSH2_AGENT_PID) then
+            kill ${SSH2_AGENT_PID}
+            rm -Rf ${SSH2_AUTH_SOCK}
+        else if ($?SSH_AGENT_PID) then
+            eval `ssh-agent -k`
+        endif
+    endif
+endif
