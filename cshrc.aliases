@@ -49,3 +49,4 @@ endif
 	alias ctung		finger ctung@csua.berkeley.edu
 	alias fc		ctung
 	alias csua		ssh csua.berkeley.edu -l tonytung
+	alias uiuc		ssh students.uiuc.edu -l ytung
