@@ -1,4 +1,4 @@
-set cp_version=0.4.5
+set cp_version=0.4.6
 # .cshrc.aliases 1.3
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.3
@@ -127,12 +127,12 @@ endif
 
 
 # do host dependent initialization
-if ($?YPDOMAIN && $?INTERACTIVE) then
+if ($?YPDOMAIN) then
         if ("$YPDOMAIN" != "$HOST" && -r $LOGHOME/.cshrc.$YPDOMAIN) then
                 source $LOGHOME/.cshrc.$YPDOMAIN
         endif
 endif
-if (-r $LOGHOME/.cshrc.$HOST && $?INTERACTIVE) then
+if (-r $LOGHOME/.cshrc.$HOST) then
         source $LOGHOME/.cshrc.$HOST
 endif
 
