@@ -56,7 +56,9 @@ if ($?SETPATHS) then
 endif
 
 setenv CVSROOT /wbu-sw/dev/synergy
-setenv VIEWER emacsclient
+setenv VIEWER emacsclient-ret
+setenv LPDEST e2-f2-4
+setenv PRINTER e2-f2-4
 if ($OS == "SunOS") then
     setenv TERMINFO ${HOME}/.terminfo
 endif
@@ -117,6 +119,19 @@ if ($?tcsh) then
     complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel pwv setview )/'
     complete	ssh			'p/1/( cryptonite-lnx ptooie needles dundee )/' 
 endif
+
+if ($?TERM) then
+    if ($?tcsh) then
+        if ($TERM == xterm) then
+            set prompt='%{\e]0\;[%n %m] \!:%c03>^g%}[%n %m] \!:%B%c03%b%# '
+        else
+            set prompt='[%n %m] \!:%B%c03%b%# '
+        endif
+    else
+        set prompt='[\!] '
+    endif
+endif
+set ellipsis
 
 unset SYS
 unset dotdir
