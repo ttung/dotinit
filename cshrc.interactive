@@ -55,7 +55,7 @@ endif
 
 if ($?TERMCAP && $TERMTYPE != screen) then
     set noglob
-        setenv TERMCAP ${TERMCAP}'Co#8:pa#64:op=\E[37;40m:AF=\E[3%dm:AB=\E[4%dm:ut:'
+        setenv TERMCAP "${TERMCAP}"'Co#8:pa#64:op=\E[37;40m:AF=\E[3%dm:AB=\E[4%dm:ut:'
         # for systems with terminfo, add 'colors#8, pairs#64, op=\E[37;40m, setaf=\E[3%p1%dm, setab=\E[4%p1%dm,' to the info file.  see terminfo(4), infocmp(1), and tic(1) for information on how this can be done.
     unset noglob
 endif
@@ -154,7 +154,7 @@ set cdpath=${HOME}
 #set complete=enhance
 set history=500
 set ignoreeof=2
-set savehist=100
+set savehist=(100 merge)
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
 
@@ -165,4 +165,3 @@ endif
 if ($?MAIL) then
     set mail=(60 $MAIL)
 endif
-
