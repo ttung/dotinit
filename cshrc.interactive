@@ -51,10 +51,12 @@ endif
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
 
 echo ""
-frm -s n -s u -t -n
+if (-e `which frm`) then
+    frm -s n -s u -t -n
+endif
 
 if ($?DISPLAY) then
-	setenv SSH_DISPLAY $DISPLAY
+    setenv SSH_DISPLAY $DISPLAY
 endif
 
 # application setup
