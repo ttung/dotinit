@@ -1,4 +1,4 @@
-set cp_version=0.9.28
+set cp_version=0.9.29
 
 # general initialization files
 # ----------------------------
@@ -21,15 +21,17 @@ if (! $?PATH) then
 endif
 
 #interactive shell?
-if (! $?INTERACTIVE) then
-    if ($?prompt) then
-	echo "cshrc package" $cp_version
-        set INTERACTIVE
-    else
-	limit coredumpsize 0
-    endif
+if ($?prompt) then
+    echo "cshrc package" $cp_version
+    set INTERACTIVE
+else
+    limit coredumpsize 0
 endif
 
+if ($?INTERACTIVE) then
+    echo -n Initializing
+    echo -n "" arch
+endif
 if (! $?ARCH) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
@@ -69,6 +71,9 @@ if (! $?OSTYPE) then
 endif
 
 # Figure out the current host name and YP domain name
+if ($?INTERACTIVE) then
+    echo -n "" hostname
+endif
 if (! $?HOST) then
     if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
         setenv HOST `hostname`
@@ -77,12 +82,18 @@ if (! $?HOST) then
     endif
 endif
 
+if ($?INTERACTIVE) then
+    echo -n "" machname
+endif
 if (! $?MACHNAME) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         setenv MACHNAME `echo $HOST | sed 's/\..*//'`
     endif
 endif
 
+if ($?INTERACTIVE) then
+    echo -n "" domain
+endif
 if (! $?YPDOMAIN) then
     if (-x /bin/domainname) then
         setenv YPDOMAIN `domainname`
@@ -116,9 +127,13 @@ endif
 if ($?SETPATHS) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
+            if ($?INTERACTIVE) then
+                echo -n "" paths
+            endif
 	    source $HOME/.cshrc.paths
         else
-            echo WARNING: $HOME/.cshrc.paths unavailable, using default:
+            echo ""
+            echo "WARNING: $HOME/.cshrc.paths unavailable, using default:"
             set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
             echo "   " $path
         endif
@@ -127,24 +142,34 @@ endif
 
 if ($?HOME) then
     if (-r $HOME/.cshrc.aliases) then
+        if ($?INTERACTIVE) then
+            echo -n "" aliases
+        endif
         source $HOME/.cshrc.aliases
     else
-        echo WARNING: $HOME/.cshrc.aliases unavailable
+        echo ""
+        echo "WARNING: $HOME/.cshrc.aliases unavailable"
     endif
 endif
 
 if ($?HOME && $?tcsh) then
     if (-r $HOME/.cshrc.complete) then
+        if ($?INTERACTIVE) then
+            echo -n "" complete
+        endif
         source $HOME/.cshrc.complete
     else
-        echo WARNING: $HOME/.cshrc.complete unavailable
+        echo ""
+        echo "WARNING: $HOME/.cshrc.complete unavailable"
     endif
 endif
 
 if ($?INTERACTIVE) then
+    echo "" interactive
     if (-r $HOME/.cshrc.interactive) then
 	source $HOME/.cshrc.interactive
     else
+        echo ""
 	echo "WARNING: cannot find $HOME/.cshrc.interactive"
     endif
 endif
