@@ -44,7 +44,7 @@ setenv BLOCKSIZE K
 if ($?TERM) then
     if ($?tcsh) then
 	if ($TERM == xterm) then
-	    set prompt='%{\e]2\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%~%b%# '
+	    set prompt='%{\e]0\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%~%b%# '
 	else
 	    set prompt='[%n %m] \!:%B%~%b%# '
     	endif
