@@ -1,25 +1,5 @@
 #!/bin/tcsh
 cd ${HOME}
-set nonomatch
-'rm' -f .cshrc*
-unset nonomatch
-'rm' -f .emacs
-'rm' -f .xstart
-'rm' -f .dvorak
-'rm' -f .xsession
-'rm' -f .qwerty
-'rm' -f .fvwm2rc
-'rm' -f .xmodmap
-'rm' -f .dvorak.keysym
-'rm' -f .Xdefaults
-'rm' -f .hushlogin
-'rm' -f .screenrc
-
-'rm' -f .aliases
-'rm' -f .login
-'rm' -f .logout
-
-'rm' -f .xinitrc
 
 if ($user == "cwu") then
     set addr_user = iyaowu
