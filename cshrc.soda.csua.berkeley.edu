@@ -6,19 +6,7 @@ set watch= (1 \
 	braden any \
 	ngjeff any \
 	mhchu any \
-	$user any)
-
-if ($user == iyaowu) then
-    set watch= (1 \
-            tonytung any \
-            ctung any \
-            ihsuan any \
-            reblee any \
-            braden any \
-            ngjeff any \
-            mhchu any \
-            $user any)
-endif    
+	tonytung any)
 
 umask 066
 
@@ -34,9 +22,12 @@ if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
     alias	skey	'key `keyinfo`'
     alias	skeyi	'key `keyinfo iyaowu`'
-    alias	i	finger iyaowu
-    alias	fc	finger ctung
+    alias	fc	finger iyaowu
+    alias	fy	finger ctung
     alias	mw	'motdwatch -u "beep; diff -b -B -C 3"'
+    complete	ssh	'p/1/(coke seltzer beer linux rum martini ocf.berkeley.edu chaos.crhc.uiuc.edu alumni.eecs.berkeley.edu willers.employees.org)/'
+    complete	finger	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
+    complete	f	'p/1/(iyaowu tonytung ctung reblee ihsuan braden ngjeff mhchu kwhung)/'
 
     pstat "."
 endif
