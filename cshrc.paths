@@ -46,7 +46,7 @@ if ($OSTYPE == solaris) then
 
     setenv C_MANPATH            "${C_MANPATH} /lang/SUNWspro/man /opt/SUNWspro/man"
 
-    setenv C_LD_LIBRARY_PATH    "${C_LD_LIBRARY_PATH /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib"
+    setenv C_LD_LIBRARY_PATH    "${C_LD_LIBRARY_PATH} /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib"
 endif
 cstat "."
 
