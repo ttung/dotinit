@@ -1,4 +1,4 @@
-set cp_version=0.7.1
+set cp_version=0.7.2
 # .cshrc.aliases 1.13
 # .cshrc.crhc 1.4
 # .cshrc.cso.uiuc.edu 1.1
@@ -137,4 +137,6 @@ if ($?INTERACTIVE) then
 endif
 
 #this must be at the bottom!
+if (! $?TERM) exit
+
 if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\033]0;[${USER} ${HOST}]:> \!-0\007"'
