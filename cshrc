@@ -1,10 +1,10 @@
-set cp_version=0.9.16
+set cp_version=0.9.17
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.40
+# .cshrc.aliases 1.41
 # .cshrc.complete 1.4
-# .cshrc.interactive 1.33
+# .cshrc.interactive 1.34
 # .cshrc.login 1.1
 # .cshrc.logout 1.1
 # .cshrc.paths 1.13
