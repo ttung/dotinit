@@ -9,3 +9,5 @@ setenv CVSROOT	/home/titan/CVSROOT
 if ($OSTYPE == "hpux") then
    setenv PATH "${PATH}:/home/titan/rational/releases/DeveloperTools.5.2/hppa_hpux/bin"
 endif
+
+setenv	PRINTER	pssouth
