@@ -1,34 +1,13 @@
-set cp_version=0.6.6
+set cp_version=0.6.7
 # .cshrc.aliases 1.12
-# .cshrc.crhc 1.3
+# .cshrc.crhc 1.4
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.5
-# .cshrc.paths 1.6
+# .cshrc.paths 1.7
 # .cshrc.soda.csua.berkeley.edu 1.7
 
 set path = (/bin /usr/bin)
-
-if (! $?WHOAMI) then
-        if (-x /usr/ucb/whoami) then
-                set WHOAMI = `/usr/ucb/whoami`
-        else
-                set WHOAMI = `whoami`
-        endif
-endif
-
-if (! $?LOGNAME) then
-        if ($?user) then
-                setenv LOGNAME $user
-        else
-                setenv LOGNAME $WHOAMI
-        endif
-endif
-
-setenv LOGHOME ~$LOGNAME
-if (! $?HOME) then
-        setenv HOME $LOGHOME
-endif
 
 #interactive shell?
 if (! $?INTERACTIVE) then
@@ -96,8 +75,8 @@ if (! $?YPDOMAIN) then
                 setenv YPDOMAIN `cat /etc/ypdomainname`
                 if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
         endif
-        if (! $?YPDOMAIN && -r $LOGHOME/.domainname) then
-                setenv YPDOMAIN `cat $LOGHOME/.domainname`
+        if (! $?YPDOMAIN && -r $HOME/.domainname) then
+                setenv YPDOMAIN `cat $HOME/.domainname`
                 if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
         endif
         if (! $?YPDOMAIN) then
@@ -109,41 +88,41 @@ if ($?tcsh) then
     set watch=(1 $user any)
 endif
 
-if ($?LOGHOME) then
-    if (-r $LOGHOME/.cshrc.paths) then
-	    source $LOGHOME/.cshrc.paths
+if ($?HOME) then
+    if (-r $HOME/.cshrc.paths) then
+	    source $HOME/.cshrc.paths
     else
-	    echo WARNING: $LOGHOME/.cshrc.paths unavailable, using default:
-	    set path = ($LOGHOME/bin /bin /usr/bin /usr/local/bin)
+	    echo WARNING: $HOME/.cshrc.paths unavailable, using default:
+	    set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
 	    echo "   " $path
     endif
 endif
 
 if ($?INTERACTIVE) then
-    if (-r $LOGHOME/.cshrc.interactive) then
-	source $LOGHOME/.cshrc.interactive
+    if (-r $HOME/.cshrc.interactive) then
+	source $HOME/.cshrc.interactive
     else
-	echo "WARNING: cannot find $LOGHOME/.cshrc.interactive"
+	echo "WARNING: cannot find $HOME/.cshrc.interactive"
     endif
 endif
 
-if ($?LOGHOME) then
-    if (-r $LOGHOME/.cshrc.aliases) then
-	    source $LOGHOME/.cshrc.aliases
+if ($?HOME) then
+    if (-r $HOME/.cshrc.aliases) then
+	    source $HOME/.cshrc.aliases
     else
-	    echo WARNING: $LOGHOME/.cshrc.aliases unavailable
+	    echo WARNING: $HOME/.cshrc.aliases unavailable
     endif
 endif
 
 
 # do host dependent initialization
 if ($?YPDOMAIN) then
-        if ("$YPDOMAIN" != "$HOST" && -r $LOGHOME/.cshrc.$YPDOMAIN) then
-                source $LOGHOME/.cshrc.$YPDOMAIN
+        if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
+                source $HOME/.cshrc.$YPDOMAIN
         endif
 endif
-if (-r $LOGHOME/.cshrc.$HOST) then
-        source $LOGHOME/.cshrc.$HOST
+if (-r $HOME/.cshrc.$HOST) then
+        source $HOME/.cshrc.$HOST
 endif
 
 if ($?MAIL) then

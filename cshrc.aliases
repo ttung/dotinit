@@ -21,7 +21,7 @@ else if (-e /usr/bin/umask) then
 endif
 	alias more		less -m -e
 	alias less		less -m 
-	alias ps                ps -U $WHOAMI
+	alias ps                ps -U $USER
 #	alias which		where
 
 
@@ -34,8 +34,8 @@ endif
 
 	# x stuff
 
-	alias xterm		'xterm -bg black -fg white -cr green -sl 1024 -T '$WHOAMI'@`hostname` -xrm "xterm*scrollBar: on"'
-	alias bigxterm		'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '$WHOAMI'@`hostname` -xrm "xterm*scrollBar: on"'
+	alias xterm		'xterm -bg black -fg white -cr green -sl 1024 -T '$USER'@`hostname` -xrm "xterm*scrollBar: on"'
+	alias bigxterm		'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '$USER'@`hostname` -xrm "xterm*scrollBar: on"'
 	alias xload		xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
 
 	alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -

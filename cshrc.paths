@@ -8,41 +8,41 @@ setenv GCC_IFLAG "-I."
 setenv GCC_LFLAG "-L."
 
 # initialize path variables for HOME subsystem
-if ($?LOGHOME) then
-        if (-d $LOGHOME/software/bin) then
-                setenv PATH     "${PATH}:${LOGHOME}/software/bin"
+if ($?HOME) then
+        if (-d $HOME/software/bin) then
+                setenv PATH     "${PATH}:${HOME}/software/bin"
         endif
 
-        if (-d $LOGHOME/software/bin-${MACHTYPE}-${OSTYPE}) then
-                setenv PATH     "${PATH}:${LOGHOME}/software/bin-${MACHTYPE}-${OSTYPE}"
+        if (-d $HOME/software/bin-${MACHTYPE}-${OSTYPE}) then
+                setenv PATH     "${PATH}:${HOME}/software/bin-${MACHTYPE}-${OSTYPE}"
         endif
 
-        if (-d $LOGHOME/software/lib) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib"
+        if (-d $HOME/software/lib) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib"
         endif
 
-        if (-d $LOGHOME/software/lib-${MACHTYPE}-${OSTYPE}) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib-${MACHTYPE}-${OSTYPE}"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib-${MACHTYPE}-${OSTYPE}"
+        if (-d $HOME/software/lib-${MACHTYPE}-${OSTYPE}) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
         endif
 
-        if (-d $LOGHOME/software/man) then
-                setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man"
+        if (-d $HOME/software/man) then
+                setenv MANPATH  "${MANPATH}:${HOME}/software/man"
         endif
 
-        if (-d $LOGHOME/software/man-${MACHTYPE}-${OSTYPE}) then
-                setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man-${MACHTYPE}-${OSTYPE}"
+        if (-d $HOME/software/man-${MACHTYPE}-${OSTYPE}) then
+                setenv MANPATH  "${MANPATH}:${HOME}/software/man-${MACHTYPE}-${OSTYPE}"
         endif
 
-    	if (-d $LOGHOME/software/include) then
-		setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include"
-		setenv GCC_IFLAG "${GCC_IFLAG} -I${LOGHOME}/software/include"
+    	if (-d $HOME/software/include) then
+		setenv INCLUDE	"${INCLUDE}:${HOME}/software/include"
+		setenv GCC_IFLAG "${GCC_IFLAG} -I${HOME}/software/include"
     	endif
 
-        if (-d $LOGHOME/software/include-${MACHTYPE}-${OSTYPE}) then
-                setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include-${MACHTYPE}-${OSTYPE}"
-		setenv GCC_IFLAG "${GCC_IFLAG} -L${LOGHOME}/software/include-${MACHTYPE}-${OSTYPE}"
+        if (-d $HOME/software/include-${MACHTYPE}-${OSTYPE}) then
+                setenv INCLUDE	"${INCLUDE}:${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
+		setenv GCC_IFLAG "${GCC_IFLAG} -L${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
         endif
 endif
 
