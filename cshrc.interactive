@@ -51,13 +51,31 @@ if ($?tcsh) then
     bindkey	"^[f"	forward-char
 endif
 
-if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD
+if (! $?NOMOTD && -r /etc/motd) then
+    more /etc/motd
+    setenv NOMOTD
+endif
 
-echo ""
+if (-e ${HOME}/TODO && ! -z ${HOME}/TODO && ! $?EMACS) then
+    echo ""
+    echo "TODO:"
+    echo "-----"
+    echo ""
+    more ${HOME}/TODO
+endif
+
 if ($?tcsh) then
     if (-X frm) then
+        echo ""
         frm -s n -s u -t -n
     endif
+endif
+
+echo ""
+if ($OSTYPE == solaris) then
+    quota
+else
+    quota -q
 endif
 
 if ($?DISPLAY && ! $?SSH_DISPLAY) then
@@ -71,6 +89,7 @@ if (! $?EDITOR) then
 endif
 setenv BLOCKSIZE K
 setenv CVS_RSH ssh
+setenv PAGER "less -m -e -i"
 
 # shell stuff
 
