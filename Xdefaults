@@ -6,7 +6,9 @@ XTerm*VT100*Translations:	#override \
         Shift<Key>Prior:	scroll-back(1,page) \n\
         Shift<Key>Next:		scroll-forw(1,page) \n\
         Shift<Key>Home:		scroll-back(100,page) \n\
-        Shift<Key>End:		scroll-forw(100,page) \n
+        Shift<Key>End:		scroll-forw(100,page) \n\
+        <Key>BackSpace:		string(0x7F)\n\
+        <Key>Delete:		string("\033[3~")\n
 XTerm*scrollBar:		on
 XTerm*rightScrollBar:		true
 XTerm*scrollTtyOutput:		false
