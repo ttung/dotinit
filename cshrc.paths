@@ -3,6 +3,10 @@ setenv MANPATH /usr/man
 setenv LD_LIBRARY_PATH  /lib:/usr/lib
 setenv INCLUDE .:/usr/include
 
+setenv GCC_DFLAG
+setenv GCC_IFLAG "-I."
+setenv GCC_LFLAG "-L."
+
 # initialize random usr paths
 if (-d /usr/ucb) then
 	setenv PATH	"${PATH}:/usr/ucb"
@@ -190,20 +194,29 @@ if ($?LOGHOME) then
         if (-d $LOGHOME/software/bin) then
                 setenv PATH     "${PATH}:${LOGHOME}/software/bin"
         endif
+
         if (-d $LOGHOME/software/bin-$ARCH) then
                 setenv PATH     "${PATH}:${LOGHOME}/software/bin-${ARCH}"
         endif
+
+        if (-d $LOGHOME/software/lib) then
+                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib"
+        endif
+
         if (-d $LOGHOME/software/lib-$ARCH) then
                 setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOGHOME}/software/lib-${ARCH}"
+		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOGHOME}/software/lib-${ARCH}"
         endif
+
         if (-d $LOGHOME/software/man) then
                 setenv MANPATH  "${MANPATH}:${LOGHOME}/software/man"
         endif
 
     	if (-d $LOGHOME/software/include) then
 		setenv INCLUDE	"${INCLUDE}:${LOGHOME}/software/include"
+		setenv GCC_IFLAG "${GCC_IFLAG} -I${LOGHOME}/software/include"
     	endif
-
 endif
 
 if ($OS == SunOS) then
