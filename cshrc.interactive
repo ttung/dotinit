@@ -39,12 +39,13 @@ if ($?TERMCAP) then
     unset noglob
 endif
 
-if ($?SHLVL && $?tcsh) then
-    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) && (-X ssh-agent) ) then
+if ($?tcsh) then
+    if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
 	eval `ssh-agent -c`
 	if (-r ${HOME}/.ssh/identity) then
 	    ssh-add
 	endif
+        set ssh_agent_started
     endif
 endif
 

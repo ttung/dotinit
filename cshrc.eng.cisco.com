@@ -75,18 +75,45 @@ alias	mkview	mkview -v /vob/ace -s /vws/xel
 alias	tagit	ct mklabel -replace BUILD
 alias	cc_rmview	cc_rmview -vob /vob/ace -view 
 
+# squish ssh2 stuff
+if ($?ssh_agent_started) then
+    if ($?SSH2_AGENT_PID) then
+        kill ${SSH2_AGENT_PID}
+        rm -Rf ${SSH2_AUTH_SOCK}
+        unsetenv SSH2_AGENT_PID SSH2_AUTH_SOCK
+    endif
+endif
+
+# alias to ssh1
+alias	ssh		ssh1
+alias	ssh-add		ssh-add1
+alias	ssh-agent	ssh-agent1
+alias	ssh-askpass	ssh-askpass1
+alias	ssh-keygen	ssh-keygen1
+
+# restart agent
+if ($?tcsh) then
+    if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
+	eval `ssh-agent -c`
+	if (-r ${HOME}/.ssh/identity) then
+	    ssh-add
+	endif
+        set ssh_agent_started   # redundant, but why not...
+    endif
+endif
+
 # disable copyright check on clearcase
 setenv	CC_DISABLE_COPYRIGHT_CHECK
 
 if ($?tcsh) then
-    complete	ct			'p/1/( describe diff lshistory lsvtree mklabel setview )/'
-    complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel setview )/'
-    complete	ssh			'p/1/( ptooie needles dundee )/' 
+    complete	ct			'p/1/( describe diff lshistory lsvtree mklabel pwv setview )/'
+    complete	cleartool		'p/1/( describe diff lshistory lsvtree mklabel pwv setview )/'
+    complete	ssh			'p/1/( cryptonite-lnx ptooie needles dundee )/' 
 endif
 
 unset SYS
 unset dotdir
 
-if ($?CLEARCASE_ROOT && $?INTERACTIVE) then
+if ($?CLEARCASE_ROOT && $?INTERACTIVE && ! $?EMACS) then
     cd /vob/ace
 endif
