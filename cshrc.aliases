@@ -70,6 +70,8 @@ else
     alias asdf			~/.xmodmap ~/.dvorak \| xmodmap -
     alias aoeu			~/.xmodmap ~/.qwerty \| xmodmap -
 endif
+alias unswap_caps 'xmodmap -e "remove lock = Control_L" -e "remove control = Caps_Lock" -e "add lock = Caps_Lock" -e "add control = Control_L"'
+alias swap_caps 'xmodmap -e "remove lock = Caps_Lock" -e "remove control = Control_L" -e "add lock = Control_L" -e "add control = Caps_Lock"'
 
 # conveniences
 alias fha			setenv DISPLAY 12.234.134.128:0
@@ -99,4 +101,4 @@ else
     endif
 endif
 
-pstat "done\n"
+cstat "done\n"
