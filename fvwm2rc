@@ -319,10 +319,10 @@ AddToMenu "Quit-Verify" "Really Quit Fvwm?" Title
 +              "No, Don't Quit" Nop
 
 AddToMenu "Hosts" "Hosts" Title
-+              "moses" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e rlogin moses
++              "mally" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh mally
 +              "" Nop
-+              "cipher" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e rlogin cipher
-+              "cryptonite" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e rlogin cryptonite
++              "glenlivet" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh glenlivet
++              "cryptonite-lnx" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15 -e ssh cryptonite-lnx
 
 AddToMenu "Main" "Main" Title
 +              "Xterm" Exec exec xterm -ls -bg black -fg white -cr green -sl 1024 -xrm "xterm*scrollBar: on" -font 9x15
