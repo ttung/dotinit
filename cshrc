@@ -1,9 +1,9 @@
-set cp_version=0.11.1
+set cp_version=0.11.2
 
 # general initialization files
 # ----------------------------
-# .cshrc.aliases 1.50
-# .cshrc.complete 1.6
+# .cshrc.aliases 1.51
+# .cshrc.complete 1.7
 # .cshrc.interactive 1.51
 # .cshrc.login 1.1
 # .cshrc.logout 1.4
@@ -11,10 +11,10 @@ set cp_version=0.11.1
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.crhc 1.12
+# .cshrc.crhc 1.13
 # .cshrc.eng.cisco.com 1.13
 # .cshrc.OCF.Berkeley.EDU 1.4
-# .cshrc.soda.csua.berkeley.edu 1.24
+# .cshrc.soda.csua.berkeley.edu 1.25
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
