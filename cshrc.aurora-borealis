@@ -19,3 +19,5 @@ if ($?INTERACTIVE) then
 
     cstat "."
 endif
+
+cstat "done"
