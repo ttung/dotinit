@@ -34,4 +34,11 @@ if ($?INTERACTIVE) then
     pstat "."
 endif
 
+if ($?WINDOW && $?INTERACTIVE) then 
+    if ($WINDOW == 3) then
+        screen -X login
+        screen -X reportidle
+    endif
+endif
+
 pstat "done\n"
