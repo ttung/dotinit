@@ -24,8 +24,8 @@ if (! $?EMACS ) then
 	mesg y
 endif
 
-if ($?SHLVL) then
-    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) && (-x ssh-agent)) then
+if ($?SHLVL && $?tcsh) then
+    if ( ($SHLVL == 1) && (! $?SSH_AUTH_SOCK) && (-X ssh-agent) ) then
 	eval `ssh-agent -c`
 	if (-r ${HOME}/.ssh/identity) then
 	    ssh-add
@@ -47,7 +47,7 @@ endif
 if (! $?NOMOTD && -e /etc/motd) more /etc/motd; setenv NOMOTD ""
 
 echo ""
-if (-x frm) then
+if ($?tcsh && -X frm) then
     frm -s n -s u -t -n
 endif
 
@@ -84,7 +84,7 @@ set savehist=100
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
 
-if (-x ${HOME}/software/bin-${MACHTYPE}-${OSTYPE}/myfrm) then
+if ($?tcsh && -X myfrm) then
     set tperiod=1
 else
     unalias periodic
