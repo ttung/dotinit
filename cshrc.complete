@@ -1,0 +1,30 @@
+complete	acroread	'p/*/f:*.pdf/'
+complete	cd		'p/1/d/'
+
+complete	cvs			'c/--/( help help-commands help-synonyms )/' 'p/1/( add admin annotate checkout commit diff edit editors export history import init log login logout rdiff release remove rtag status tag unedit update watch watchers )/' \
+					'n/-a/( edit unedit commit all none )/' \
+					'n/watch/( on off add remove )/'
+
+complete	emacs		'n/*/f:^*.[oa]/'
+complete	en		'n/*/f:^*.[oa]/'
+
+complete 	find \
+				'c/-/(user group type name print exec ctime atime mtime fstype perm size links nouser nogroup inum ok cpio newer anewer cnewer depth prune mount local follow)/' \
+					'n/-user/u/' \
+					'n/-group/g/' \
+					'n/{-name,-newer,-anewer,-cnewer}/f/' \
+					'n/-type/(c b d f p l s)/' \
+					'n/{-exec,-ok}/c/' \
+					'n/*/f/'
+
+complete	ghostview	'p/*/f:*.ps/'
+complete	gunzip		'p/*/f:*.{gz,Z,tgz,taz}/'
+complete	gv		'p/*/f:*.ps/'
+complete	gzip		'n/-d/f:*.{gz,Z,tgz,taz}/' 'n/*/f:^*.{gz,Z,tgz,taz}/'
+complete	pushd		'p/1/d/'
+#complete	rm		'n/-*r/d/'
+complete	rmdir		'p/*/d/'
+complete	unsetenv	'p/1/v/'
+complete	where		'n/*/c/'
+complete	which		'n/*/c/'
+complete	zcat		'p/*/f:*.{gz,Z,z,zip,taz,tgz}/'
