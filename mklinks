@@ -1,18 +1,6 @@
 #!/bin/tcsh
 cd ${HOME}
-'rm' -f .cshrc
-'rm' -f .cshrc.OCF.Berkeley.EDU
-'rm' -f .cshrc.aliases
-'rm' -f .cshrc.complete
-'rm' -f .cshrc.crhc
-'rm' -f .cshrc.cso.uiuc.edu
-'rm' -f .cshrc.eng.cisco.com
-'rm' -f .cshrc.ews.uiuc.edu
-'rm' -f .cshrc.interactive
-'rm' -f .cshrc.login
-'rm' -f .cshrc.logout
-'rm' -f .cshrc.paths
-'rm' -f .cshrc.soda.csua.berkeley.edu
+'rm' -f .cshrc*
 'rm' -f .emacs
 'rm' -f .xstart
 'rm' -f .dvorak
@@ -30,14 +18,14 @@ cd ${HOME}
 
 'rm' -f .xinitrc
 
+'rm' -f .addressbook*
+
 ln -sf .init/cshrc .cshrc
 ln -sf .init/cshrc.OCF.Berkeley.EDU .cshrc.OCF.Berkeley.EDU
 ln -sf .init/cshrc.aliases .cshrc.aliases
 ln -sf .init/cshrc.complete .cshrc.complete
 ln -sf .init/cshrc.crhc .cshrc.crhc
-ln -sf .init/cshrc.cso.uiuc.edu .cshrc.cso.uiuc.edu
 ln -sf .init/cshrc.eng.cisco.com .cshrc.eng.cisco.com
-ln -sf .init/cshrc.ews.uiuc.edu .cshrc.ews.uiuc.edu
 ln -sf .init/cshrc.interactive .cshrc.interactive
 ln -sf .init/cshrc.login .cshrc.login
 ln -sf .init/cshrc.logout .cshrc.logout
@@ -59,4 +47,30 @@ ln -sf .cshrc.login .login
 ln -sf .cshrc.logout .logout
 
 ln -sf .xsession .xinitrc 
+
+if ($user == 'tonytung') then
+    ln -sf .init/cabb-addressbook/addressbook .addressbook
+    ln -sf .init/cabb-addressbook/addressbook-college-00-01 .addressbook-college-00-01
+    ln -sf .init/cabb-addressbook/addressbook-college-00-01.lu .addressbook-college-00-01.lu
+    ln -sf .init/cabb-addressbook/addressbook-college-95-96 .addressbook-college-95-96
+    ln -sf .init/cabb-addressbook/addressbook-college-95-96.lu .addressbook-college-95-96.lu
+    ln -sf .init/cabb-addressbook/addressbook-college-96-97 .addressbook-college-96-97
+    ln -sf .init/cabb-addressbook/addressbook-college-96-97.lu .addressbook-college-96-97.lu
+    ln -sf .init/cabb-addressbook/addressbook-college-97-98 .addressbook-college-97-98
+    ln -sf .init/cabb-addressbook/addressbook-college-97-98.lu .addressbook-college-97-98.lu
+    ln -sf .init/cabb-addressbook/addressbook-college-98-99 .addressbook-college-98-99
+    ln -sf .init/cabb-addressbook/addressbook-college-98-99.lu .addressbook-college-98-99.lu
+    ln -sf .init/cabb-addressbook/addressbook-college-99-00 .addressbook-college-99-00
+    ln -sf .init/cabb-addressbook/addressbook-college-99-00.lu .addressbook-college-99-00.lu
+    ln -sf .init/cabb-addressbook/addressbook-high-school .addressbook-high-school
+    ln -sf .init/cabb-addressbook/addressbook-high-school.lu .addressbook-high-school.lu
+    ln -sf .init/cabb-addressbook/addressbook-other-friends .addressbook-other-friends
+    ln -sf .init/cabb-addressbook/addressbook-other-friends.lu .addressbook-other-friends.lu
+    ln -sf .init/cabb-addressbook/addressbook-relatives .addressbook-relatives
+    ln -sf .init/cabb-addressbook/addressbook-relatives.lu .addressbook-relatives.lu
+    ln -sf .init/cabb-addressbook/addressbook-work .addressbook-work
+    ln -sf .init/cabb-addressbook/addressbook-work.lu .addressbook-work.lu
+    ln -sf .init/cabb-addressbook/addressbook.lu .addressbook.lu
+endif
+
 cd -
