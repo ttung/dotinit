@@ -36,11 +36,6 @@ endif
 	alias bigxterm		'xterm -font 10x20 -bg black -fg white -cr green -sl 1024 -T '$WHOAMI'@`hostname` -xrm "xterm*scrollBar: on"'
 	alias xload		xload -bg black -fg white -update 1 -jumpscroll 1 -hl green
 
-	if ($OS == SunOS) then
-		alias asdf xmodmap .dvorak.keysym
-	else
-		alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
-	endif
 	alias asdf ~/.xmodmap ~/.dvorak \| xmodmap -
 	alias aoeu ~/.xmodmap ~/.qwerty \| xmodmap -
 
