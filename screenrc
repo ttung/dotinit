@@ -6,6 +6,10 @@ hardstatus on
 
 defscrollback 2000
 
+# this prohibits screen from resizing our window (or something like that)
+termcapinfo vt100 Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+#termcapinfo xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
 # this magically allows the hardstatus to be put to the xterm title
 termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
 
