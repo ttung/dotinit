@@ -19,6 +19,7 @@ set dotdir = ${HOME}/.files
 if ( $SYS != "" ) then
     set osenv=${dotdir}/${SYS}/cshenv
     if ( -f $osenv ) source $osenv
+    pstat "."
 
     # Some of these variables are set up by sub-scripts.
     if ( $?SETPATHS ) then
@@ -77,39 +78,12 @@ alias	mkview	mkview -v /vob/ace -s /vws/xel
 alias	tagit	ct mklabel -replace BUILD
 alias	cc_rmview	cc_rmview -vob /vob/ace -view 
 
-# squish ssh2 stuff
-
-set rmalias=`alias rm`
-unalias rm
-
-if ($?ssh_agent_started) then
-    if ($?SSH2_AGENT_PID) then
-        kill ${SSH2_AGENT_PID}
-        rm -Rf ${SSH2_AUTH_SOCK}
-        unsetenv SSH2_AGENT_PID SSH2_AUTH_SOCK
-    endif
-endif
-
-alias rm $rmalias
-unset rmalias
-
 # alias to ssh1
 alias	ssh		ssh1
 alias	ssh-add		ssh-add1
 alias	ssh-agent	ssh-agent1
 alias	ssh-askpass	ssh-askpass1
 alias	ssh-keygen	ssh-keygen1
-
-# restart agent
-if ($?tcsh) then
-    if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
-	eval `ssh-agent -c`
-	if (-r ${HOME}/.ssh/identity) then
-	    ssh-add
-	endif
-        set ssh_agent_started   # redundant, but why not...
-    endif
-endif
 
 # disable copyright check on clearcase
 setenv	CC_DISABLE_COPYRIGHT_CHECK
@@ -139,3 +113,5 @@ unset dotdir
 if ($?CLEARCASE_ROOT && $?INTERACTIVE && ! $?EMACS) then
     cd /vob/ace
 endif
+
+pstat "done\n"
