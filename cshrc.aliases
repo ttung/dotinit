@@ -14,7 +14,7 @@
 	alias ll		ls -l
 	alias lla		ls -al
 
-if ($OSTYPE == Linux)
+if ($OSTYPE == Linux) then
 	alias top		nice +2 top d 1
 else
 	alias top		nice +2 top -s 1
