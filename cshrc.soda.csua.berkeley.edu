@@ -29,10 +29,11 @@ setenv CVSROOT	${HOME}/.CVSROOT
 
 if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
-    alias	skey		'key `keyinfo`'
+    alias	skey	'key `keyinfo`'
     alias	skeyi	'key `keyinfo iyaowu`'
-    alias i	finger iyaowu
-    alias fc	finger ctung
+    alias	i	finger iyaowu
+    alias	fc	finger ctung
+    alias	xmw	'xterm -bg black -fg white -cr green -sl 1024 -T motdwatch -xrm "xterm*scrollBar: on" -e motdwatch -u "beep; diff -C 3"'
 
     /usr/bin/quota -q
 endif
