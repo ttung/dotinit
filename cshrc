@@ -1,4 +1,4 @@
-set cp_version=0.9.2
+set cp_version=0.9.3
 
 # general initialization files
 # ----------------------------
@@ -11,10 +11,10 @@ set cp_version=0.9.2
 
 # site-specific initialization files
 # ----------------------------------
-# .cshrc.allegrosys.com 1.3
-# .cshrc.crhc 1.10
+# .cshrc.allegrosys.com 1.4
+# .cshrc.crhc 1.11
 # .cshrc.OCF.Berkeley.EDU 1.3
-# .cshrc.soda.csua.berkeley.edu 1.17
+# .cshrc.soda.csua.berkeley.edu 1.18
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -33,31 +33,31 @@ endif
 if (! $?ARCH) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-                setenv ARCH `arch | sed 's/\//-/'`
+            setenv ARCH `arch | sed 's/\//-/'`
         else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-                setenv ARCH `mach | sed 's/\//-/'`
+            setenv ARCH `mach | sed 's/\//-/'`
         else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-                setenv ARCH `uname -m | sed 's/\//-/'`
+            setenv ARCH `uname -m | sed 's/\//-/'`
         else
-                setenv ARCH UNKNOWN
+            setenv ARCH UNKNOWN
         endif
     else
         if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-                setenv ARCH `arch`
+            setenv ARCH `arch`
         else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-                setenv ARCH `mach`
+            setenv ARCH `mach`
         else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-                setenv ARCH `uname -m`
+            setenv ARCH `uname -m`
         else
-                setenv ARCH UNKNOWN
+            setenv ARCH UNKNOWN
         endif
     endif
 endif
 
 if (! $?OS) then
-        if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-                setenv OS `uname -s`
-	endif
+    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+        setenv OS `uname -s`
+    endif
 endif
 
 if (! $?MACHTYPE) then
@@ -70,11 +70,11 @@ endif
 
 # Figure out the current host name and YP domain name
 if (! $?HOST) then
-        if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
-                setenv HOST `hostname`
-        else
-                setenv HOST `uname -n`
-        endif
+    if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
+        setenv HOST `hostname`
+    else
+        setenv HOST `uname -n`
+    endif
 endif
 
 if (! $?MACHNAME) then
@@ -84,56 +84,60 @@ if (! $?MACHNAME) then
 endif
 
 if (! $?YPDOMAIN) then
-        if (-x /bin/domainname) then
-                setenv YPDOMAIN `domainname`
-                if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
-        endif
-        if (! $?YPDOMAIN && -r /etc/ypdomainname) then
-                setenv YPDOMAIN `cat /etc/ypdomainname`
-                if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
-        endif
-        if (! $?YPDOMAIN && -r $HOME/.domainname) then
-                setenv YPDOMAIN `cat $HOME/.domainname`
-                if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
-        endif
-        if (! $?YPDOMAIN) then
-                setenv YPDOMAIN $HOST
-        endif
+    if (-x /bin/domainname) then
+        setenv YPDOMAIN `domainname`
+        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
+    endif
+    if (! $?YPDOMAIN && -r /etc/ypdomainname) then
+        setenv YPDOMAIN `cat /etc/ypdomainname`
+        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
+    endif
+    if (! $?YPDOMAIN && -r $HOME/.domainname) then
+        setenv YPDOMAIN `cat $HOME/.domainname`
+        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
+    endif
+    if (! $?YPDOMAIN) then
+        setenv YPDOMAIN $HOST
+    endif
 endif
 
 if ($?tcsh) then
     set watch=(1 $user any)
 endif
 
-if ($?HOME) then
-    if (-r $HOME/.cshrc.paths) then
-	if (! $?SHLVL) then
+if (! $?SHLVL) then
+    set SETPATHS
+else
+    if ($SHLVL == 1) then
+        set SETPATHS
+    endif
+endif
+
+if ($?SETPATHS) then
+    if ($?HOME) then
+        if (-r $HOME/.cshrc.paths) then
 	    source $HOME/.cshrc.paths
-	else 
-	    if ($SHLVL == 1) then
-		source $HOME/.cshrc.paths
-	    endif
-	endif
-    else
-	echo WARNING: $HOME/.cshrc.paths unavailable, using default:
-	set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
-	echo "   " $path
+        else
+            echo WARNING: $HOME/.cshrc.paths unavailable, using default:
+            set path = ($HOME/bin /bin /usr/bin /usr/local/bin)
+            echo "   " $path
+        endif
     endif
 endif
 
 if ($?HOME) then
     if (-r $HOME/.cshrc.aliases) then
-	    source $HOME/.cshrc.aliases
+        source $HOME/.cshrc.aliases
     else
-	    echo WARNING: $HOME/.cshrc.aliases unavailable
+        echo WARNING: $HOME/.cshrc.aliases unavailable
     endif
 endif
 
 if ($?HOME && $?tcsh) then
     if (-r $HOME/.cshrc.complete) then
-	    source $HOME/.cshrc.complete
+        source $HOME/.cshrc.complete
     else
-	    echo WARNING: $HOME/.cshrc.complete unavailable
+        echo WARNING: $HOME/.cshrc.complete unavailable
     endif
 endif
 
@@ -147,24 +151,28 @@ endif
 
 # do host dependent initialization
 if ($?YPDOMAIN) then
-        if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
-                source $HOME/.cshrc.$YPDOMAIN
-        endif
+    if ("$YPDOMAIN" != "$HOST" && -r $HOME/.cshrc.$YPDOMAIN) then
+        source $HOME/.cshrc.$YPDOMAIN
+    endif
 endif
 if (-r $HOME/.cshrc.$HOST) then
-        source $HOME/.cshrc.$HOST
+    source $HOME/.cshrc.$HOST
 endif
 
 if ($?MAIL && ! $?tperiod) then
-	set mail=(60 $MAIL)
+    set mail=(60 $MAIL)
 endif
 
 if ($?WHOAMI) then
-	unset WHOAMI
+    unset WHOAMI
 endif
 
 if ($?INTERACTIVE) then
-	unset INTERACTIVE
+    unset INTERACTIVE
+endif
+
+if ($?SETPATHS) then
+    unset SETPATHS
 endif
 
 #this must be at the bottom!
