@@ -73,7 +73,5 @@ if ($?HOME) then
 endif
 
 # tperiod
-if ($?tperiod) then
 	alias periodic		myfrm -s u -s n -t -n -r
-endif
 
