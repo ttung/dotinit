@@ -1,11 +1,11 @@
-set cp_version=0.6.10
+set cp_version=0.7.0
 # .cshrc.aliases 1.13
 # .cshrc.crhc 1.4
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
 # .cshrc.interactive 1.7
-# .cshrc.paths 1.7
-# .cshrc.soda.csua.berkeley.edu 1.7
+# .cshrc.paths 1.8
+# .cshrc.soda.csua.berkeley.edu 1.8
 
 set path = (/bin /usr/bin)
 
@@ -136,3 +136,6 @@ endif
 if ($?INTERACTIVE) then
 	unset INTERACTIVE
 endif
+
+#this must be at the bottom!
+if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\033]0;[${USER} ${HOST}]:> \!-0\007"'

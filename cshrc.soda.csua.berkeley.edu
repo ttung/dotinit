@@ -16,4 +16,4 @@ alias	ncftp	ncftp2
 alias	emacs	emacs-20.2
 alias	skey	'key `keyinfo`'
 
-quota -q
+/usr/bin/quota -q

@@ -46,6 +46,43 @@ if ($?HOME) then
         endif
 endif
 
+# initialize path variables for LOCAL subsystem
+if (! $?LOCALROOT) then
+    if (-d /usr/local) then
+        set LOCALROOT = /usr/local
+	set unsetLOCALROOT
+    endif
+endif
+
+if ($?LOCALROOT) then
+	if (-d $LOCALROOT/bin) then
+		setenv PATH	"${PATH}:${LOCALROOT}/bin"
+	else
+		setenv PATH	"${PATH}:${LOCALROOT}"
+	endif
+
+	if (-d $LOCALROOT/java/bin) then
+		setenv PATH	"${PATH}:${LOCALROOT}/java/bin"
+	endif
+
+	if (-d $LOCALROOT/man) then
+		setenv MANPATH  "${MANPATH}:${LOCALROOT}/man"
+	endif
+
+	if (-d $LOCALROOT/lib) then
+		setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOCALROOT}/lib"
+	endif
+
+    	if (-d $LOCALROOT/include) then
+		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
+    	endif
+
+	if ($?unsetLOCALROOT) then
+		unset unsetLOCALROOT
+		unset LOCALROOT
+	endif
+endif
+
 setenv PATH	"${PATH}:/usr/bin:/bin:/etc:/sbin:/usr/sbin"
 setenv MANPATH	"${MANPATH}:/usr/man"
 setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/lib:/usr/lib"
@@ -168,74 +205,6 @@ if ($?X11) then
     endif
 endif
 
-# initialize path variables for unified contrib subsystem
-if (! $?CONTRIB) then
-    if (-d /usr/contrib) then
-	set CONTRIB = /usr/contrib
-	set unsetCONTRIB
-    endif
-endif
-
-if ($?CONTRIB) then
-    if (-d $CONTRIB/bin) then
-	setenv PATH	"${PATH}:${CONTRIB}/bin"
-    endif
-
-    if (-d $CONTRIB/man) then
-	setenv MANPATH	"${MANPATH}:${CONTRIB}/man"
-    endif
-
-    if (-d $CONTRIB/lib) then
-	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${CONTRIB}/lib"
-    endif
-
-    if (-d $CONTRIB/include) then
-	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
-    endif
-
-    if ($?unsetCONTRIB) then
-	unset unsetCONTRIB
-	unset CONTRIB
-    endif
-endif
-
-# initialize path variables for LOCAL subsystem
-if (! $?LOCALROOT) then
-    if (-d /usr/local) then
-        set LOCALROOT = /usr/local
-	set unsetLOCALROOT
-    endif
-endif
-
-if ($?LOCALROOT) then
-	if (-d $LOCALROOT/bin) then
-		setenv PATH	"${PATH}:${LOCALROOT}/bin"
-	else
-		setenv PATH	"${PATH}:${LOCALROOT}"
-	endif
-
-	if (-d $LOCALROOT/java/bin) then
-		setenv PATH	"${PATH}:${LOCALROOT}/java/bin"
-	endif
-
-	if (-d $LOCALROOT/man) then
-		setenv MANPATH  "${MANPATH}:${LOCALROOT}/man"
-	endif
-
-	if (-d $LOCALROOT/lib) then
-		setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOCALROOT}/lib"
-	endif
-
-    	if (-d $LOCALROOT/include) then
-		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
-    	endif
-
-	if ($?unsetLOCALROOT) then
-		unset unsetLOCALROOT
-		unset LOCALROOT
-	endif
-endif
-
 if ($OS == SunOS) then
 	if (-d /lang/SUNWspro/bin) then
 		setenv PATH	"${PATH}:/lang/SUNWspro/bin"
@@ -268,4 +237,35 @@ if ($OS == SunOS) then
 	if (-d /opt/SUNWdtpcv/lib) then
 		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/SUNWdtpcv/lib"
 	endif
+endif
+
+# initialize path variables for unified contrib subsystem
+if (! $?CONTRIB) then
+    if (-d /usr/contrib) then
+	set CONTRIB = /usr/contrib
+	set unsetCONTRIB
+    endif
+endif
+
+if ($?CONTRIB) then
+    if (-d $CONTRIB/bin) then
+	setenv PATH	"${PATH}:${CONTRIB}/bin"
+    endif
+
+    if (-d $CONTRIB/man) then
+	setenv MANPATH	"${MANPATH}:${CONTRIB}/man"
+    endif
+
+    if (-d $CONTRIB/lib) then
+	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${CONTRIB}/lib"
+    endif
+
+    if (-d $CONTRIB/include) then
+	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
+    endif
+
+    if ($?unsetCONTRIB) then
+	unset unsetCONTRIB
+	unset CONTRIB
+    endif
 endif
