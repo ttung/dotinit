@@ -20,6 +20,14 @@ if ($?INTERACTIVE) then
     cstat "cshrc package ${cp_version}\n\n"
     cstat "Initializing...\n"
     cstat "  main..."
+
+    if ($?TERM) then
+        if ($TERM == screen || $TERM == screen-w) then
+            set TERMTYPE = screen
+        else
+            set TERMTYPE = $TERM
+        endif
+    endif
 endif
 
 if (! $?MACHTYPE) then
@@ -96,8 +104,8 @@ if (! $?SHLVL) then
 else
     if ($SHLVL == 1) then
         set SETPATHS
-    else if ($?TERM && $?INTERACTIVE) then
-        if ($TERM == "screen") then
+    else if ($?TERMTYPE && $?INTERACTIVE) then
+        if ($TERMTYPE == "screen") then
             set SETPATHS
         endif
     endif
@@ -161,20 +169,17 @@ if ($?INTERACTIVE) then
     endif
 endif
 
-if ($?WHOAMI) then
-    unset WHOAMI
-endif
+if ($?WHOAMI) unset WHOAMI
+if ($?SETPATHS) unset SETPATHS
+if ($?TERMTYPE) unset TERMTYPE
 
 if ($?INTERACTIVE) then
     unset INTERACTIVE
     unalias cstat
 endif
 
-if ($?SETPATHS) then
-    unset SETPATHS
-endif
 
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm || $TERM == screen) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM}']:`pwd`> \!-0:q\a"'
+if ( ($?prompt) && ($TERM == xterm || $TERM == screen || $TERM == screen-w) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
