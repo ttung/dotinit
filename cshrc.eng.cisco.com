@@ -57,6 +57,9 @@ endif
 
 setenv CVSROOT /wbu-sw/dev/synergy
 setenv VIEWER emacsclient
+if ($OS == "SunOS") then
+    setenv TERMINFO ${HOME}/.terminfo
+endif
 
 alias	quake	'finger -l quake@quake.geo.berkeley.edu'
 alias	stock	'finger stocks@qotd2.cisco.com | egrep -i "^Company|^cisco|quotes" | head -3'
