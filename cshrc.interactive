@@ -20,6 +20,15 @@ if (! $?EMACS ) then
 	mesg y
 endif
 
+if ($?SHLVL) then
+    if ($SHLVL == 1) then
+	if (! $?SSH_AUTH_SOCK) then
+	    eval `ssh-agent -c`
+	    ssh-add
+	endif
+    endif
+endif
+
 if ($?tcsh) then
     bindkey "^[[1~" beginning-of-line        # home
     bindkey "^[[4~" end-of-line              # end

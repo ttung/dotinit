@@ -55,6 +55,7 @@ endif
 	alias csua		ssh csua.berkeley.edu -l tonytung
 	alias uiuc		ssh students.uiuc.edu -l ytung
 	alias crhc		ssh chaos.crhc.uiuc.edu -l tonytung
+	alias ssha		'eval `ssh-agent -c`; ssh-add'
 
 if ($?HOME) then
 	alias rp		'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
