@@ -8,3 +8,5 @@ set watch=(1 any any)
 setenv CVSROOT	/home/titan/CVSROOT
 
 setenv	PRINTER	pssouth
+
+pstat "done\n"
