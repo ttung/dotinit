@@ -43,7 +43,7 @@ setenv BLOCKSIZE K
 # set the prompt
 if ($?TERM) then
     if ($TERM == xterm) then
-	set prompt='%{\e]2\;%n@%M^g%}[%n %m] \!:%B%~%b%# '
+	set prompt='%{\e]2\;%n@%m - %/^g%}[%n %m] \!:%B%~%b%# '
     else
 	set prompt='[%n %m] \!:%B%~%b%# '
     endif
