@@ -82,6 +82,7 @@ cstat "."
 if (! $?MACHNAME) then
     if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
         setenv MACHNAME `echo $HOST | sed 's/\..*//'`
+        setenv PROMPT_MACHNAME $MACHNAME
     endif
 endif
 cstat "."
@@ -195,4 +196,4 @@ if ($?dontshowproc) then
     exit
 endif
 
-if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
+if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'echo -n "\e]0;['${PROMPT_MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
