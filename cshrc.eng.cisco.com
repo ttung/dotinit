@@ -1,7 +1,7 @@
 umask 022
 
 if ( $?VISUAL == 0 ) then
-    setenv VISUAL "$EDITOR"
+    setenv VISUAL emacs
 endif
 if ( $?NNTPSERVER == 0 ) then
     setenv NNTPSERVER usenet.cisco.com
