@@ -10,7 +10,7 @@ set watch= (1 \
 
 umask 066
 
-setenv PATH	"${PATH}:/csua/bin"
+setenv PATH	"${PATH}:/csua/bin:/usr/local/jdk1.1.8/bin"
 setenv MANPATH	"${MANPATH}:/csua/man"
 setenv EDITOR	"emacs-nw"
 setenv CVSROOT	${HOME}/.CVSROOT
