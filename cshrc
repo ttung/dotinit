@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.11.18
+set cp_version=0.11.20
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -11,7 +11,7 @@ if ($?prompt) then
     alias cstat 'echo -n \!*'
     set INTERACTIVE
     unset prompt                # we'll set it later anyway...
-    limit coredumpsize 10240k
+    limit coredumpsize 15360k
 else
     alias cstat 'echo \!* > /dev/null'
     limit coredumpsize 0
