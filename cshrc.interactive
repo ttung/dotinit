@@ -106,12 +106,13 @@ if (! $?prompt) then
     if ($?tcsh) then
         if ($?WINDOW) then 
             setenv WINDOW_NUM ":$WINDOW"
+            unsetenv WINDOW
         else
             setenv WINDOW_NUM 
         endif
 
         if ($TERM == xterm || $TERM == screen) then
-            set prompt='%{\e]0\;[%m'$WINDOW_NUM'] \!:%~>^g%}[%m'$WINDOW_NUM'] \!:%B%~%b%# '
+            set prompt='%{\e]0\;[%m'$WINDOW_NUM']:%/>^g%}[%m'$WINDOW_NUM'] \!:%B%~%b%# '
         else
             set prompt='[%m'$WINDOW_NUM'] \!:%B%~%b%# '
         endif
