@@ -1,10 +1,10 @@
-set cp_version=0.4.2
+set cp_version=0.4.3
 # .cshrc.aliases 1.2
 # .cshrc.cso.uiuc.edu 1.1
-# .cshrc.ews.uiuc.edu 1.2
-# .cshrc.interactive 1.1
+# .cshrc.ews.uiuc.edu 1.3
+# .cshrc.interactive .1
 # .cshrc.paths 1.2
-# .cshrc.soda.csua.berkeley.edu 1.1
+# .cshrc.soda.csua.berkeley.edu 1.2
 
 if (! $?WHOAMI) then
         if (-x /usr/ucb/whoami) then
