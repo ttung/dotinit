@@ -60,7 +60,7 @@ setenv CVSROOT /wbu-sw/dev/synergy
 setenv VIEWER emacsclient-ret
 setenv LPDEST e2-f2-4
 setenv PRINTER e2-f2-4
-if ($OS == "SunOS") then
+if ($OSTYPE == solaris) then
     setenv TERMINFO ${HOME}/.terminfo
 endif
 

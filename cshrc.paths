@@ -110,7 +110,7 @@ if (-d /usr/lib/X11) then
 endif
 pstat "."
 
-if ($OS == SunOS) then
+if ($OSTYPE == solaris) then
 	if (-d /lang/SUNWspro/bin) then
 		setenv PATH	"${PATH}:/lang/SUNWspro/bin"
 	endif
