@@ -10,85 +10,69 @@ setenv GCC_LFLAG "-L."
 
 # initialize path variables for HOME subsystem
 if ($?HOME) then
-        if (-d $HOME/software/bin) then
-                setenv PATH     "${PATH}:${HOME}/software/bin"
-        endif
+    if (-d $HOME/software/bin) then
+            setenv PATH     "${PATH}:${HOME}/software/bin"
+    endif
 
-        if (-d $HOME/software/bin-${MACHTYPE}-${OSTYPE}) then
-                setenv PATH     "${PATH}:${HOME}/software/bin-${MACHTYPE}-${OSTYPE}"
-        endif
+    if (-d $HOME/software/bin-${MACHTYPE}-${OSTYPE}) then
+            setenv PATH     "${PATH}:${HOME}/software/bin-${MACHTYPE}-${OSTYPE}"
+    endif
 
-        if (-d $HOME/software/lib) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib"
-        endif
+    if (-d $HOME/software/lib) then
+            setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib"
+    	setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib"
+    endif
 
-        if (-d $HOME/software/lib-${MACHTYPE}-${OSTYPE}) then
-                setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
-        endif
+    if (-d $HOME/software/lib-${MACHTYPE}-${OSTYPE}) then
+            setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
+    	setenv GCC_LFLAG "${GCC_LFLAG} -L${HOME}/software/lib-${MACHTYPE}-${OSTYPE}"
+    endif
 
-        if (-d $HOME/software/man) then
-                setenv MANPATH  "${MANPATH}:${HOME}/software/man"
-        endif
+    if (-d $HOME/software/man) then
+            setenv MANPATH  "${MANPATH}:${HOME}/software/man"
+    endif
 
-        if (-d $HOME/software/man-${MACHTYPE}-${OSTYPE}) then
-                setenv MANPATH  "${MANPATH}:${HOME}/software/man-${MACHTYPE}-${OSTYPE}"
-        endif
+    if (-d $HOME/software/man-${MACHTYPE}-${OSTYPE}) then
+            setenv MANPATH  "${MANPATH}:${HOME}/software/man-${MACHTYPE}-${OSTYPE}"
+    endif
 
-    	if (-d $HOME/software/include) then
-		setenv INCLUDE	"${INCLUDE}:${HOME}/software/include"
-		setenv GCC_IFLAG "${GCC_IFLAG} -I${HOME}/software/include"
-    	endif
+	if (-d $HOME/software/include) then
+    	setenv INCLUDE	"${INCLUDE}:${HOME}/software/include"
+    	setenv GCC_IFLAG "${GCC_IFLAG} -I${HOME}/software/include"
+	endif
 
-        if (-d $HOME/software/include-${MACHTYPE}-${OSTYPE}) then
-                setenv INCLUDE	"${INCLUDE}:${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
-		setenv GCC_IFLAG "${GCC_IFLAG} -L${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
-        endif
+    if (-d $HOME/software/include-${MACHTYPE}-${OSTYPE}) then
+            setenv INCLUDE	"${INCLUDE}:${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
+    	setenv GCC_IFLAG "${GCC_IFLAG} -L${HOME}/software/include-${MACHTYPE}-${OSTYPE}"
+    endif
 
-        if (-d $HOME/software/classes) then
-                setenv CLASSPATH	"${CLASSPATH}:${HOME}/software/classes"
-        endif
-endif
-
-# initialize path variables for LOCAL subsystem
-if (! $?LOCALROOT) then
-    if (-d /usr/local) then
-        set LOCALROOT = /usr/local
-	set unsetLOCALROOT
+    if (-d $HOME/software/classes) then
+            setenv CLASSPATH	"${CLASSPATH}:${HOME}/software/classes"
     endif
 endif
+pstat "."
 
-if ($?LOCALROOT) then
-	if (-d $LOCALROOT/bin) then
-		setenv PATH	"${PATH}:${LOCALROOT}/bin"
-	else
-		setenv PATH	"${PATH}:${LOCALROOT}"
-	endif
+# initialize path variables for all prefixed subsystem
+foreach prefix (/usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
+    if (-d $prefix/bin) then
+	setenv PATH	"${PATH}:${prefix}/bin"
+    endif
 
-	if (-d $LOCALROOT/java/bin) then
-		setenv PATH	"${PATH}:${LOCALROOT}/java/bin"
-	endif
+    if (-d $prefix/man) then
+	setenv MANPATH	"${MANPATH}:${prefix}/man"
+    endif
 
-	if (-d $LOCALROOT/man) then
-		setenv MANPATH  "${MANPATH}:${LOCALROOT}/man"
-	endif
+    if (-d $prefix/lib) then
+	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${prefix}/lib"
+        setenv GCC_LFLAG "${GCC_LFLAG} -L${prefix}/lib"
+    endif
 
-	if (-d $LOCALROOT/lib) then
-		setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${LOCALROOT}/lib"
-		setenv GCC_LFLAG "${GCC_LFLAG} -L${LOCALROOT}/lib"
-	endif
-
-    	if (-d $LOCALROOT/include) then
-		setenv INCLUDE	"${INCLUDE}:${LOCALROOT}/include"
-#                setenv GCC_IFLAG "${GCC_IFLAG} -I${LOCALROOT}/include"
-    	endif
-
-	if ($?unsetLOCALROOT) then
-		unset unsetLOCALROOT
-		unset LOCALROOT
-	endif
-endif
+    if (-d $prefix/include) then
+	setenv INCLUDE	"${INCLUDE}:${prefix}/include"
+#        setenv GCC_IFLAG "${GCC_IFLAG} -I${prefix}/include"
+    endif
+    pstat "."
+end
 
 setenv PATH	"${PATH}:/usr/bin:/bin:/etc:/sbin:/usr/sbin"
 setenv MANPATH	"${MANPATH}:/usr/man"
@@ -124,127 +108,7 @@ if (-d /usr/lib/X11) then
 	setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/lib/X11"
         setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/lib/X11"
 endif
-
-# openwin
-if (-d /usr/openwin) then
-	if (-d /usr/openwin/bin) then
-		setenv PATH     "${PATH}:/usr/openwin/bin"
-	endif
-
-	if (-d /usr/openwin/lib) then
-		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/openwin/lib"
-                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/openwin/lib"
-	endif
-
-	if (-d /usr/openwin/man) then
-		setenv MANPATH	"${MANPATH}:/usr/openwin/man"
-	endif
-
-	if (-d /usr/openwin/include) then
-		setenv INCLUDE     "${INCLUDE}:/usr/openwin/include"
-#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/openwin/include"
-	endif
-endif
-
-# dt
-if (-d /usr/dt) then
-	if (-d /usr/dt/bin) then
-		setenv PATH     "${PATH}:/usr/dt/bin"
-	endif
-
-	if (-d /usr/dt/lib) then
-		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/dt/lib"
-                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/dt/lib"
-	endif
-
-	if (-d /usr/dt/man) then
-		setenv MANPATH	"${MANPATH}:/usr/dt/man"
-	endif
-
-	if (-d /usr/dt/include) then
-		setenv INCLUDE     "${INCLUDE}:/usr/dt/include"
-#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/dt/include"
-	endif
-endif
-
-# ccs
-if (-d /usr/ccs) then
-	if (-d /usr/ccs/bin) then
-		setenv PATH     "${PATH}:/usr/ccs/bin"
-	endif
-
-	if (-d /usr/ccs/lib) then
-		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/ccs/lib"
-                setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/ccs/lib"
-	endif
-
-	if (-d /usr/ccs/man) then
-		setenv MANPATH	"${MANPATH}:/usr/ccs/man"
-	endif
-
-	if (-d /usr/ccs/include) then
-		setenv INCLUDE     "${INCLUDE}:/usr/ccs/include"
-#                setenv GCC_IFLAG "${GCC_IFLAG} -I/usr/ccs/include"
-	endif
-endif
-    
-
-# initialize path variables for unified X11 subsystem
-if (! $?X11) then
-    if (-d /usr/X11) then
-	set X11 = /usr/X11
-	set unsetX11
-    else if (-d /usr/X11R6) then
-        set X11 = /usr/X11R6
-        set unsetX11
-    endif
-endif
-
-if ($?X11) then
-    if (-d $X11/bin) then
-	setenv PATH	"${PATH}:${X11}/bin"
-    endif
-
-    if (-d $X11/man) then
-	setenv MANPATH	"${MANPATH}:${X11}/man"
-    endif
-
-    if (-d $X11/lib) then
-	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${X11}/lib"
-        setenv GCC_LFLAG "${GCC_LFLAG} -L${X11}/lib"
-    endif
-
-    if (-d $X11/include) then
-	setenv INCLUDE	"${INCLUDE}:${X11}/include"
-#        setenv GCC_IFLAG "${GCC_IFLAG} -I${X11}/include"
-    endif
-
-    if ($?unsetX11) then
-	unset unsetX11
-	unset X11
-    endif
-endif
-
-# /opt/local
-if (-d /opt/local) then
-	if (-d /opt/local/bin) then
-		setenv PATH     "${PATH}:/opt/local/bin"
-	endif
-
-	if (-d /opt/local/lib) then
-		setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/opt/local/lib"
-                setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/local/lib"
-	endif
-
-	if (-d /opt/local/man) then
-		setenv MANPATH	"${MANPATH}:/opt/local/man"
-	endif
-
-	if (-d /opt/local/include) then
-		setenv INCLUDE     "${INCLUDE}:/opt/local/include"
-#                setenv GCC_IFLAG "${GCC_IFLAG} -I/opt/local/include"
-	endif
-endif
+pstat "."
 
 if ($OS == SunOS) then
 	if (-d /lang/SUNWspro/bin) then
@@ -282,36 +146,6 @@ if ($OS == SunOS) then
                 setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/SUNWdtpcv/lib"
 	endif
 endif
+pstat "."
 
-# initialize path variables for unified contrib subsystem
-if (! $?CONTRIB) then
-    if (-d /usr/contrib) then
-	set CONTRIB = /usr/contrib
-	set unsetCONTRIB
-    endif
-endif
-
-if ($?CONTRIB) then
-    if (-d $CONTRIB/bin) then
-	setenv PATH	"${PATH}:${CONTRIB}/bin"
-    endif
-
-    if (-d $CONTRIB/man) then
-	setenv MANPATH	"${MANPATH}:${CONTRIB}/man"
-    endif
-
-    if (-d $CONTRIB/lib) then
-	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${CONTRIB}/lib"
-        setenv GCC_LFLAG "${GCC_LFLAG} -L${CONTRIB}/lib"
-    endif
-
-    if (-d $CONTRIB/include) then
-	setenv INCLUDE	"${INCLUDE}:${CONTRIB}/include"
-#        setenv GCC_IFLAG "${GCC_IFLAG} -I${CONTRIB}/include"
-    endif
-
-    if ($?unsetCONTRIB) then
-	unset unsetCONTRIB
-	unset CONTRIB
-    endif
-endif
+pstat "done\n"
