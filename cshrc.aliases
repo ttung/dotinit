@@ -64,6 +64,7 @@ endif
 
     alias fha		setenv DISPLAY 24.11.130.104:0
     alias duck		setenv DISPLAY 24.176.252.147:0
+    alias pingduck	ping -c 5 24.176.252.147
     alias motd		less -m -e /etc/motd
     alias f		finger
     alias i		finger iyaowu@csua.berkeley.edu
