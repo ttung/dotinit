@@ -180,12 +180,15 @@ endif
 if ($?setpaths) unset setpaths
 
 if ($?INTERACTIVE) then
+    setenv INTERACTIVE_PARENT
     unset INTERACTIVE
     unalias cstat
+else
+    exit
 endif
 
 #this must be at the bottom!
-if (! $?TERM) exit
+if (! $?TERMTYPE) exit
 
 if ($?dontshowproc) then
     unset dontshowproc
