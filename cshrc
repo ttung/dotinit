@@ -1,4 +1,4 @@
-set cp_version=0.4.4
+set cp_version=0.4.5
 # .cshrc.aliases 1.3
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.3
@@ -28,11 +28,13 @@ if (! $?HOME) then
 endif
 
 #interactive shell?
+#    if (! $?EMACS && ! $?0) then
 if (! $?INTERACTIVE) then
     if ( ($?prompt) && (! $?EMACS) ) then
-#    if (! $?EMACS && ! $?0) then
 	echo "cshrc package" $cp_version
         set INTERACTIVE
+    else
+	limit coredumpsize 0
     endif
 endif
 
