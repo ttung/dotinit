@@ -29,7 +29,7 @@ endif
 if ($?TERM) then
     if ($?tcsh) then
         if ($TERM == xterm) then
-            set prompt='%{\e]0\;[%n %m] \!:%~>^g%}[%n %m] \!:%B%c03%b%# '
+            set prompt='%{\e]0\;[%n %m] \!:%c03>^g%}[%n %m] \!:%B%c03%b%# '
         else
             set prompt='[%n %m] \!:%B%c03%b%# '
         endif
