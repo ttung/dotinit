@@ -13,6 +13,7 @@ umask 066
 setenv PATH	"${PATH}:/csua/bin"
 setenv MANPATH	"${MANPATH}:/csua/man"
 setenv EDITOR	"emacs-nw"
+setenv CVSROOT	${HOME}/.CVSROOT
 
 if ($?INTERACTIVE) then
     alias	ncftp	ncftp2
