@@ -77,7 +77,7 @@ alias fha			setenv DISPLAY 12.234.134.128:0
 alias motd			less -m -e /etc/motd
 alias f				finger
 alias cell			mail 5103646142@mobile.att.net
-alias cellc			mail 5103646961@mobile.att.net
+alias cellc			mail 5105858672@mobile.att.net
 alias celly			mail 5109188372@mobile.att.net
 alias tagit			'cvs tag -F LATEST \!*'
 
