@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.11.15
+set cp_version=0.11.16
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -60,6 +60,7 @@ if (! $?HOST) then
         setenv HOST `uname -n`
     endif
 endif
+setenv HOST `echo ${HOST} | tr '[:upper:]' '[:lower:]'`
 cstat "."
 
 if (! $?MACHNAME) then
@@ -86,6 +87,7 @@ if (! $?YPDOMAIN) then
         setenv YPDOMAIN $HOST
     endif
 endif
+setenv YPDOMAIN `echo ${YPDOMAIN} | tr '[:upper:]' '[:lower:]'`
 cstat "."
 cstat "done\n"
 
