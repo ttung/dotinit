@@ -30,14 +30,13 @@ else
 endif
 
 set nonomatch
-foreach addrbook (.addressbook*[^\.][^l][^u])
+foreach addrbook (.address*[^\.][^l][^u])
     set addrbookdest = `echo $addrbook | sed -e 's/\.\(.*\)/\1/'`
-    if (! -e $addrbook) then
-        break
-    endif
     if (! -l $addrbook) then
         mkdir -p .init/${addr_user}-addressbook/
         'mv' -f $addrbook .init/${addr_user}-addressbook/${addrbookdest}
+    else
+        'rm' -f $addrbook
     endif
 end
 unset nonomatch
@@ -66,7 +65,7 @@ ln -sf .cshrc.logout .logout
 ln -sf .xsession .xinitrc 
 
 if (-d .init/${addr_user}-addressbook/) then
-    foreach addrbook (.init/${addr_user}-addressbook/*)
+    foreach addrbook (.init/${addr_user}-addressbook/addr*)
         set addrbookdest = `echo $addrbook | sed -e 's/.*\/\([^\/]*\)/.\1/'`
         ln -sf $addrbook $addrbookdest
     end
