@@ -12,11 +12,13 @@ echo "Performing clean-up:"
 
 stty erase '^H' kill '^U' intr '^C'
 
-set noglob
-    eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
-unset noglob
+if (! $?EMACS ) then
+	set noglob
+	    eval `tset -s - -k -m su:\?$TERM \?$TERM` >& /dev/null
+	unset noglob
 
-mesg y
+	mesg y
+endif
 
 if ($?tcsh) then
     bindkey "^[[1~" beginning-of-line        # home

@@ -1,9 +1,9 @@
-set cp_version=0.5.15
+set cp_version=0.5.16
 # .cshrc.aliases 1.9
 # .cshrc.crhc 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive 1.4
+# .cshrc.interactive 1.5
 # .cshrc.paths 1.4
 # .cshrc.soda.csua.berkeley.edu 1.7
 
@@ -31,7 +31,8 @@ endif
 #interactive shell?
 #    if (! $?EMACS && ! $?0) then
 if (! $?INTERACTIVE) then
-    if ( ($?prompt) && (! $?EMACS) ) then
+#    if ( ($?prompt) && (! $?EMACS) ) then
+    if ($?prompt) then
 	echo "cshrc package" $cp_version
         set INTERACTIVE
     else
@@ -122,7 +123,7 @@ if ($?INTERACTIVE) then
     endif
 endif
 
-if ($?LOGHOME && $?INTERACTIVE) then
+if ($?LOGHOME) then
     if (-r $LOGHOME/.cshrc.aliases) then
 	    source $LOGHOME/.cshrc.aliases
     else
