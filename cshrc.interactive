@@ -114,9 +114,9 @@ if (! $?prompt) then
         endif
 
         if ($TERM == xterm || $TERM == screen) then
-            set prompt='%{\e]0\;[%m'$WINDOW_NUM' %n] \!:%~>^g%}[%m'$WINDOW_NUM' %n] \!:%B%~%b%# '
+            set prompt='%{\e]0\;[%m'$WINDOW_NUM'] \!:%~>^g%}[%m'$WINDOW_NUM'] \!:%B%~%b%# '
         else
-            set prompt='[%m'$WINDOW_NUM' %n] \!:%B%~%b%# '
+            set prompt='[%m'$WINDOW_NUM'] \!:%B%~%b%# '
         endif
     else
         set prompt='[\!] '
