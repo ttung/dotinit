@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.11.20
+set cp_version=0.11.21
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -62,6 +62,9 @@ if (! $?OSTYPE) then
 endif
 
 # Figure out the current host name and YP domain 
+if (-r $HOME/.host) then
+    setenv HOST `cat $HOME/.host`
+endif
 if (! $?HOST) then
     if ( (-x /usr/bin/hostname) || (-x /bin/hostname) ) then
         setenv HOST `hostname`
@@ -79,11 +82,11 @@ if (! $?MACHNAME) then
 endif
 cstat "."
 
+if (-r $HOME/.domainname) then
+    setenv YPDOMAIN `cat $HOME/.domainname`
+    if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
+endif
 if (! $?YPDOMAIN) then
-    if (! $?YPDOMAIN && -r $HOME/.domainname) then
-        setenv YPDOMAIN `cat $HOME/.domainname`
-        if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
-    endif
     if (! $?YPDOMAIN && -x /bin/domainname) then
         setenv YPDOMAIN `domainname`
         if ("$YPDOMAIN" == "") unsetenv YPDOMAIN
