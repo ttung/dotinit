@@ -1,4 +1,4 @@
-set cp_version=0.8.22
+set cp_version=0.8.23
 # .cshrc.aliases 1.28
 # .cshrc.complete 1.3
 # .cshrc.crhc 1.6
@@ -162,4 +162,4 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${MACHNAME}]:> \!-0\a"'
+if ( ($?prompt) && ($TERM == xterm) ) alias postcmd 'echo -n "\e]0;[${USER} ${MACHNAME}]:`pwd`> \!-0\a"'
