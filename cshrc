@@ -1,9 +1,9 @@
-set cp_version=0.3.3
+set cp_version=0.4.0
 # .cshrc.aliases 1.1
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.1
 # .cshrc.interactive 1.1
-# .cshrc.paths 1.1
+# .cshrc.paths 1.2
 # .cshrc.soda.csua.berkeley.edu 1.1
 
 if (! $?WHOAMI) then
@@ -97,7 +97,7 @@ if (! $?YPDOMAIN) then
         endif
 endif
 
-if ($?LOGHOME && $?INTERACTIVE) then
+if ($?LOGHOME) then
     if (-r $LOGHOME/.cshrc.paths) then
 	    source $LOGHOME/.cshrc.paths
     else

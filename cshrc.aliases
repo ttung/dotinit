@@ -12,7 +12,7 @@
 
 	alias ls                ls -F
 	alias ll		ls -l
-	alias top		nice +2 /usr/bin/top -s 1
+	alias top		nice +2 top -s 1
 if (-e /bin/umask) then
 	alias umask             'umask \!* ; /bin/umask -S'
 endif
