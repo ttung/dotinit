@@ -53,7 +53,7 @@ endif
 
 	# conveniences
 
-	alias fha		setenv DISPLAY 130.126.143.233:0.0
+	alias fha		setenv DISPLAY 130.126.76.212:0.0
 	alias tempest		setenv DISPLAY tempest.crhc.uiuc.edu:0.0
 	alias motd		less -m -e /etc/motd
 	alias iyaowu		finger iyaowu@csua.berkeley.edu
