@@ -1,5 +1,5 @@
 unalias postcmd
-set cp_version=0.12.1
+set cp_version=0.12.2
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
@@ -24,10 +24,14 @@ if ($?INTERACTIVE) then
 
     if ($?TERM) then
         if ($TERM == screen || $TERM == screen-w) then
-            set TERMTYPE = screen
+            setenv TERMTYPE screen
+        else if ($TERM == xterm-color) then
+            setenv TERMTYPE xterm
         else
-            set TERMTYPE = $TERM
+            setenv TERMTYPE $TERM
         endif
+    else
+        setenv TERMTYPE dumb
     endif
 endif
 
@@ -104,18 +108,18 @@ cstat "."
 cstat "done\n"
 
 if (! $?SHLVL) then
-    set SETPATHS
+    set setpaths
 else
     if ($SHLVL == 1) then
-        set SETPATHS
+        set setpaths
     else if ($?TERMTYPE && $?INTERACTIVE) then
         if ($TERMTYPE == "screen") then
-            set SETPATHS
+            set setpaths
         endif
     endif
 endif
 
-if ($?SETPATHS) then
+if ($?setpaths) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
             cstat "  paths..."
@@ -173,9 +177,7 @@ if ($?INTERACTIVE) then
     endif
 endif
 
-if ($?WHOAMI) unset WHOAMI
-if ($?SETPATHS) unset SETPATHS
-if ($?TERMTYPE) unset TERMTYPE
+if ($?setpaths) unset setpaths
 
 if ($?INTERACTIVE) then
     unset INTERACTIVE
@@ -185,4 +187,9 @@ endif
 #this must be at the bottom!
 if (! $?TERM) exit
 
-if ( ($?prompt) && ($TERM == xterm || $TERM == screen || $TERM == screen-w) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
+if ($?dontshowproc) then
+    unset dontshowproc
+    exit
+endif
+
+if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'echo -n "\e]0;['${MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
