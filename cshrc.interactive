@@ -11,26 +11,31 @@ unset rmalias
 stty erase '^?' kill '^U' intr '^C'
 
 if (! $?TERM) then
-    set noglob
-        eval `tset -s - | sed -e '1d'`
-    unset noglob
-    mesg y
+    set getterm mesgy
 else if ($TERM == "eterm") then
-    set noglob
-        eval `tset -s - vt100 | sed -e '1d'`
-    unset noglob
-else if ( ($TERM == screen && $SHLVL != 1) || $?EMACS) then
-    # do nothing in these cases....
+    set getterm
+else if ($TERM == screen && $SHLVL != 1) then
+    set mesgy
+else if ($?EMACS) then
+    #nothing!
 else
+    set getterm mesgy
+endif
+
+if ($?getterm) then
     set noglob
         eval `tset -s - | sed -e '1d'`
     unset noglob
+    unset getterm
+endif
+if ($?mesgy) then
     mesg y
+    unset mesgy
 endif
 
 if ($?TERMCAP && $TERM != screen) then
     set noglob
-        setenv TERMCAP ${TERMCAP}'Co#8:pa#64:op=\E[37;40m:AF=\E[3%dm:AB=\E[4%dm:'
+        setenv TERMCAP ${TERMCAP}'Co#8:pa#64:op=\E[37;40m:AF=\E[3%dm:AB=\E[4%dm:ut:'
         # for systems with terminfo, add 'colors#8, pairs#64, op=\E[37;40m, setaf=\E[3%p1%dm, setab=\E[4%p1%dm,' to the info file.  see terminfo(4), infocmp(1), and tic(1) for information on how this can be done.
     unset noglob
 endif
