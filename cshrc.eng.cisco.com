@@ -8,7 +8,7 @@ if ( $?NNTPSERVER == 0 ) then
 endif
 
 set USER_PATH=
-if ( $?SETPATHS ) then
+if ( $?setpaths ) then
     setenv PATH /bin:/usr/bin:.
 endif
 setenv OS_PATH "/bin /usr/bin"		# "Always" correct. -ljr
@@ -22,7 +22,7 @@ if ( $SYS != "" ) then
     cstat "."
 
     # Some of these variables are set up by sub-scripts.
-    if ( $?SETPATHS ) then
+    if ( $?setpaths ) then
         set path=( $SW_PATH $APPS_PATH $LOCAL_PATH    \
                     $USER_PATH $OS_PATH . )
     endif
@@ -32,7 +32,7 @@ endif
 setenv CSHENV_SET true
 
 # initialize path variables for HOME subsystem
-if ($?SETPATHS) then
+if ($?setpaths) then
     if ($?HOME) then
         if (-d $HOME/software/bin) then
             setenv PATH     "${HOME}/software/bin:${PATH}"
