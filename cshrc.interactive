@@ -1,6 +1,4 @@
 echo "Performing clean-up:"
-    echo "  core files..."
-    rm -f ~/core
     echo "  Pine debug files..."
     rm -f ~/.pine-debug* >& /dev/null
     echo "  dead letters..."
