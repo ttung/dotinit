@@ -1,3 +1,10 @@
+if (`alias rm` == "") then
+    set normalias
+else
+    set rmalias=`alias rm`
+    unalias rm
+endif
+
 echo "Performing clean-up:"
     echo "  Pine debug files..."
     rm -f ~/.pine-debug* >& /dev/null
@@ -7,6 +14,13 @@ echo "Performing clean-up:"
     rm -f ~/.xsession-errors
     echo "  saves..."
     rm -f ~/.saves-* >& /dev/null
+
+if ($?normalias) then
+    unset normalias
+else
+    alias rm $rmalias
+    unset rmalias
+endif
 
 stty erase '^H' kill '^U' intr '^C'
 

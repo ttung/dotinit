@@ -1,13 +1,13 @@
-set cp_version=0.8.36
+set cp_version=0.8.37
 # .cshrc.aliases 1.33
 # .cshrc.complete 1.4
 # .cshrc.crhc 1.9
 # .cshrc.cso.uiuc.edu 1.1
 # .cshrc.ews.uiuc.edu 1.4
-# .cshrc.interactive 1.26
+# .cshrc.interactive 1.27
 # .cshrc.login 1.1
 # .cshrc.logout 1.1
-# .cshrc.OCF.Berkeley.EDU 1.1
+# .cshrc.OCF.Berkeley.EDU 1.2
 # .cshrc.paths 1.11
 # .cshrc.soda.csua.berkeley.edu 1.13
 
