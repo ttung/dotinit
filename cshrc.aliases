@@ -32,6 +32,8 @@ endif
 	alias less		less -m 
 	alias ps                ps -U $USER
 	alias j			jobs
+        alias gmake		make
+
 
 	# editors
 
