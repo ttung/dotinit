@@ -25,30 +25,66 @@ foreach addrbook (.address*[^\.][^l][^u])
         'rm' -f $addrbook
     endif
 end
-unset nonomatch
 
 foreach cshrc (.init/cshrc*)
-    set cshrcdest = `echo $cshrc | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-    ln -sf $cshrc $cshrcdest
+    set cshrcdest = `echo ${cshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+    if (-e ${cshrcdest}) then
+        if (-l ${cshrcdest}) then
+            # it's a link, we can remove it
+            'rm' -f ${cshrcdest}
+        else
+            set skiplink
+            echo "Warning: ${cshrcdest} is in the way."
+        endif
+    endif
+
+    if ($?skiplink) then
+        unset skiplink
+    else
+        ln -sf ${cshrc} ${cshrcdest}
+    endif
 end
 
-ln -sf .init/emacs .emacs
-ln -sf .init/xstart .xstart
-ln -sf .init/dvorak .dvorak
-ln -sf .init/xsession .xsession
-ln -sf .init/qwerty .qwerty
-ln -sf .init/fvwm2rc .fvwm2rc
-ln -sf .init/xmodmap .xmodmap
-ln -sf .init/dvorak.keysym .dvorak.keysym
-ln -sf .init/Xdefaults .Xdefaults
-ln -sf .init/hushlogin .hushlogin
-ln -sf .init/screenrc .screenrc
+foreach df ( emacs xstart dvorak xsession qwerty fvwm2rc xmodmap \
+             dvorak.keysym Xdefaults hushlogin screenrc )
+    if (-e .${df}) then
+        if (-l .${df}) then
+            'rm' -f .${df}
+        else
+            set skiplink
+            echo "Warning: .${df} is in the way."
+        endif
+    endif
 
-ln -sf .cshrc.aliases .aliases
-ln -sf .cshrc.login .login
-ln -sf .cshrc.logout .logout
+    if ($?skiplink) then
+        unset skiplink
+    else
+        ln -sf .init/${df} .${df}
+    endif
+end
 
-ln -sf .xsession .xinitrc 
+set src = ( .cshrc.aliases .cshrc.login .cshrc.logout .xsession )
+set dst = (       .aliases       .login       .logout .xinitrc  )
+
+set cntr = 1
+while ($cntr <= ${#src})
+    if (-e ${dst[$cntr]}) then
+        if (-l ${dst[$cntr]}) then
+            'rm' -f ${dst[$cntr]}
+        else
+            set skiplink
+            echo "Warning: ${dst[$cntr]} is in the way."
+        endif
+    endif
+
+    if ($?skiplink) then
+        unset skiplink
+    else
+        ln -sf ${src[$cntr]} ${dst[$cntr]}
+    endif
+
+    set cntr = `expr ${cntr} + 1`
+end
 
 if (-d .init/${addr_user}-addressbook/) then
     foreach addrbook (.init/${addr_user}-addressbook/addr*)
