@@ -67,7 +67,7 @@ foreach cshrc (.init/cshrc*)
     endif
 end
 
-set fileset = ( emacs xstart dvorak xsession qwerty fvwm2rc xmodmap \
+set fileset = ( xstart dvorak xsession qwerty fvwm2rc xmodmap \
              dvorak.keysym Xdefaults hushlogin screenrc )
 
 echo "Miscellaneous..."
@@ -127,5 +127,9 @@ foreach dotfile (.*)
         endif
     endif
 end
+
+if (-e ${HOME}/emacs) then
+    make -C ${HOME}/emacs
+endif
 
 cd -
