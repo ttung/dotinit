@@ -60,6 +60,7 @@ if ($user == 'tonytung') then
     ln -sf .init/cabb-addressbook/addressbook-other-friends .addressbook-other-friends
     ln -sf .init/cabb-addressbook/addressbook-relatives .addressbook-relatives
     ln -sf .init/cabb-addressbook/addressbook-work .addressbook-work
+    ln -sf .init/cabb-addressbook/addressbook-01 .addressbook-01
 endif
 
 cd -
