@@ -13,12 +13,19 @@
 	alias ls                ls -F
 	alias ll		ls -l
 	alias lla		ls -al
+
+if ($OSTYPE == Linux)
+	alias top		nice +2 top d 1
+else
 	alias top		nice +2 top -s 1
+endif
+
 if (-e /bin/umask) then
 	alias umask		"if (\!* == "\"\"") /bin/umask -S ; if (\!* != "\"\"") umask \!*"
 else if (-e /usr/bin/umask) then
 	alias umask		"if (\!* == "\"\"") /usr/bin/umask -S ; if (\!* != "\"\"") umask \!*"
 endif
+
 	alias more		less -m -e
 	alias less		less -m 
 	alias ps                ps -U $USER
