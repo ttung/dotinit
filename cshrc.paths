@@ -50,28 +50,32 @@ if ($?HOME) then
             setenv CLASSPATH	"${CLASSPATH}:${HOME}/software/classes"
     endif
 endif
-pstat "."
+cstat "."
 
 # initialize path variables for all prefixed subsystem
 foreach prefix (/usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
-    if (-d $prefix/bin) then
+    if (-d ${prefix}/bin) then
 	setenv PATH	"${PATH}:${prefix}/bin"
     endif
 
-    if (-d $prefix/man) then
+    if (-d ${prefix}/sbin) then
+	setenv PATH	"${PATH}:${prefix}/sbin"
+    endif
+
+    if (-d ${prefix}/man) then
 	setenv MANPATH	"${MANPATH}:${prefix}/man"
     endif
 
-    if (-d $prefix/lib) then
+    if (-d ${prefix}/lib) then
 	setenv LD_LIBRARY_PATH  "${LD_LIBRARY_PATH}:${prefix}/lib"
         setenv GCC_LFLAG "${GCC_LFLAG} -L${prefix}/lib"
     endif
 
-    if (-d $prefix/include) then
+    if (-d ${prefix}/include) then
 	setenv INCLUDE	"${INCLUDE}:${prefix}/include"
 #        setenv GCC_IFLAG "${GCC_IFLAG} -I${prefix}/include"
     endif
-    pstat "."
+    cstat "."
 end
 
 setenv PATH	"${PATH}:/usr/bin:/bin:/etc:/sbin:/usr/sbin"
@@ -108,7 +112,7 @@ if (-d /usr/lib/X11) then
 	setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:/usr/lib/X11"
         setenv GCC_LFLAG "${GCC_LFLAG} -L/usr/lib/X11"
 endif
-pstat "."
+cstat "."
 
 if ($OSTYPE == solaris) then
 	if (-d /lang/SUNWspro/bin) then
@@ -146,6 +150,6 @@ if ($OSTYPE == solaris) then
                 setenv GCC_LFLAG "${GCC_LFLAG} -L/opt/SUNWdtpcv/lib"
 	endif
 endif
-pstat "."
+cstat "."
 
-pstat "done\n"
+cstat "done\n"
