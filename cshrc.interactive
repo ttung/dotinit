@@ -59,14 +59,34 @@ if ($?TERMCAP && $TERMTYPE != screen) then
 endif
 
 if ($?tcsh && ! $?NO_SSH_AGENT) then
-    if ( (! $?SSH_AUTH_SOCK) && (! $?SSH2_AUTH_SOCK) && (-X ssh-agent) ) then
+    if (! -d ${HOME}/.ssh) then
+        mkdir ${HOME}/.ssh
+    endif
+    if (-e ${HOME}/.ssh/agent) then
+        source ${HOME}/.ssh/agent
+
+        set sock = ${SSH_AUTH_SOCK}
+        if (! -e ${sock}) then
+            unsetenv SSH_AUTH_SOCK SSH_AGENT_PID
+        endif
+    endif
+    if ( (! $?SSH_AUTH_SOCK) && (-X ssh-agent) ) then
 	eval `ssh-agent -c`
 	if (-r ${HOME}/.ssh/identity || \
             -r ${HOME}/.ssh/id_dsa || \
             -r ${HOME}/.ssh/id_rsa) then
 	    ssh-add
 	endif
-        set ssh_agent_started
+        echo "setenv SSH_AUTH_SOCK ${SSH_AUTH_SOCK}" >! ${HOME}/.ssh/agent
+        echo "setenv SSH_AGENT_PID ${SSH_AGENT_PID}" >> ${HOME}/.ssh/agent
+
+        set sock = ${SSH_AUTH_SOCK}
+    endif
+    if ($?sock) then
+        set dir = `dirname ${sock}`
+        set ssh_sock_link = `mktemp ${dir}/sock_lnk.XXXXXXXX`
+        ln -f ${sock} ${ssh_sock_link}
+        unset sock dir
     endif
 endif
 

@@ -1,12 +1,18 @@
 set rmalias=`alias rm`
 unalias rm
 
-if ($?ssh_agent_started) then
-    if ($?SSH2_AGENT_PID) then
-        kill ${SSH2_AGENT_PID}
-        rm -Rf ${SSH2_AUTH_SOCK}
-    else if ($?SSH_AGENT_PID) then
-        eval `ssh-agent -k`
+# remove our link, indicating that we're done
+if ($?ssh_sock_link) then
+    rm -f ${ssh_sock_link}
+endif
+
+# check the ref count, kill if 1
+if ($?SSH_AUTH_SOCK) then
+    if (`stat -f \%l ${SSH_AUTH_SOCK}` == 1) then
+        if (! $?PERSISTENT_AGENT) then
+            eval `ssh-agent -k`
+            rm -f ${HOME}/.ssh/agent
+        endif
     endif
 endif
 
