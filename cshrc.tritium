@@ -20,7 +20,8 @@ if (! $?gatherpaths) then
             setenv DISPLAY :0
         endif
 
-        alias em /Applications/Emacs.app/Contents/MacOS/Emacs
+        alias em /Applications/darwinports/Emacs.app/Contents/MacOS/Emacs
+        alias dailyshow "rsync -avP \!* csua.berkeley.edu:/csua/tmp/dailyshow Desktop/"
     endif
 
     cstat "done\n"
