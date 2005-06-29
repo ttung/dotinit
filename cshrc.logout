@@ -1,0 +1,20 @@
+set rmalias=`alias rm`
+unalias rm
+
+# remove our link, indicating that we're done
+if ($?v_ssh_sock_link) then
+    rm -f ${v_ssh_sock_link}
+endif
+
+# check the ref count, kill if 1
+if ($?SSH_AUTH_SOCK && $?SSH_AGENT_PID) then
+    if (`stat -f \%l ${SSH_AUTH_SOCK}` == 1) then
+        if (! $?f_persistent_ssh_agent) then
+            eval `ssh-agent -k`
+            rm -f ${HOME}/.ssh/agent
+        endif
+    endif
+endif
+
+alias rm $rmalias
+unset rmalias

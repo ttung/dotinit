@@ -1,11 +1,15 @@
-if (! $?gatherpaths) then
+if (! $?f_gatherpaths) then
     set complete=enhance
-    set NOMESG NOMOTD NOQUOTACHECK
+    set f_persistent_ssh_agent
+    setenv F_NOMESG 
+    setenv F_NOMOTD
+    setenv F_NOQUOTACHECK
     setenv RSYNC_RSH ssh
     setenv CVS_RSH ssh
+    setenv CVSROOT :ext:merly.org:/home/CVSROOT
 
-    if ($?INTERACTIVE) then
-        complete	ssh	'p/1/(merly.org ssh-sj1.cisco.com)/'
+    if ($?f_interactive) then
+        complete	ssh	'p/1/(merly.org elcamino.pasemi.com)/'
 
         cstat "."
 
@@ -14,7 +18,7 @@ if (! $?gatherpaths) then
                 setenv TERM xterm-color
             endif
         endif
-        set dontshowproc
+        set f_dontshowproc
 
         if (! $?DISPLAY) then
             setenv DISPLAY :0

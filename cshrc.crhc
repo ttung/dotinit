@@ -1,4 +1,4 @@
-if (! $?gatherpaths) then
+if (! $?f_gatherpaths) then
     unalias	make
     alias	ups	ps -u ${USER}
     alias	lynx	lynx -cfg=${HOME}/software/lynx2-8-2/lynx.cfg

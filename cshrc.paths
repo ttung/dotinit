@@ -1,4 +1,4 @@
-if ($?gatherpaths) then
+if ($?f_gatherpaths) then
     set C_PATH
     set C_MANPATH
     set C_LD_LIBRARY_PATH
@@ -9,7 +9,7 @@ if ($?gatherpaths) then
     foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
         set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
-        set C_MANPATH		= (${C_MANPATH} ${prefix}/man)
+        set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
 
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
 
@@ -51,7 +51,7 @@ endif
 # even if we are just gathering, we should probably set the paths, in case
 # later init files require things that are in the path.  we just have to set it 
 # twice.
-if ($?setpaths) then
+if ($?f_setpaths) then
     setenv PATH .
     setenv MANPATH .
     setenv LD_LIBRARY_PATH  .
@@ -92,7 +92,7 @@ if ($?setpaths) then
     setenv GCC_LFLAG		"${GCC_LFLAG} -L."
     setenv GCC_IFLAG		"${GCC_IFLAG} -I."
 
-    if (! $?gatherpaths) then
+    if (! $?f_gatherpaths) then
         unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
     endif
 

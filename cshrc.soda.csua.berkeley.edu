@@ -1,4 +1,4 @@
-if ($?gatherpaths) then
+if ($?f_gatherpaths) then
     set C_PATH		= (${C_PATH} /csua/bin)
     set C_MANPATH	= (${C_MANPATH} /csua/man)
     set C_CLASSPATH	= (${C_CLASSPATH} ${HOME}/office/software/mm.mysql-2.0.7/mm.mysql-2.0.7-bin.jar)
@@ -14,10 +14,10 @@ else
 
     setenv EDITOR	"emacs-nw"
     setenv CVSROOT	${HOME}/.CVSROOT
-    setenv NOFRM
+    setenv F_NOFRM
     setenv NNTPSERVER	agate.berkeley.edu
 
-    if ($?INTERACTIVE) then
+    if ($?f_interactive) then
         alias	ncftp	ncftp2
         alias	fc	finger iyaowu
         alias	fy	finger ctung

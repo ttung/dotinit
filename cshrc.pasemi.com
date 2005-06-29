@@ -1,4 +1,4 @@
-if ($?gatherpaths) then
+if ($?f_gatherpaths) then
     if ($OSTYPE == "linux") then
         set C_PATH	= (${C_PATH} /proj/projroot/andromeda/bin \
                                     /proj/cad/global_bin \
@@ -30,9 +30,9 @@ else
         alias em /Applications/Emacs.app/Contents/MacOS/Emacs
     endif
 
-    setenv NOMOTD 
-    setenv NOFRM
-    setenv NOQUOTACHECK
+    setenv F_NOMOTD 
+    setenv F_NOFRM
+    setenv F_NOQUOTACHECK
 
     if ($OSTYPE == "linux") then
         #######################################################

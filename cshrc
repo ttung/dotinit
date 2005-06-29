@@ -10,7 +10,7 @@ set echo_style=both
 if ($?prompt) then
     #alias cstat 'echo -n \!*'
     alias cstat 'echo \!* > /dev/null'
-    set INTERACTIVE
+    set f_interactive
     unset prompt                # we'll set it later anyway...
     limit coredumpsize 15360k
 else
@@ -19,7 +19,7 @@ else
     set prompt=${HOST}':\!> '
 endif
 
-if ($?INTERACTIVE) then
+if ($?f_interactive) then
     cstat "cshrc package ${cp_version}\n\n"
     cstat "Initializing...\n"
     cstat "  main..."
@@ -111,18 +111,18 @@ cstat "."
 cstat "done\n"
 
 if (! $?SHLVL) then
-    set gatherpaths setpaths
+    set f_gatherpaths f_setpaths
 else
     if ($SHLVL == 1) then
-        set gatherpaths setpaths
-    else if ($?TERMTYPE && $?INTERACTIVE) then
+        set f_gatherpaths f_setpaths
+    else if ($?TERMTYPE && $?f_interactive) then
         if ($TERMTYPE == "screen") then
-            set gatherpaths setpaths
+            set f_gatherpaths f_setpaths
         endif
     endif
 endif
 
-if ($?gatherpaths) then
+if ($?f_gatherpaths) then
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
             cstat "  gather-paths..."
@@ -141,17 +141,17 @@ if ($?gatherpaths) then
     endif
 endif
 
-if ($?setpaths) then
-    unset gatherpaths           # go into the setting mode
+if ($?f_setpaths) then
+    unset f_gatherpaths           # go into the setting mode
     if ($?HOME) then
         if (-r $HOME/.cshrc.paths) then
             cstat "  set-paths..."
 	    source $HOME/.cshrc.paths
-            set pathsset
+            set f_pathsset
         endif
     endif
 
-    if (! $?pathsset) then
+    if (! $?f_pathsset) then
         cstat ""
         if ($?HOME) then
             cstat "WARNING: ${HOME}/.cshrc.paths not available, using default:"
@@ -161,7 +161,7 @@ if ($?setpaths) then
         set path = (${HOME}/bin /bin /usr/bin /usr/local/bin)
         cstat "	" $path
     endif
-    unset setpaths pathsset
+    unset f_setpaths f_pathsset
 endif
 
 if ($?HOME) then
@@ -198,7 +198,7 @@ endif
 
 cstat "\n"
 
-if ($?INTERACTIVE) then
+if ($?f_interactive) then
     cstat "Starting interactive login\n\n"
     if (-r $HOME/.cshrc.interactive) then
 	source $HOME/.cshrc.interactive
@@ -208,9 +208,9 @@ if ($?INTERACTIVE) then
     endif
 endif
 
-if ($?INTERACTIVE) then
-    setenv INTERACTIVE_PARENT
-    unset INTERACTIVE
+if ($?f_interactive) then
+    setenv F_INTERACTIVE_PARENT
+    unset f_interactive
     unalias cstat
 else
     exit
@@ -219,8 +219,8 @@ endif
 #this must be at the bottom!
 if (! $?TERMTYPE) exit
 
-if ($?dontshowproc) then
-    unset dontshowproc
+if ($?f_dontshowproc) then
+    unset f_dontshowproc
     exit
 endif
 
