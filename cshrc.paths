@@ -4,6 +4,7 @@ if ($?f_gatherpaths) then
     set C_LD_LIBRARY_PATH
     set C_INCLUDE
     set C_CLASSPATH
+    set C_PYTHONPATH
 
     # initialize path variables for all prefixed subsystem
     foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
@@ -12,8 +13,6 @@ if ($?f_gatherpaths) then
         set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
 
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
-
-#        set C_INCLUDE		= (${C_INCLUDE} ${prefix}/include)
     end
     cstat "."
 
@@ -22,7 +21,6 @@ if ($?f_gatherpaths) then
                                     /usr/ucb /usr/etc /usr/bin/X11)
     set C_MANPATH		= (${C_MANPATH} /usr/man /usr/share/man)
     set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11)
-#    set C_INCLUDE		= (${C_INCLUDE} /usr/include /usr/include/X11)
     cstat "."
 
     if ($OSTYPE == solaris) then
@@ -34,7 +32,7 @@ if ($?f_gatherpaths) then
     endif
 
     # initialize path variables for HOME subsystem.
-    if ($?HOME) then
+    if ($?HOME && -d ${HOME}/software) then
         set C_PATH		= (${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE} ${C_PATH})
     
         set C_LD_LIBRARY_PATH	= (${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE} ${C_LD_LIBRARY_PATH})
@@ -44,6 +42,8 @@ if ($?f_gatherpaths) then
         set C_INCLUDE		= (${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE} ${C_INCLUDE})
 
         set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
+
+        set C_PYTHONPATH        = (${HOME}/software/lib/python ${C_PYTHONPATH})
     endif
     cstat "."
 endif
@@ -85,6 +85,16 @@ if ($?f_setpaths) then
         if (-d ${include}) then
             setenv INCLUDE		"${INCLUDE}:${include}"
             setenv GCC_IFLAG		"${GCC_IFLAG} -I${include}"
+        endif
+    end
+    cstat "."
+    foreach pythonpath (${C_PYTHONPATH})
+        if (-d ${pythonpath}) then
+            if (! $?PYTHONPATH) then
+                setenv PYTHONPATH	"${pythonpath}"
+            else
+                setenv PYTHONPATH		"${PYTHONPATH}:${pythonpath}"
+            endif
         endif
     end
     cstat "."
