@@ -52,7 +52,7 @@ endif
 # later init files require things that are in the path.  we just have to set it 
 # twice.
 if ($?f_setpaths) then
-    setenv PATH .
+    unsetenv PATH
     setenv MANPATH .
     setenv LD_LIBRARY_PATH  .
     setenv INCLUDE .
@@ -64,9 +64,14 @@ if ($?f_setpaths) then
 
     foreach bin (${C_PATH})
         if (-d ${bin}) then
-            setenv PATH			"${PATH}:${bin}"
+            if ($?PATH) then
+                setenv PATH			"${PATH}:${bin}"
+            else
+                setenv PATH			"${bin}"
+            endif
         endif
     end
+
     cstat "."
     foreach man (${C_MANPATH})
         if (-d ${man}) then
