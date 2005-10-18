@@ -27,8 +27,8 @@ alias more			less -m -e -i
 alias less			less -m -i
 
 # other cmd line utilities
-alias cvsdiff			"cvs status |& egrep 'Loc|Merg|cvs status'"
-alias cvsstat			"cvs status |& egrep 'Loc|Nee|conflicts|Unknown|cvs status'"
+alias cvsdiff			"cvs status \!* |& egrep 'Loc|Merg|conflicts|cvs status'"
+alias cvsstat			"cvs status \!* |& egrep 'Loc|Nee|conflicts|Unknown|cvs status'"
 if ($?tcsh) then
     if (-X gmake) then
         alias make		gmake
@@ -79,7 +79,6 @@ alias f				finger
 alias cell			mail 5103646142@mobile.att.net
 alias cellc			mail 5105858672@mobile.att.net
 alias celly			mail 5109188372@mobile.att.net
-alias tagit			'cvs tag -F LATEST \!*'
 
 if ($?HOME) then
     alias rp			'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
