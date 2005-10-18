@@ -64,10 +64,12 @@ if ($?tcsh && $TERMTYPE != screen) then
     endif
     if (-e ${HOME}/.ssh/agent) then
         source ${HOME}/.ssh/agent
-
-        set v_sock = ${SSH_AUTH_SOCK}
-        if (! -e ${v_sock}) then
+    endif
+    if ($?SSH_AUTH_SOCK) then
+        if (! -e ${SSH_AUTH_SOCK}) then
             unsetenv SSH_AUTH_SOCK SSH_AGENT_PID
+        else
+            set v_sock = ${SSH_AUTH_SOCK}
         endif
     endif
     if ( (! $?SSH_AUTH_SOCK) && (-X ssh-agent) ) then
@@ -90,7 +92,7 @@ if ($?tcsh && $TERMTYPE != screen) then
     endif
 endif
 
-stty erase '^?' kill '^U' intr '^C'
+stty erase '^?' kill '^U' intr '^C' stop '^O'
 
 if ($?tcsh) then
     bindkey	"^[[1~"	beginning-of-line		# home
@@ -103,8 +105,8 @@ if ($?tcsh) then
     bindkey	"^F"	forward-word
     bindkey	-b M-b	backward-char
     bindkey	-b M-f	forward-char
-    bindkey	-b M-s	i-search-fwd
-    bindkey	-b M-r	i-search-back
+    bindkey	-b C-s	i-search-fwd
+    bindkey	-b C-r	i-search-back
 endif
 
 if (! $?F_NOMOTD && -r /etc/motd) then
