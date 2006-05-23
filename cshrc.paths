@@ -6,8 +6,24 @@ if ($?f_gatherpaths) then
     set C_CLASSPATH
     set C_PYTHONPATH
 
-    # initialize path variables for all prefixed subsystem
-    foreach prefix (/sw /usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
+    # initialize path variables for HOME subsystem.
+    if ($?HOME && -d ${HOME}/software) then
+        set C_PATH		= (${C_PATH} ${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE})
+    
+        set C_LD_LIBRARY_PATH	= (${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE} ${C_LD_LIBRARY_PATH})
+
+        set C_MANPATH		= (${HOME}/software/man ${HOME}/software/man-${MACHTYPE}-${OSTYPE} ${C_MANPATH})
+
+        set C_INCLUDE		= (${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE} ${C_INCLUDE})
+
+        set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
+
+        set C_PYTHONPATH        = (${HOME}/software/lib/python ${C_PYTHONPATH})
+    endif
+    cstat "."
+
+    # initialize path variables for all trusted prefixed subsystems
+    foreach prefix (/usr/local /opt/local /usr/openwin /usr/dt /usr/ccs /usr/X11 /usr/X11R6 /usr/contrib)
         set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
         set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
@@ -31,20 +47,14 @@ if ($?f_gatherpaths) then
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lang/SUNWspro/lib /opt/SUNWspro/lib /opt/SUNWdtpcv/lib)
     endif
 
-    # initialize path variables for HOME subsystem.
-    if ($?HOME && -d ${HOME}/software) then
-        set C_PATH		= (${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE} ${C_PATH})
-    
-        set C_LD_LIBRARY_PATH	= (${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE} ${C_LD_LIBRARY_PATH})
+    # initialize path variables for all untrusted prefixed subsystems
+    foreach prefix (/usr/contrib)
+        set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
-        set C_MANPATH		= (${HOME}/software/man ${HOME}/software/man-${MACHTYPE}-${OSTYPE} ${C_MANPATH})
+        set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
 
-        set C_INCLUDE		= (${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE} ${C_INCLUDE})
-
-        set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
-
-        set C_PYTHONPATH        = (${HOME}/software/lib/python ${C_PYTHONPATH})
-    endif
+        set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
+    end
     cstat "."
 endif
 
@@ -52,54 +62,54 @@ endif
 # later init files require things that are in the path.  we just have to set it 
 # twice.
 if ($?f_setpaths) then
-    unsetenv PATH
-    setenv MANPATH .
-    setenv LD_LIBRARY_PATH  .
-    setenv INCLUDE .
-    setenv CLASSPATH .
+    setenv PATH			""
+    setenv MANPATH		""
+    setenv LD_LIBRARY_PATH	""
+    setenv INCLUDE		""
+    setenv CLASSPATH		""
+    setenv PYTHONPATH		""
 
-    setenv GCC_DFLAG ""
-    setenv GCC_IFLAG ""
-    setenv GCC_LFLAG ""
+    setenv GCC_DFLAG		""
+    setenv GCC_IFLAG		""
+    setenv GCC_LFLAG		""
+
+    set bin_separator man_separator lib_separator include_separator pythonpath_separator
 
     foreach bin (${C_PATH})
         if (-d ${bin}) then
-            if ($?PATH) then
-                setenv PATH			"${PATH}:${bin}"
-            else
-                setenv PATH			"${bin}"
-            endif
+            setenv PATH			"${PATH}${bin_separator}${bin}"
+            set bin_separator =		:
         endif
     end
 
     cstat "."
     foreach man (${C_MANPATH})
         if (-d ${man}) then
-            setenv MANPATH		"${MANPATH}:${man}"
+            setenv MANPATH		"${MANPATH}${man_separator}${man}"
+            set man_separator =		:
         endif
     end
     cstat "."
     foreach lib (${C_LD_LIBRARY_PATH})
         if (-d ${lib}) then
-            setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}:${lib}"
+            setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}${lib_separator}${lib}"
             setenv GCC_LFLAG		"${GCC_LFLAG} -L${lib}"
+            set lib_separator =		:
         endif
     end
     cstat "."
     foreach include (${C_INCLUDE})
         if (-d ${include}) then
-            setenv INCLUDE		"${INCLUDE}:${include}"
+            setenv INCLUDE		"${INCLUDE}${include_separator}${include}"
             setenv GCC_IFLAG		"${GCC_IFLAG} -I${include}"
+            set include_separator =	:
         endif
     end
     cstat "."
     foreach pythonpath (${C_PYTHONPATH})
         if (-d ${pythonpath}) then
-            if (! $?PYTHONPATH) then
-                setenv PYTHONPATH	"${pythonpath}"
-            else
-                setenv PYTHONPATH		"${PYTHONPATH}:${pythonpath}"
-            endif
+            setenv PYTHONPATH		"${PYTHONPATH}${pythonpath_separator}${pythonpath}"
+            set pythonpath_separator =	:
         endif
     end
     cstat "."
@@ -110,6 +120,7 @@ if ($?f_setpaths) then
     if (! $?f_gatherpaths) then
         unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
     endif
+    unset bin_separator man_separator lib_separator include_separator pythonpath_separator
 
     cstat "done\n"
 endif
