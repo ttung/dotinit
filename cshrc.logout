@@ -8,11 +8,9 @@ endif
 
 # check the ref count, kill if 1
 if ($?SSH_AUTH_SOCK && $?SSH_AGENT_PID) then
-    if (`stat -f \%l ${SSH_AUTH_SOCK}` == 1) then
-        if (! $?f_persistent_ssh_agent) then
-            eval `ssh-agent -k`
-            rm -f ${HOME}/.ssh/agent
-        endif
+    if (-N ${SSH_AUTH_SOCK} == 1) then
+        eval `ssh-agent -k`
+        rm -f ${HOME}/.ssh/agent
     endif
 endif
 
