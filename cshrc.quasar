@@ -1,0 +1,33 @@
+if (! $?f_gatherpaths) then
+    set complete=enhance
+    setenv F_NOMESG 
+    setenv F_NOMOTD
+    setenv F_NOQUOTACHECK
+    setenv RSYNC_RSH ssh
+    setenv CVS_RSH ssh
+    setenv CVSROOT :ext:merly.org:/home/CVSROOT
+    alias top nice +2 top -s 1 -ocpu
+
+    if ($?f_interactive) then
+        complete	ssh	'p/1/(merly.org elcamino.pasemi.com)/'
+
+        cstat "."
+
+        if ($?TERM) then
+            if ($TERM == xterm) then
+                setenv TERM xterm-color
+            endif
+        endif
+        set f_dontshowproc
+
+        if (! $?DISPLAY) then
+            setenv DISPLAY :0
+        endif
+
+        alias em /Applications/darwinports/Emacs.app/Contents/MacOS/Emacs
+        alias dailyshow "rsync -avP \!* csua.berkeley.edu:/csua/tmp/dailyshow Desktop/"
+        setenv EDITOR /Applications/darwinports/Emacs.app/Contents/MacOS/Emacs
+    endif
+
+    cstat "done\n"
+endif
