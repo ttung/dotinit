@@ -66,3 +66,4 @@ Vncviewer*raiseOnBeep:		false
 Vncviewer*desktop.translations:	#override\n\
 	<Key>F8: SendRFBEvent()\n\
 	<Key>F12: ShowPopup()
+Vncviewer*encodings:            copyrect tight hextile zlib corre rre raw
