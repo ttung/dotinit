@@ -83,6 +83,10 @@ if ($?tcsh && $TERMTYPE != screen) then
         echo "setenv SSH_AGENT_PID ${SSH_AGENT_PID}" >> ${HOME}/.ssh/agent
 
         set v_sock = ${SSH_AUTH_SOCK}
+
+        if (${HOST} == "quasar") then
+            ln -f ${v_sock} ${HOME}/.ssh/agent-sock
+        endif
     endif
     if ($?v_sock) then
         set v_dir = `dirname ${v_sock}`
@@ -174,11 +178,20 @@ if (! $?watch) then
 endif
 
 unset autologout
-set pushdtohome notify noclobber listjobs autolist
+set pushdtohome dextract dunique notify noclobber listjobs 
+set autolist=ambiguous
 set cdpath=${HOME}
 set history=500
-set ignoreeof=2
-set savehist=(100 merge)
+set histdup=erase
+if ($?tcsh) then
+    set v_tcshver = `echo $version | sed -E 's/tcsh ([^ ]*).*/\1/'`
+    if ($v_tcshver == "6.13.00") then
+        set ignoreeof=3
+    else
+        set ignoreeof=2
+    endif
+endif
+set savehist=(500 merge)
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
 
