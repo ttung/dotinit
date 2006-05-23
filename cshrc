@@ -221,7 +221,8 @@ if (! $?TERMTYPE) exit
 
 if ($?f_dontshowproc) then
     unset f_dontshowproc
+    if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'history -S'
     exit
 endif
 
-if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'echo -n "\e]0;['${PROMPT_MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
+if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'history -S; echo -n "\e]0;['${PROMPT_MACHNAME}${WINDOW_NUM:q}']:`pwd`> \!-0:q\a"'
