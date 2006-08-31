@@ -12,6 +12,9 @@ if ($?f_gatherpaths) then
 #                                /tools/pas/tm/1.0.3/bin \
 #                                /tools/pas/imp/1.0.5/i386-linux/bin \
 #
+    if ($OSTYPE == "linux") then
+        set C_LD_LIBRARY_PATH = (${C_LD_LIBRARY_PATH} /tools/openssl/0.9.8a/Linux-i686/lib)
+    endif
 else
     umask 022
 
