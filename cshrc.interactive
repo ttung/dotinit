@@ -183,6 +183,7 @@ set autolist=ambiguous
 set cdpath=${HOME}
 set history=500
 set histdup=erase
+set savehist=(500 merge)
 if ($?tcsh) then
     set v_tcshver = `echo $version | sed -E 's/tcsh ([^ ]*).*/\1/'`
     if ($v_tcshver == "6.13.00") then
@@ -191,7 +192,6 @@ if ($?tcsh) then
         set ignoreeof=2
     endif
 endif
-set savehist=(500 merge)
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
 
