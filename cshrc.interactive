@@ -185,7 +185,7 @@ set history=500
 set histdup=erase
 set savehist=(500 merge)
 if ($?tcsh) then
-    set v_tcshver = `echo $version | sed -E 's/tcsh ([^ ]*).*/\1/'`
+    set v_tcshver = `echo $version | cut -d' ' -f 2`
     if ($v_tcshver == "6.13.00") then
         set ignoreeof=3
     else
