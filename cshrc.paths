@@ -1,6 +1,7 @@
 if ($?f_gatherpaths) then
     set C_PATH
     set C_MANPATH
+    set C_INFOPATH
     set C_LD_LIBRARY_PATH
     set C_INCLUDE
     set C_CLASSPATH
@@ -40,6 +41,8 @@ if ($?f_gatherpaths) then
 
             set C_MANPATH		= (${check}/man ${C_MANPATH})
 
+            set C_INFOPATH		= (${check}/info ${C_INFOPATH})
+
             set C_INCLUDE		= (${check}/include ${C_INCLUDE})
 
             set C_CLASSPATH		= (${check}/classes ${C_CLASSPATH})
@@ -56,6 +59,7 @@ if ($?f_gatherpaths) then
         set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
         set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
+        set C_INFOPATH		= (${C_INFOPATH} ${prefix}/info ${prefix}/share/info)
 
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
     end
@@ -65,6 +69,7 @@ if ($?f_gatherpaths) then
     set C_PATH			= (${C_PATH} /usr/bin /bin /usr/sbin /sbin /etc \
                                     /usr/ucb /usr/etc /usr/bin/X11)
     set C_MANPATH		= (${C_MANPATH} /usr/man /usr/share/man)
+    set C_INFOPATH		= (${C_INFOPATH} /usr/share/info)
     set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} /lib /usr/lib /usr/lib/X11)
     cstat "."
 
@@ -81,6 +86,7 @@ if ($?f_gatherpaths) then
         set C_PATH		= (${C_PATH} ${prefix}/bin ${prefix}/sbin)
 
         set C_MANPATH		= (${C_MANPATH} ${prefix}/man ${prefix}/share/man)
+        set C_INFOPATH		= (${C_INFOPATH} ${prefix}/share/info)
 
         set C_LD_LIBRARY_PATH	= (${C_LD_LIBRARY_PATH} ${prefix}/lib)
     end
@@ -93,6 +99,7 @@ endif
 if ($?f_setpaths) then
     setenv PATH			""
     setenv MANPATH		""
+    setenv INFOPATH		""
     setenv LD_LIBRARY_PATH	""
     setenv INCLUDE		""
     setenv CLASSPATH		""
@@ -102,7 +109,7 @@ if ($?f_setpaths) then
     setenv GCC_IFLAG		""
     setenv GCC_LFLAG		""
 
-    set bin_separator man_separator lib_separator include_separator pythonpath_separator
+    set bin_separator man_separator info_separator lib_separator include_separator pythonpath_separator
 
     foreach bin (${C_PATH})
         if (-d ${bin}) then
@@ -116,6 +123,13 @@ if ($?f_setpaths) then
         if (-d ${man}) then
             setenv MANPATH		"${MANPATH}${man_separator}${man}"
             set man_separator =		:
+        endif
+    end
+    cstat "."
+    foreach info (${C_INFOPATH})
+        if (-d ${info}) then
+            setenv INFOPATH		"${INFOPATH}${info_separator}${info}"
+            set info_separator =	:
         endif
     end
     cstat "."
@@ -147,9 +161,9 @@ if ($?f_setpaths) then
     setenv GCC_IFLAG		"${GCC_IFLAG} -I."
 
     if (! $?f_gatherpaths) then
-        unset C_PATH C_MANPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
+        unset C_PATH C_MANPATH C_INFOPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
     endif
-    unset bin_separator man_separator lib_separator include_separator pythonpath_separator
+    unset bin_separator man_separator info_separator lib_separator include_separator pythonpath_separator
 
     cstat "done\n"
 endif
