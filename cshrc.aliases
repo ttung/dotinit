@@ -85,7 +85,7 @@ alias cellc			mail 5105858672@mobile.att.net
 alias celly			mail 5109188372@mobile.att.net
 
 if ($?HOME) then
-    alias rp			'if (-r '${HOME}'/.cshrc.paths) source '${HOME}'/.cshrc.paths'
+    alias rp			'alias cstat "echo \!* > /dev/null"; set f_gatherpaths f_setpaths; source '${HOME}'/.cshrc.paths; unset f_gatherpaths; source '${HOME}'/.cshrc.paths; unset f_setpaths; unalias cstat'
 endif
 alias quake			'finger -l quake@quake.geo.berkeley.edu'
 
