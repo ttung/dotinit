@@ -6,19 +6,48 @@ if ($?f_gatherpaths) then
     set C_CLASSPATH
     set C_PYTHONPATH
 
-    # initialize path variables for HOME subsystem.
-    if ($?HOME && -d ${HOME}/software) then
-        set C_PATH		= (${C_PATH} ${HOME}/software/bin ${HOME}/software/bin-${MACHTYPE}-${OSTYPE})
-    
-        set C_LD_LIBRARY_PATH	= (${HOME}/software/lib ${HOME}/software/lib-${MACHTYPE}-${OSTYPE} ${C_LD_LIBRARY_PATH})
+    if ($?HOME) then
+        # x86-64 can run i386 binaries.
+        if (${MACHTYPE} == "x86_64") then
+            set COMPAT_MACHTYPE = (x86_64 i386)
+        else
+            set COMPAT_MACHTYPE = (${MACHTYPE})
+        endif
 
-        set C_MANPATH		= (${HOME}/software/man ${HOME}/software/man-${MACHTYPE}-${OSTYPE} ${C_MANPATH})
+        # freebsd has the linux compatibility layer.
+        if (${OSTYPE} == "FreeBSD") then
+            set COMPAT_OSTYPE = (FreeBSD linux)
+        else
+            set COMPAT_OSTYPE = (${OSTYPE})
+        endif
 
-        set C_INCLUDE		= (${HOME}/software/include ${HOME}/software/include-${MACHTYPE}-${OSTYPE} ${C_INCLUDE})
+        # generate a list of all home-based systems to check.
+        set CHECK = (${HOME}/software)
 
-        set C_CLASSPATH		= (${HOME}/software/classes ${C_CLASSPATH})
+        foreach machtype ($COMPAT_MACHTYPE)
+            foreach ostype ($COMPAT_OSTYPE)
+                set CHECK = (${CHECK} ${HOME}/software/${machtype}-${ostype})
+            end
+        end
 
-        set C_PYTHONPATH        = (${HOME}/software/lib/python ${C_PYTHONPATH})
+        foreach check (${CHECK})
+            set C_PATH			= (${C_PATH} ${check}/bin)
+
+            set C_LD_LIBRARY_PATH	= (${check}/lib ${C_LD_LIBRARY_PATH})
+            if (${MACHTYPE} == "x86_64") then
+                set C_LD_LIBRARY_PATH	= (${check}/lib64 ${C_LD_LIBRARY_PATH})
+            endif
+
+            set C_MANPATH		= (${check}/man ${C_MANPATH})
+
+            set C_INCLUDE		= (${check}/include ${C_INCLUDE})
+
+            set C_CLASSPATH		= (${check}/classes ${C_CLASSPATH})
+
+            set C_PYTHONPATH        	= (${check}/lib/python ${C_PYTHONPATH})
+        end
+
+        unset COMPAT_MACHTYPE COMPAT_OSTYPE CHECK
     endif
     cstat "."
 
