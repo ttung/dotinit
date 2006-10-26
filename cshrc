@@ -37,18 +37,16 @@ if ($?f_interactive) then
     endif
 endif
 
-if (! $?MACHTYPE) then
-    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-        setenv MACHTYPE `uname -p`
-    else
-        setenv MACHTYPE UNKNOWN
-    endif
+if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+    setenv MACHTYPE `uname -p`
+else
+    setenv MACHTYPE UNKNOWN
 endif
 
-if (! $?OSTYPE) then
-    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-        setenv OSTYPE `uname -s`
-    endif
+if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+    setenv OSTYPE `uname -s`
+else
+    setenv OSTYPE UNKNOWN
 endif
 
 # Figure out the current host name and YP domain 
