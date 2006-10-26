@@ -38,26 +38,10 @@ if ($?f_interactive) then
 endif
 
 if (! $?MACHTYPE) then
-    if ( (-x /bin/sed) || (-x /usr/bin/sed) ) then
-        if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-            setenv MACHTYPE `arch | sed 's/\//-/'`
-        else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-            setenv MACHTYPE `mach | sed 's/\//-/'`
-        else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-            setenv MACHTYPE `uname -p | sed 's/\//-/'`
-        else
-            setenv MACHTYPE UNKNOWN
-        endif
+    if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
+        setenv MACHTYPE `uname -p`
     else
-        if ( (-x /bin/arch) || (-x /usr/bin/arch) ) then
-            setenv MACHTYPE `arch`
-        else if ( (-x /bin/mach) || (-x /usr/bin/mach) ) then
-            setenv MACHTYPE `mach`
-        else if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-            setenv MACHTYPE `uname -p`
-        else
-            setenv MACHTYPE UNKNOWN
-        endif
+        setenv MACHTYPE UNKNOWN
     endif
 endif
 

@@ -191,6 +191,7 @@ if ($?tcsh) then
     else
         set ignoreeof=2
     endif
+    set ignoreeof=3
 endif
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
