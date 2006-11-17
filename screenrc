@@ -21,9 +21,9 @@ caption always "%{wb}%M %d %C%a %L=%=%-Lw%50L>%{+b wb}%n%f* %t%{-}%+Lw%<"
 shelltitle '> |tcsh'
 
 # keymappings specific to each terminal
-termcap xterm* 'kb=^?:kD=\E[3~'
-termcap vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
-termcap vt100 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
+termcapinfo xterm* 'kb=^?:kD=\E[3~'
+termcapinfo vt100 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcapinfo vt100 'kh=\E[1~:kI=\E[2~:kD=\E[3~:kH=\E[4~:kP=\E[H:kN=\E[6~'
 
 # give the background-color-erase capability
 termcap vt100|xterm* "" 'ut'
@@ -40,6 +40,7 @@ vbell off
 #bindkey -d -k k4 stuff \033[14~
 
 bindkey "^[OI" stuff "^I"
+bindkey kb stuff "^_"
 
 #remove some stupid / dangerous key bindings
 bind k
