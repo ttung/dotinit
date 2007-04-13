@@ -20,7 +20,7 @@ alias popd                      popd -v
 # process control
 alias ups			ps -U $USER
 alias j				jobs
-if ($OSTYPE == linux) then
+if ($OSTYPE == Linux) then
     alias top			nice +2 top d 1
 else
     alias top			nice +2 top -s 1
