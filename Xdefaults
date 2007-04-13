@@ -58,7 +58,7 @@ XTerm-ansi*colorBDMode:		false
 
 Xclock*update:			1
 
-Emacs*font:			-misc-fixed-medium-r-normal--14-130-75-75-c-70-*-1
+Emacs*font:			-schumacher-clean-medium-r-normal--12-*
 Emacs*toolBar:			off
 Emacs.verticalScrollBars:       right
 
