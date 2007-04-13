@@ -58,7 +58,7 @@ if ($?TERMCAP && $TERMTYPE != screen) then
     unset noglob
 endif
 
-if ($?tcsh && $TERMTYPE != screen) then
+if (! $?F_NO_SSH_AUTH_SOCK && $?tcsh && $TERMTYPE != screen) then
     if (! -d ${HOME}/.ssh) then
         mkdir ${HOME}/.ssh
     endif
@@ -191,7 +191,6 @@ if ($?tcsh) then
     else
         set ignoreeof=2
     endif
-    set ignoreeof=3
 endif
 set symlinks=ignore
 set time=(10 "%Us usr, %Ss kern, %Es real, %Xk shrd, %Dk usr")
