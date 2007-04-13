@@ -40,7 +40,7 @@ vbell off
 #bindkey -d -k k4 stuff \033[14~
 
 bindkey "^[OI" stuff "^I"
-bindkey kb stuff "^_"
+bindkey -k kb stuff "^_"
 
 #remove some stupid / dangerous key bindings
 bind k

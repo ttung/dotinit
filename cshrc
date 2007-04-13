@@ -38,7 +38,7 @@ if ($?f_interactive) then
 endif
 
 if ( (-x /bin/uname) || (-x /usr/bin/uname) ) then
-    setenv MACHTYPE `uname -p`
+    setenv MACHTYPE `uname -m`
 else
     setenv MACHTYPE UNKNOWN
 endif
@@ -143,7 +143,7 @@ if ($?f_setpaths) then
         set path = (${HOME}/bin /bin /usr/bin /usr/local/bin)
         cstat "	" $path
     endif
-    unset f_setpaths f_pathsset
+    unset f_pathsset
 endif
 
 if ($?HOME) then
@@ -177,6 +177,7 @@ if (-r $HOME/.cshrc.$HOST) then
     cstat "  host-based..."
     source $HOME/.cshrc.$HOST
 endif
+unset f_setpaths
 
 cstat "\n"
 
