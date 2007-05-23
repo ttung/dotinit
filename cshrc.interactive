@@ -1,13 +1,3 @@
-set rmalias=`alias rm`
-unalias rm
-
-rm -f ~/.pine-debug* >& /dev/null
-rm -f ~/dead.letter
-rm -f ~/.saves-* >& /dev/null
-
-alias rm $rmalias
-unset rmalias
-
 # set the term if it hasn't already been set, or if it was set to dumb
 if (! $?TERM) then
     set f_setterm

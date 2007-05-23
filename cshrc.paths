@@ -22,6 +22,13 @@ if ($?f_gatherpaths) then
             set COMPAT_OSTYPE = (${OSTYPE})
         endif
 
+        # macosx has rosetta, allowing it to run ppc binaries.
+        if (${OSTYPE} == "Darwin" && ${MACHTYPE} == "i386") then
+            set COMPAT_MACHTYPE = (i386 powerpc)
+        else
+            set COMPAT_MACHTYPE = (${OSTYPE})
+        endif
+
         # generate a list of all home-based systems to check.
         set CHECK = (${HOME}/software)
 
@@ -39,7 +46,7 @@ if ($?f_gatherpaths) then
                 set C_LD_LIBRARY_PATH	= (${check}/lib64 ${C_LD_LIBRARY_PATH})
             endif
 
-            set C_MANPATH		= (${check}/man ${C_MANPATH})
+            set C_MANPATH		= (${check}/man ${check}/share/man ${C_MANPATH})
 
             set C_INFOPATH		= (${check}/info ${C_INFOPATH})
 
