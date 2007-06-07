@@ -8,25 +8,22 @@ if ($?f_gatherpaths) then
     set C_PYTHONPATH
 
     if ($?HOME) then
+        set COMPAT_MACHTYPE = ${MACHTYPE}
+        set COMPAT_OSTYPE   = ${OSTYPE}
+
         # x86-64 can run i386 binaries.
         if (${MACHTYPE} == "x86_64") then
-            set COMPAT_MACHTYPE = (x86_64 i386)
-        else
-            set COMPAT_MACHTYPE = (${MACHTYPE})
+            set COMPAT_MACHTYPE = (${COMPAT_MACHTYPE} i386)
         endif
 
         # freebsd has the linux compatibility layer.
         if (${OSTYPE} == "FreeBSD") then
-            set COMPAT_OSTYPE = (FreeBSD linux)
-        else
-            set COMPAT_OSTYPE = (${OSTYPE})
+            set COMPAT_OSTYPE = (${COMPAT_OSTYPE} Linux)
         endif
 
         # macosx has rosetta, allowing it to run ppc binaries.
         if (${OSTYPE} == "Darwin" && ${MACHTYPE} == "i386") then
-            set COMPAT_MACHTYPE = (i386 powerpc)
-        else
-            set COMPAT_MACHTYPE = (${OSTYPE})
+            set COMPAT_MACHTYPE = (${COMPAT_MACHTYPE} powerpc)
         endif
 
         # generate a list of all home-based systems to check.
@@ -168,7 +165,7 @@ if ($?f_setpaths) then
     setenv GCC_IFLAG		"${GCC_IFLAG} -I."
 
     if (! $?f_gatherpaths) then
-        unset C_PATH C_MANPATH C_INFOPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH
+        unset C_PATH C_MANPATH C_INFOPATH C_LD_LIBRARY_PATH C_INCLUDE C_CLASSPATH C_PYTHONPATH
     endif
     unset bin_separator man_separator info_separator lib_separator include_separator pythonpath_separator
 
