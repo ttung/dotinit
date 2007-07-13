@@ -26,6 +26,21 @@ complete	gunzip		'p/*/f:*.{gz,Z,tgz,taz}/'
 complete	gv		'p/*/f:*.{ps,eps,pdf}/'
 complete	gzip		'n/-d/f:*.{gz,Z,tgz,taz}/' 'n/*/f:^*.{gz,Z,tgz,taz}/'
 complete	man		'n/*/c/'
+complete	mtn		'c/--/( help db )/' 'p/1/( automate db annotate cat diff list ls cert pull push checkout co explicit_merge heads merge propagate rm )/' \
+					'n/automate/( get_base_revision_id )/' \
+					'n/db/( init )/' \
+					'n/annotate/f/' \
+					'n/cat/f/' \
+					'n/diff/f/' \
+					'n/list/( branches known unknown ignored missing changed )/' \
+					'n/ls/( branches known unknown ignored missing changed )/' \
+					'n/rm/f/' \
+                                        'c/h:/`mtn ls branches`/' \
+                                        'n/-r/`mtn automate select i:`/'
+# \
+#                                        'n/-r/`mtn ls branches`/'
+#                                        'n/-r/`mtn ls branches | awk \{printf\ \"h:%s\ \",\$1\}`/' \
+
 complete	nice		'p/1-2/c/'
 complete	pico		'n/*/f:^*.[oa]/'
 complete	printenv	'p/1/v/'
