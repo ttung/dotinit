@@ -51,7 +51,7 @@ if ($?f_gatherpaths) then
 
             set C_CLASSPATH		= (${check}/classes ${C_CLASSPATH})
 
-            set C_PYTHONPATH        	= (${check}/lib/python ${C_PYTHONPATH})
+            set C_PYTHONPATH        	= (${check}/python ${C_PYTHONPATH})
         end
 
         unset COMPAT_MACHTYPE COMPAT_OSTYPE CHECK
