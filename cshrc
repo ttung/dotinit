@@ -1,8 +1,15 @@
 unalias postcmd
-set cp_version=0.12.27-fb-1
+set cp_version=0.12.28
 
 if (! $?PATH) then
     set path = (/bin /usr/bin)
+endif
+
+if ($?HOME) then
+    set PYENV_HOME=${HOME}/software/pyenv
+    if (-e ${PYENV_HOME}) then
+        alias module 'set module_file=`'${PYENV_HOME}'/modulecmd -s tcsh '"\!*"'`; if (-e "$module_file") source "$module_file"; rm -f "${module_file}"; unset module_file'
+    endif
 endif
 
 #interactive shell?
@@ -204,7 +211,7 @@ if (! $?TERMTYPE) exit
 
 if ($?f_dontshowproc) then
     unset f_dontshowproc
-    if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd 'history -S'
+    if ( ($?prompt) && ($TERMTYPE == xterm || $TERMTYPE == screen) ) alias postcmd history -S
     exit
 endif
 

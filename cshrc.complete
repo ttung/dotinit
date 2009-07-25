@@ -36,7 +36,9 @@ complete	mtn		'c/--/( help db )/' 'p/1/( automate db annotate cat diff list ls c
 					'n/ls/( branches known unknown ignored missing changed )/' \
 					'n/rm/f/' \
                                         'c/h:/`mtn ls branches`/' \
-                                        'n/-r/`mtn automate select i:`/'
+                                        'n/-r/`mtn automate select i:`/' \
+                                        'n/propagate/`mtn ls branches`/' \
+                                        'N/propagate/`mtn ls branches`/'
 # \
 #                                        'n/-r/`mtn ls branches`/'
 #                                        'n/-r/`mtn ls branches | awk \{printf\ \"h:%s\ \",\$1\}`/' \

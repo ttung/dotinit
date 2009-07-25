@@ -25,6 +25,7 @@ if ($OSTYPE == Linux) then
 else
     alias top			nice +2 top -s 1
 endif
+alias pgrep                     pgrep -f
 
 # pagers
 alias more			less -m -e -i
