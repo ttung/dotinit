@@ -28,7 +28,7 @@ endif
 alias pgrep                     pgrep -f
 
 # pagers
-alias more			less -m -e -i
+alias more			less -m -e -i -r
 alias less			less -m -i
 
 # other cmd line utilities

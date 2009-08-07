@@ -22,7 +22,9 @@ if ($?prompt) then
     limit coredumpsize 15360k
 else
     alias cstat 'echo \!* > /dev/null'
-    limit coredumpsize 0
+    if (! $?INTERACTIVE_PARENT) then
+        limit coredumpsize 0
+    endif
     set prompt=${HOST}':\!> '
 endif
 
@@ -56,7 +58,7 @@ else
     setenv OSTYPE UNKNOWN
 endif
 
-# Figure out the current host name and YP domain 
+# Figure out the current host name and YP domain
 if (-r $HOME/.host) then
     setenv HOST `cat $HOME/.host`
 endif

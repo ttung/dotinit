@@ -9,6 +9,15 @@ if ($?f_gatherpaths) then
     set C_PYTHONPATH
 
     if ($?HOME) then
+        set CH_PATH
+        set CH_MANPATH
+        set CH_INFOPATH
+        set CH_LD_LIBRARY_PATH
+        set CH_INCLUDE
+        set CH_LIB
+        set CH_CLASSPATH
+        set CH_PYTHONPATH
+
         set COMPAT_MACHTYPE = ${MACHTYPE}
         set COMPAT_OSTYPE   = ${OSTYPE}
 
@@ -37,23 +46,23 @@ if ($?f_gatherpaths) then
         end
 
         foreach check (${CHECK})
-            set C_PATH			= (${C_PATH} ${check}/bin)
+            set CH_PATH			= (${CH_PATH} ${check}/bin)
 
-            set C_LD_LIBRARY_PATH	= (${check}/lib ${C_LD_LIBRARY_PATH})
+            set CH_LD_LIBRARY_PATH	= (${check}/lib ${CH_LD_LIBRARY_PATH})
             if (${MACHTYPE} == "x86_64") then
-                set C_LD_LIBRARY_PATH	= (${check}/lib64 ${C_LD_LIBRARY_PATH})
+                set CH_LD_LIBRARY_PATH	= (${check}/lib64 ${CH_LD_LIBRARY_PATH})
             endif
 
-            set C_MANPATH		= (${check}/man ${check}/share/man ${C_MANPATH})
+            set CH_MANPATH		= (${check}/man ${check}/share/man ${CH_MANPATH})
 
-            set C_INFOPATH		= (${check}/info ${C_INFOPATH})
+            set CH_INFOPATH		= (${check}/info ${CH_INFOPATH})
 
-            set C_INCLUDE		= (${check}/include ${C_INCLUDE})
-            set C_LIB                   = (${check}/lib ${C_LIB})
+            set CH_INCLUDE		= (${check}/include ${CH_INCLUDE})
+            set CH_LIB                   = (${check}/lib ${CH_LIB})
 
-            set C_CLASSPATH		= (${check}/classes ${C_CLASSPATH})
+            set CH_CLASSPATH		= (${check}/classes ${CH_CLASSPATH})
 
-            set C_PYTHONPATH        	= (${check}/python ${C_PYTHONPATH})
+            set CH_PYTHONPATH        	= (${check}/python ${CH_PYTHONPATH})
         end
 
         unset COMPAT_MACHTYPE COMPAT_OSTYPE CHECK
@@ -100,7 +109,7 @@ if ($?f_gatherpaths) then
 endif
 
 # even if we are just gathering, we should probably set the paths, in case
-# later init files require things that are in the path.  we just have to set it 
+# later init files require things that are in the path.  we just have to set it
 # twice.
 if ($?f_setpaths) then
     setenv PATH			""
@@ -118,7 +127,7 @@ if ($?f_setpaths) then
 
     set bin_separator man_separator info_separator ld_separator include_separator lib_separator pythonpath_separator
 
-    foreach bin (${C_PATH})
+    foreach bin (${CH_PATH} ${C_PATH})
         if (-d ${bin}) then
             setenv PATH			"${PATH}${bin_separator}${bin}"
             set bin_separator =		:
@@ -126,28 +135,28 @@ if ($?f_setpaths) then
     end
 
     cstat "."
-    foreach man (${C_MANPATH})
+    foreach man (${CH_MANPATH} ${C_MANPATH})
         if (-d ${man}) then
             setenv MANPATH		"${MANPATH}${man_separator}${man}"
             set man_separator =		:
         endif
     end
     cstat "."
-    foreach info (${C_INFOPATH})
+    foreach info (${CH_INFOPATH} ${C_INFOPATH})
         if (-d ${info}) then
             setenv INFOPATH		"${INFOPATH}${info_separator}${info}"
             set info_separator =	:
         endif
     end
     cstat "."
-    foreach lib (${C_LD_LIBRARY_PATH})
+    foreach lib (${CH_LD_LIBRARY_PATH} ${C_LD_LIBRARY_PATH})
         if (-d ${lib}) then
             setenv LD_LIBRARY_PATH	"${LD_LIBRARY_PATH}${ld_separator}${lib}"
             set ld_separator =		:
         endif
     end
     cstat "."
-    foreach include (${C_INCLUDE})
+    foreach include (${CH_INCLUDE} ${C_INCLUDE})
         if (-d ${include}) then
             setenv INCLUDE		"${INCLUDE}${include_separator}${include}"
             setenv GCC_IFLAG		"${GCC_IFLAG} -I${include}"
@@ -155,15 +164,15 @@ if ($?f_setpaths) then
         endif
     end
     cstat "."
-    foreach lib (${C_LIB})
+    foreach lib (${CH_LIB} ${C_LIB})
         if (-d ${lib}) then
             setenv LIB			"${LIB}${lib_separator}${lib}"
-            setenv GCC_LFLAG		"${GCC_LFLAG} -I${lib}"
+            setenv GCC_LFLAG		"${GCC_LFLAG} -L${lib}"
             set lib_separator =	:
         endif
     end
     cstat "."
-    foreach pythonpath (${C_PYTHONPATH})
+    foreach pythonpath (${CH_PYTHONPATH} ${C_PYTHONPATH})
         if (-d ${pythonpath}) then
             setenv PYTHONPATH		"${PYTHONPATH}${pythonpath_separator}${pythonpath}"
             set pythonpath_separator =	:
@@ -173,6 +182,7 @@ if ($?f_setpaths) then
 
     if (! $?f_gatherpaths) then
         unset C_PATH C_MANPATH C_INFOPATH C_LD_LIBRARY_PATH C_INCLUDE C_LIB C_CLASSPATH C_PYTHONPATH
+        unset CH_PATH CH_MANPATH CH_INFOPATH CH_LD_LIBRARY_PATH CH_INCLUDE CH_LIB CH_CLASSPATH CH_PYTHONPATH
     endif
     unset bin_separator man_separator info_separator ld_separator include_separator lib_separator pythonpath_separator
 

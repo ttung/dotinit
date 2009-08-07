@@ -6,7 +6,6 @@ if (! $?f_gatherpaths) then
 
     umask 026
     set watch=(1 any any)
-    setenv CVSROOT	/home/titan/CVSROOT
 
     setenv	PRINTER	pssouth
 

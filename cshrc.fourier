@@ -1,12 +1,10 @@
 if (! $?f_gatherpaths) then
     set complete=enhance
-    setenv F_NOMESG 
     setenv F_NOMOTD
     setenv F_NOQUOTACHECK
     setenv F_NO_SSH_AUTH_SOCK
     setenv RSYNC_RSH ssh
     setenv CVS_RSH ssh
-    setenv CVSROOT :ext:merly.org:/home/CVSROOT
     alias top nice +2 top -s 1 -ocpu
 
     if ($?f_interactive) then
