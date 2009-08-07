@@ -2,7 +2,6 @@ if (! $?f_gatherpaths) then
     set complete=enhance
     setenv F_NOMOTD
     setenv F_NOQUOTACHECK
-    setenv F_NO_SSH_AUTH_SOCK
     setenv RSYNC_RSH ssh
     setenv CVS_RSH ssh
     alias top nice +2 top -s 1 -ocpu

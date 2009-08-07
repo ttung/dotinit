@@ -33,44 +33,6 @@ if ($?TERMCAP && $TERMTYPE != screen) then
     unset noglob
 endif
 
-if (! $?F_NO_SSH_AUTH_SOCK && $?tcsh && $TERMTYPE != screen) then
-    if (! -d ${HOME}/.ssh) then
-        mkdir ${HOME}/.ssh
-    endif
-    if (-e ${HOME}/.ssh/agent) then
-        source ${HOME}/.ssh/agent
-    endif
-    if ($?SSH_AUTH_SOCK) then
-        if (! -e ${SSH_AUTH_SOCK}) then
-            unsetenv SSH_AUTH_SOCK SSH_AGENT_PID
-        else
-            set v_sock = ${SSH_AUTH_SOCK}
-        endif
-    endif
-    if ( (! $?SSH_AUTH_SOCK) && (-X ssh-agent) ) then
-	eval `ssh-agent -c`
-	if (-r ${HOME}/.ssh/identity || \
-            -r ${HOME}/.ssh/id_dsa || \
-            -r ${HOME}/.ssh/id_rsa) then
-	    ssh-add
-	endif
-        echo "setenv SSH_AUTH_SOCK ${SSH_AUTH_SOCK}" >! ${HOME}/.ssh/agent
-        echo "setenv SSH_AGENT_PID ${SSH_AGENT_PID}" >> ${HOME}/.ssh/agent
-
-        set v_sock = ${SSH_AUTH_SOCK}
-
-        if (${HOST} == "quasar") then
-            ln -f ${v_sock} ${HOME}/.ssh/agent-sock
-        endif
-    endif
-    if ($?v_sock) then
-        set v_dir = `dirname ${v_sock}`
-        set v_ssh_sock_link = `mktemp ${v_dir}/sock_lnk.XXXXXXXX`
-        ln -f ${v_sock} ${v_ssh_sock_link}
-        unset v_sock v_dir
-    endif
-endif
-
 stty erase '^?' kill '^U' intr '^C' stop '^O'
 
 if ($?tcsh) then
