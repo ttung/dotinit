@@ -29,7 +29,6 @@ alias pgrep                     pgrep -f
 
 # pagers
 alias more			less -m -e -i -r
-alias less			less -m -i
 
 # other cmd line utilities
 alias cvsdiff			"cvs status \!* |& egrep 'Loc|Merg|conflicts|cvs status'"
@@ -55,7 +54,6 @@ endif
 
 
 # editors
-alias pico			pico -z -w
 alias en			emacs -nw
 alias em			emacs
 
@@ -78,16 +76,11 @@ alias unswap_caps 'xmodmap -e "remove lock = Control_L" -e "remove control = Cap
 alias swap_caps 'xmodmap -e "remove lock = Caps_Lock" -e "remove control = Control_L" -e "add lock = Control_L" -e "add control = Caps_Lock"'
 
 # conveniences
-alias fha			setenv DISPLAY 12.234.134.128:0
 alias motd			less -m -e /etc/motd
 alias f				finger
-alias cell			mail 5103646142@mobile.att.net
-alias cellc			mail 5105858672@mobile.att.net
-alias celly			mail 5109188372@mobile.att.net
 
 if ($?HOME) then
     alias rp			'alias cstat "echo \!* > /dev/null"; set f_gatherpaths f_setpaths; source '${HOME}'/.cshrc.paths; unset f_gatherpaths; source '${HOME}'/.cshrc.paths; unset f_setpaths; unalias cstat'
 endif
-alias quake			'finger -l quake@quake.geo.berkeley.edu'
 
 cstat "done\n"
