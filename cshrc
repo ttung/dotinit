@@ -5,6 +5,13 @@ if (! $?PATH) then
     set path = (/bin /usr/bin)
 endif
 
+if ($?HOME) then
+    set PYENV_HOME=${HOME}/software/pyenv
+    if (-e ${PYENV_HOME}) then
+        alias module 'set module_file=`'${PYENV_HOME}'/modulecmd -s tcsh '"\!*"'`; if (-e "$module_file") source "$module_file"; rm -f "${module_file}"; unset module_file'
+    endif
+endif
+
 #interactive shell?
 set echo_style=both
 if ($?prompt) then
@@ -15,7 +22,9 @@ if ($?prompt) then
     limit coredumpsize 15360k
 else
     alias cstat 'echo \!* > /dev/null'
-    limit coredumpsize 0
+    if (! $?INTERACTIVE_PARENT) then
+        limit coredumpsize 0
+    endif
     set prompt=${HOST}':\!> '
 endif
 
@@ -49,7 +58,7 @@ else
     setenv OSTYPE UNKNOWN
 endif
 
-# Figure out the current host name and YP domain 
+# Figure out the current host name and YP domain
 if (-r $HOME/.host) then
     setenv HOST `cat $HOME/.host`
 endif

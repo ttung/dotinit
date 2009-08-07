@@ -1,12 +1,10 @@
 if (! $?f_gatherpaths) then
     set complete=enhance
     set f_persistent_ssh_agent
-    setenv F_NOMESG 
     setenv F_NOMOTD
     setenv F_NOQUOTACHECK
     setenv RSYNC_RSH ssh
     setenv CVS_RSH ssh
-    setenv CVSROOT :ext:merly.org:/home/CVSROOT
     alias top nice +2 top -s 1 -ocpu
 
     if ($?f_interactive) then
@@ -26,7 +24,6 @@ if (! $?f_gatherpaths) then
         endif
 
         alias em /Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
-        alias dailyshow "rsync -avP \!* csua.berkeley.edu:/csua/tmp/dailyshow Desktop/"
         setenv EDITOR /Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
     endif
 

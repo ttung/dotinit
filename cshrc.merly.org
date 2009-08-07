@@ -7,7 +7,6 @@ if (! $?f_gatherpaths) then
     umask 066
 
     setenv EDITOR	"emacs-nw"
-    setenv CVSROOT	/home/CVSROOT
     #setenv NNTPSERVER news.comcast.giganews.com
     setenv NNTPSERVER localhost:1190
 
@@ -21,7 +20,7 @@ if (! $?f_gatherpaths) then
             alias	${srhost}	ssh ${rhost}
         end
         unset srhost
-        alias	csua	ssh -L 1190:agate.berkeley.edu:119 csua.berkeley.edu 
+        alias	csua	ssh -L 1190:agate.berkeley.edu:119 csua.berkeley.edu
         alias	mangairc	BitchX bjones_15 irc.mircx.com
         alias	tvirc	BitchX bjones_15 irc.irchighway.net
 
@@ -34,18 +33,18 @@ if (! $?f_gatherpaths) then
 
         cstat "."
 
-        if ($?WINDOW) then 
+        if ($?WINDOW) then
             if ($WINDOW == 0) then
                 screen -X login
                 screen -X reportidle
             endif
         endif
         if (! $?prompt && $?tcsh && $TERMTYPE == screen) then
-            if ($?WINDOW) then 
+            if ($?WINDOW) then
                 setenv WINDOW_NUM "-$WINDOW"
                 unsetenv WINDOW
             else
-                setenv WINDOW_NUM 
+                setenv WINDOW_NUM
             endif
 
             set prompt='%{\ek\e\\\e]0\;[%m'${WINDOW_NUM:q}']:%/>^g%}[%m'${WINDOW_NUM:q}']:%B%~%b%# '
