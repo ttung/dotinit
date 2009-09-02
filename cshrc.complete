@@ -43,6 +43,11 @@ complete	mtn		'c/--/( help db )/' 'p/1/( automate db annotate cat diff list ls c
 #                                        'n/-r/`mtn ls branches`/'
 #                                        'n/-r/`mtn ls branches | awk \{printf\ \"h:%s\ \",\$1\}`/' \
 
+complete        module          'p/1/( load avail loaded unload )/' \
+                                'n/load/`module avail`/' \
+                                'n/unload/`module loaded`/'
+
+
 complete	nice		'p/1-2/c/'
 complete	pico		'n/*/f:^*.[oa]/'
 complete	printenv	'p/1/v/'
