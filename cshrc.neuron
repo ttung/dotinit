@@ -18,8 +18,7 @@ if (! $?f_gatherpaths) then
         endif
         set f_dontshowproc
 
-        alias em /Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
-        setenv EDITOR /Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs
+        alias en /Users/tonytung/Development/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs -nw
     endif
 
     cstat "done\n"
