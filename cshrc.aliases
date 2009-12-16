@@ -28,7 +28,7 @@ endif
 alias pgrep                     pgrep -f
 
 # pagers
-alias more			less -m -e -i -r
+alias more			less -meiR
 
 # other cmd line utilities
 alias cvsdiff			"cvs status \!* |& egrep 'Loc|Merg|conflicts|cvs status'"
