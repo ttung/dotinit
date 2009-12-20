@@ -53,7 +53,7 @@ foreach cshrc (.init/cshrc*)
                 unset skiplink
                 'mv' -f ${cshrcdest} ${cshrc}
                 echo "Cleaning by moving ${cshrcdest} to ${cshrc}."
-            endif            
+            endif
         else
             unset skiplink
             'rm' -f ${cshrcdest}
@@ -67,8 +67,33 @@ foreach cshrc (.init/cshrc*)
     endif
 end
 
+echo "bashrc..."
+foreach bashrc (.init/bashrc*)
+    set bashrcdest = `echo ${bashrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+    if (-e ${bashrcdest}) then
+        if (! -l ${bashrcdest}) then
+            set skiplink
+            echo "Warning: ${bashrcdest} is in the way and may need to be checked into CVS."
+            if ($?clean) then
+                unset skiplink
+                'mv' -f ${bashrcdest} ${bashrc}
+                echo "Cleaning by moving ${bashrcdest} to ${bashrc}."
+            endif
+        else
+            unset skiplink
+            'rm' -f ${bashrcdest}
+        endif
+    endif
+
+    if ($?skiplink) then
+        unset skiplink
+    else
+        ln -sf ${bashrc} ${bashrcdest}
+    endif
+end
+
 set fileset = ( xstart dvorak xsession qwerty fvwm2rc xmodmap \
-             dvorak.keysym Xdefaults hushlogin screenrc )
+             dvorak.keysym Xdefaults hushlogin screenrc inputrc )
 
 echo "Miscellaneous..."
 foreach df ( ${fileset} )
