@@ -16,3 +16,6 @@ PS1="\[\e]0;[\h]:\w${prompt_end}\a\][\h]:${bold_cmd}\w${unbold_cmd}${prompt_end}
 # merging history
 export PROMPT_COMMAND='history -a; history -n'
 shopt -s histappend cmdhist lithist
+
+IGNOREEOF=2
+export PAGER="less -meiR"
