@@ -29,10 +29,10 @@ fi
 init_stat "main..."
 
 if [ ! -z "`which uname`" ]; then
-    export MACHNAME=`uname -m`
+    export MACHTYPE=`uname -m`
     export OSTYPE=`uname -s`
 else
-    export MACHNAME=unknown
+    export MACHTYPE=unknown
     export OSTYPE=unknown
 fi
 
