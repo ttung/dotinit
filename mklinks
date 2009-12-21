@@ -67,28 +67,28 @@ foreach cshrc (.init/cshrc*)
     endif
 end
 
-echo "bashrc..."
-foreach bashrc (.init/bashrc*)
-    set bashrcdest = `echo ${bashrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-    if (-e ${bashrcdest}) then
-        if (! -l ${bashrcdest}) then
+echo "bash..."
+foreach bash (.init/bash*)
+    set bashdest = `echo ${bash} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+    if (-e ${bashdest}) then
+        if (! -l ${bashdest}) then
             set skiplink
-            echo "Warning: ${bashrcdest} is in the way and may need to be checked into CVS."
+            echo "Warning: ${bashdest} is in the way and may need to be checked into CVS."
             if ($?clean) then
                 unset skiplink
-                'mv' -f ${bashrcdest} ${bashrc}
-                echo "Cleaning by moving ${bashrcdest} to ${bashrc}."
+                'mv' -f ${bashdest} ${bash}
+                echo "Cleaning by moving ${bashdest} to ${bash}."
             endif
         else
             unset skiplink
-            'rm' -f ${bashrcdest}
+            'rm' -f ${bashdest}
         endif
     endif
 
     if ($?skiplink) then
         unset skiplink
     else
-        ln -sf ${bashrc} ${bashrcdest}
+        ln -sf ${bash} ${bashdest}
     endif
 end
 
