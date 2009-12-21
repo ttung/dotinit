@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ ! -z "`type -t tput`" ]; then
+    bold_cmd="\[`tput bold`\]"
+    unbold_cmd="\[`tput rmso`\]"
+fi
+
+if [ $UID -eq 0 ]; then
+    prompt_end='%'
+else
+    prompt_end='>'
+fi
+
+PS1="\[\e]0;[\h]:\w${prompt_end}\a\][\h]:${bold_cmd}\w${unbold_cmd}${prompt_end} "
+
+# merging history
+export PROMPT_COMMAND='history -a; history -n'
+shopt -s histappend cmdhist lithist

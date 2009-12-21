@@ -1,0 +1,18 @@
+#!/bin/bash
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias l='ls -F'
+alias ls='ls -F'
+alias ll='ls -l'
+alias lla='ls -al'
+
+alias more='less -meiR'
+
+# editors
+alias en='emacs -nw'
+alias em='emacs'
+
+

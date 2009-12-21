@@ -15,9 +15,18 @@ fi
 
 if [ ! -z "${PS1}" ]; then
     interactive=yes
+    function init_stat() {
+        # echo -en "$@"
+        echo -n ""
+    }
 else
     interactive=no
+    function init_stat() {
+        echo -n ""
+    }
 fi
+
+init_stat "main..."
 
 if [ ! -z "`which uname`" ]; then
     export MACHNAME=`uname -m`
@@ -40,56 +49,56 @@ fi
 export HOST="`echo ${HOST} | tr '[:upper:]' '[:lower:]'`"
 
 # Figure out the current domain name
-if [ -r "${HOME}/.domainname" ]; then
-    export DOMAINNAME="`cat ${HOME}/.domainname`"
+if [ -r "${HOME}/.domain" ]; then
+    export DOMAIN="`cat ${HOME}/.domain`"
 elif [ ! -z "`which domainname`" ]; then
-    export DOMAINNAME="`domainname`"
+    export DOMAIN="`domainname`"
 else
-    export DOMAINNAME=unknown
+    export DOMAIN=unknown
 fi
-export DOMAINNAME="`echo ${DOMAINNAME} | tr '[:upper:]' '[:lower:]'`"
+export DOMAIN="`echo ${DOMAIN} | tr '[:upper:]' '[:lower:]'`"
 
 if [ -z "${SHLVL}" ] || [ "${SHLVL}" -eq 1 ]; then
     t_setpaths=yes
 elif [ "${TERM}" == "screen" ] || [ "${TERM}" == "screen-w" ]; then
     t_setpaths=yes
 fi
+init_stat "done\n"
 
 if [ "${t_setpaths}" == "yes" ]; then
+    init_stat "paths..."
     module load org.merly.init.paths
+    init_stat "done\n"
+fi
+
+# all aliases stuff....
+if [ -r "${HOME}/.bashrc.aliases" ]; then
+    . "${HOME}/.bashrc.aliases"
+fi
+
+# all completions stuff....
+if [ "${interactive}" == "yes" ] &&
+    [ -r "${HOME}/.bashrc.complete" ]; then
+    . "${HOME}/.bashrc.complete"
+fi
+
+# domain-specific initialization.
+if [ ! -z "${DOMAIN}" ] &&
+    [ "${DOMAIN}" != "${HOST}" ] &&
+    [ -r "${HOME}/.bashrc.${DOMAIN}" ]; then
+    . "${HOME}/.bashrc.${DOMAIN}"
+fi
+
+# host-specific initialization.
+if [ ! -z "${HOST}" ] &&
+    [ -r "${HOME}/.bashrc.${HOST}" ]; then
+    . "${HOME}/.bashrc.${HOST}"
 fi
 
 # all interactive stuff....
-if [ "${interactive}" == "yes" ]; then
-    if [ ! -z "`type -t tput`" ]; then
-        bold_cmd="\[`tput bold`\]"
-        unbold_cmd="\[`tput rmso`\]"
-    fi
-
-    if [ $UID -eq 0 ]; then
-        prompt_end='%'
-    else
-        prompt_end='>'
-    fi
-
-    PS1="\[\e]0;[\h]:\w${prompt_end}\a\][\h]:${bold_cmd}\w${unbold_cmd}${prompt_end} "
-
-    # merging history
-    export PROMPT_COMMAND='history -a; history -n'
-    shopt -s histappend
-
-    alias rm='rm -i'
-    alias cp='cp -i'
-    alias mv='mv -i'
-
-    alias l='ls -F'
-    alias ls='ls -F'
-    alias ll='ls -l'
-    alias lla='ls -al'
-
-    alias more='less -meiR'
-
-    # editors
-    alias en='emacs -nw'
-    alias em='emacs'
+if [ "${interactive}" == "yes" ] &&
+    [ -r "${HOME}/.bashrc.interactive" ]; then
+    . "${HOME}/.bashrc.interactive"
 fi
+
+unset t_setpaths
