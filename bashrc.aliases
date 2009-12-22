@@ -15,4 +15,17 @@ alias more='less -meiR'
 alias en='emacs -nw'
 alias em='emacs'
 
-
+function which() {
+    while (( "$#" )); do
+        output=`type -t "$1"`
+        case "${output}" in
+            "file"|"alias")
+                type -a "$1" | head -n1
+                ;;
+            *)
+                type -t "$1"
+        esac
+        shift
+    done
+}
+alias where='type -a'

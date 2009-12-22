@@ -1,8 +1,3 @@
 set show-all-if-ambiguous on
-"\e[5~": history-search-backward
-"\e[6~": history-search-forward
-C-f: forward-word
-C-b: backward-word
-M-f: forward-char
-M-b: backward-char
-C-u: kill-whole-line
+set page-completions off
+set mark-symlinked-directories on
