@@ -2,18 +2,31 @@
 
 if [ -z "${TERM}" ] ||
     [ "${TERM}" == "dumb" ]; then
-    eval `tset -s -`
+    eval `tset -s - | sed -e '1d'`
+fi
+
+if [ "${TERM}" == "screen" ] ||
+    [ "${TERM}" == "screen-w" ]; then
+    TERMTYPE=screen
+elif [ "${TERM}" == "xterm-color" ]; then
+    TERMTYPE=xterm
+elif [ ! -z "${TERM}" ]; then
+    TERMTYPE="${TERM}"
+else
+    TERMTYPE=dumb
 fi
 
 stty erase '^?' kill undef intr '^C' stop '^O'
 
-bind '"\e[5~":history-search-backward'
-bind '"\e[6~":history-search-forward'
-bind C-f:forward-word
-bind C-b:backward-word
-bind M-f:forward-char
-bind M-b:backward-char
-bind C-u:kill-whole-line
+if [ "${TERM}" != "dumb" ]; then
+    bind '"\e[5~":history-search-backward'
+    bind '"\e[6~":history-search-forward'
+    bind C-f:forward-word
+    bind C-b:backward-word
+    bind M-f:forward-char
+    bind M-b:backward-char
+    bind C-u:kill-whole-line
+fi
 
 if [ ! -z "${DISPLAY}" ] &&
     [ -z "${SSH_DISPLAY}" ]; then
@@ -38,7 +51,12 @@ else
     t_prompt_end='>'
 fi
 
-PS1="\[\e]0;[\h]:\w${t_prompt_end}\a\][\h]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+if [ "$TERMTYPE" == "xterm" ] ||
+    [ "$TERMTYPE" == "screen" ]; then
+    PS1="\[\e]0;[\h]:\w${t_prompt_end}\a\][\h]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+else
+    PS1="[\h]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+fi
 
 # merging history
 export PROMPT_COMMAND='history -a; history -n'
