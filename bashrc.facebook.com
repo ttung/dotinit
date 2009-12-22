@@ -6,3 +6,7 @@ if [ "${interactive}" == "yes" ] &&
     ${HOME}/software/${MACHTYPE}-${OSTYPE}/bash-4.0/bin/bash
     exit
 fi
+
+if [ "${t_setpaths}" == "yes" ]; then
+    module load com.facebook.init.paths
+fi
