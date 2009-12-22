@@ -1,2 +1,32 @@
 #!/bin/bash
 
+complete -A directory cd
+complete -A file -A directory -X '*.pyc' emacs
+
+function _module_complete() {
+    COMPREPLY=()
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+    local avail_cmds
+    case ${COMP_CWORD} in
+        1)
+            avail_cmds="avail load loaded unload"
+            ;;
+        2)
+            case "${COMP_WORDS[1]}" in
+                load)
+                    avail_cmds=`module avail`
+                    ;;
+                unload)
+                    avail_cmds=`module loaded`
+                    ;;
+            esac
+            ;;
+    esac
+
+    if [ ! -z "${avail_cmds}" ]; then
+        COMPREPLY=( $(compgen -W "${avail_cmds}" "${cur}") )
+    fi
+}
+
+complete -F _module_complete module

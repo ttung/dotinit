@@ -4,12 +4,11 @@ if [ ! -z "${HOME}" ]; then
     PYENV_HOME="${HOME}/software/pyenv"
 
     function module() {
-        module_file=`${PYENV_HOME}/modulecmd -s bash "$@"`
+        local module_file=`${PYENV_HOME}/modulecmd -s bash "$@"`
         if [ -f "${module_file}" ]; then
             . "${module_file}"
             rm -f "${module_file}"
         fi
-        unset module_file
     }
 fi
 
