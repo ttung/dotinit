@@ -93,7 +93,7 @@ foreach bash (.init/bash*)
 end
 
 set fileset = ( xstart dvorak xsession qwerty fvwm2rc xmodmap \
-             dvorak.keysym Xdefaults hushlogin screenrc inputrc )
+             dvorak.keysym Xdefaults hushlogin screenrc )
 
 echo "Miscellaneous..."
 foreach df ( ${fileset} )

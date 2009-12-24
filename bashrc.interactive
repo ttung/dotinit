@@ -51,11 +51,13 @@ else
     t_prompt_end='>'
 fi
 
+t_prompt_machname=`echo ${HOST} | sed 's/\..*//'`
+
 if [ "$TERMTYPE" == "xterm" ] ||
     [ "$TERMTYPE" == "screen" ]; then
-    PS1="\[\e]0;[\h]:\w${t_prompt_end}\a\][\h]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+    PS1="\[\e]0;[${t_prompt_machname}]:\w${t_prompt_end}\a\][${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
 else
-    PS1="[\h]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+    PS1="[${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
 fi
 
 # merging history
@@ -65,6 +67,12 @@ shopt -s histappend cmdhist lithist
 set -o notify
 IGNOREEOF=2
 
+# readline variables
+bind "set show-all-if-ambiguous on"
+bind "set page-completions off"
+bind "set mark-symlinked-directories on"
+
 # clean up.
 unset t_bold_cmd t_unbold_cmd
 unset t_prompt_end
+unset t_prompt_machname
