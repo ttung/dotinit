@@ -8,6 +8,7 @@ alias l='ls -F'
 alias ls='ls -F'
 alias ll='ls -l'
 alias lla='ls -al'
+alias f='finger'
 
 alias more='less -meiR'
 

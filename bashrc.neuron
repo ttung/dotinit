@@ -2,3 +2,5 @@
 
 shopt -s nocaseglob
 bind "set completion-ignore-case on"
+
+complete -W 'merly.org 99 dev099.snc1.facebook.com' ssh
