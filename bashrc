@@ -66,7 +66,7 @@ init_stat "done\n"
 
 if [ "${t_setpaths}" == "yes" ]; then
     init_stat "paths..."
-    module load org.merly.init.paths
+    module load --force org.merly.init.paths
     init_stat "done\n"
 fi
 

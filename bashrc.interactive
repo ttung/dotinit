@@ -37,7 +37,12 @@ export EDITOR=emacs
 export BLOCKSIZE=K
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
-export PAGER="less -meiR"
+
+if [ "${TERMTYPE}" == dumb ]; then
+    export PAGER="cat"
+else
+    export PAGER="less -meiR"
+fi
 
 # set the prompt.
 if [ ! -z "`type -t tput`" ]; then
@@ -61,7 +66,8 @@ else
 fi
 
 # merging history
-export PROMPT_COMMAND='history -a; history -n'
+PROMPT_COMMAND='history -a; history -n'
+HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
 set -o notify
