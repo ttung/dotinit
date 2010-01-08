@@ -16,7 +16,7 @@ else
     TERMTYPE=dumb
 fi
 
-stty erase '^?' kill undef intr '^C' stop '^O'
+stty erase '^?' kill undef intr '^C' stop '^O' werase undef
 
 if [ "${TERM}" != "dumb" ]; then
     bind '"\e[5~":history-search-backward'
@@ -26,6 +26,7 @@ if [ "${TERM}" != "dumb" ]; then
     bind M-f:forward-char
     bind M-b:backward-char
     bind C-u:kill-whole-line
+    bind C-w:kill-region
 fi
 
 if [ ! -z "${DISPLAY}" ] &&
