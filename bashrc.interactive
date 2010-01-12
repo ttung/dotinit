@@ -48,7 +48,7 @@ fi
 # set the prompt.
 if [ ! -z "`type -t tput`" ]; then
     t_bold_cmd="\[`tput bold`\]"
-    t_unbold_cmd="\[`tput rmso`\]"
+    t_unbold_cmd="\[`tput sgr0`\]"
 fi
 
 if [ $UID -eq 0 ]; then
