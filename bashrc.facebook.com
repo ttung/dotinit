@@ -1,6 +1,10 @@
 #!/bin/bash
 
 if [ "${t_setpaths}" == "yes" ]; then
+    module loaded | grep -q com.facebook.init.paths
+    if [ $? -eq 0 ]; then
+        module unload com.facebook.init.paths
+    fi
     module load com.facebook.init.paths
 fi
 
