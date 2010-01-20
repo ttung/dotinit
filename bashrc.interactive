@@ -67,7 +67,9 @@ else
 fi
 
 # merging history
+#PROMPT_COMMAND='history -a; echo "before: "; history; history -n; echo "after: "; history'
 PROMPT_COMMAND='history -a; history -n'
+HISTCONTROL=erasedups
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
