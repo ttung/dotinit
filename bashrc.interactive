@@ -10,6 +10,8 @@ if [ "${TERM}" == "screen" ] ||
     TERMTYPE=screen
 elif [ "${TERM}" == "xterm-color" ]; then
     TERMTYPE=xterm
+elif [ "${TERM}" == "emacs" ]; then
+    TERMTYPE=dumb
 elif [ ! -z "${TERM}" ]; then
     TERMTYPE="${TERM}"
 else
@@ -18,7 +20,7 @@ fi
 
 stty erase '^?' kill undef intr '^C' stop '^O' werase undef
 
-if [ "${TERM}" != "dumb" ]; then
+if [ "${TERMTYPE}" != "dumb" ]; then
     bind '"\e[5~":history-search-backward'
     bind '"\e[6~":history-search-forward'
     bind C-f:forward-word
@@ -27,6 +29,11 @@ if [ "${TERM}" != "dumb" ]; then
     bind M-b:backward-char
     bind C-u:kill-whole-line
     bind C-w:kill-region
+
+    # readline variables
+    bind "set show-all-if-ambiguous on"
+    bind "set page-completions off"
+    bind "set mark-symlinked-directories on"
 fi
 
 if [ ! -z "${DISPLAY}" ] &&
@@ -70,17 +77,13 @@ fi
 #PROMPT_COMMAND='history -a; echo "before: "; history; history -n; echo "after: "; history'
 PROMPT_COMMAND='history -a; history -n'
 HISTCONTROL=erasedups
+HISTFILESIZE=5000
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
 set -o notify
 set -o noclobber
 IGNOREEOF=2
-
-# readline variables
-bind "set show-all-if-ambiguous on"
-bind "set page-completions off"
-bind "set mark-symlinked-directories on"
 
 # clean up.
 unset t_bold_cmd t_unbold_cmd

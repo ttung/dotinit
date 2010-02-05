@@ -1,11 +1,14 @@
 #!/bin/bash
 
 if [ "${t_setpaths}" == "yes" ]; then
-    module loaded | grep -q com.facebook.init.paths
-    if [ $? -eq 0 ]; then
-        module unload com.facebook.init.paths
-    fi
+    while read module
+    do
+        if [ "${module}" != "org.merly.init.paths" ]; then
+            module unload "$module"
+        fi
+    done <<< "$(module loaded)"
     module load com.facebook.init.paths
+    module load oss.emacs-22.3
 fi
 
 if [ "${interactive}" == "yes" ] &&
