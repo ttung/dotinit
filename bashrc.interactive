@@ -74,6 +74,7 @@ HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
 set -o notify
+set -o noclobber
 IGNOREEOF=2
 
 # readline variables
