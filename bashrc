@@ -25,6 +25,9 @@ else
     }
 fi
 
+# array of functions to call before finishing up.
+declare -a finalize
+
 init_stat "main..."
 
 if [ ! -z "`which uname`" ]; then
@@ -99,5 +102,9 @@ if [ "${interactive}" == "yes" ] &&
     [ -r "${HOME}/.bashrc.interactive" ]; then
     . "${HOME}/.bashrc.interactive"
 fi
+
+for func in $finalize; do
+    $func
+done
 
 unset t_setpaths

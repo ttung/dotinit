@@ -1,6 +1,14 @@
 #!/bin/bash
 
+# this needs to be called after interactive setup.
+function completion_disable_case_sensitivity() {
+    if [ "${interactive}" == "yes" ] &&
+        [ "${TERMTYPE}" != "dumb" ]; then
+        bind "set completion-ignore-case on"
+    fi
+}
+finalize=( ${finalize[@]} completion_disable_case_sensitivity )
+
 shopt -s nocaseglob
-bind "set completion-ignore-case on"
 
 complete -W 'merly.org 99 dev099.snc1.facebook.com' ssh
