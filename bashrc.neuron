@@ -9,6 +9,24 @@ function completion_disable_case_sensitivity() {
 }
 finalize=( ${finalize[@]} completion_disable_case_sensitivity )
 
+
+function tivodec() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: tivodec <tivo_file>"
+        return 1
+    fi
+
+    echo $1
+
+    filename=$(basename "$1")
+    extension=${filename##*.}
+    filebase=${filename%.*}
+
+    outputfile=$(dirname "$1")/${filebase}.mpg
+
+    tivodecode -m 2765639181 -o "$outputfile" "$1"
+}
+
 shopt -s nocaseglob
 
-complete -W 'merly.org 99 dev099.snc1.facebook.com' ssh
+complete -W 'merly.org 44 dev449.snc1.facebook.com' ssh
