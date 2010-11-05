@@ -84,6 +84,12 @@ if [ "${interactive}" == "yes" ] &&
     . "${HOME}/.bashrc.complete"
 fi
 
+# all completions stuff....
+if [ "${interactive}" == "yes" ] &&
+    [ -r "${HOME}/.bashrc.gitcomplete" ]; then
+    . "${HOME}/.bashrc.gitcomplete"
+fi
+
 # domain-specific initialization.
 if [ ! -z "${DOMAIN}" ] &&
     [ "${DOMAIN}" != "${HOST}" ] &&
