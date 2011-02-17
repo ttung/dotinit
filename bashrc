@@ -60,7 +60,7 @@ else
 fi
 export DOMAIN="`echo ${DOMAIN} | tr '[:upper:]' '[:lower:]'`"
 
-if [ -z "${SHLVL}" ] || [ "${SHLVL}" -eq 1 ]; then
+if [ -z "${INIT_PATHS_SET}" ]; then
     t_setpaths=yes
 elif [ "${TERM}" == "screen" ] || [ "${TERM}" == "screen-w" ]; then
     t_setpaths=yes
@@ -70,6 +70,7 @@ init_stat "done\n"
 if [ "${t_setpaths}" == "yes" ]; then
     init_stat "paths..."
     module load --force org.merly.init.paths
+    export INIT_PATHS_SET=true
     init_stat "done\n"
 fi
 
