@@ -29,4 +29,4 @@ function tivodec() {
 
 shopt -s nocaseglob
 
-complete -W 'merly.org 44 dev449.snc1.facebook.com' ssh
+complete -W 'merly.org 17 dev1717.snc6.facebook.com' ssh

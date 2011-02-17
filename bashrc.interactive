@@ -74,8 +74,22 @@ else
 fi
 
 # merging history
-#PROMPT_COMMAND='history -a; echo "before: "; history; history -n; echo "after: "; history'
-PROMPT_COMMAND='history -a; history -n'
+if [ ! -z "`type -t sqlite_history.py`" ]; then
+    function sqlite_history() {
+        old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
+        HISTTIMEFORMAT='%s '
+        new_history_file=`history | sqlite_history.py`
+        HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
+        unset old_HISTTIMEFORMAT
+
+        history -r $new_history_file
+        rm -f $new_history_file
+    }
+    PROMPT_COMMAND=sqlite_history
+    unset HISTFILE
+else
+    PROMPT_COMMAND='history -a; history -n'
+fi
 HISTCONTROL=erasedups
 HISTFILESIZE=5000
 HISTTIMEFORMAT=' %F %T '
