@@ -18,4 +18,10 @@ if [ "${interactive}" == "yes" ] &&
     exit
 fi
 
+# abbrev_host="${HOST%.facebook.com}"
+# if [ -d /local-${abbrev_host}/${USER}/ ]; then
+#     HISTFILE=/local-${abbrev_host}/${USER}/.bash_history
+# fi
+
 alias reset_err="sudo tcsh -c 'cat /dev/null >! ~ttung/logs/error_log_ttung'"
+alias gitlastrelease="/home/engshare/admin/scripts/git/git-fetch-release `svn ls svn+ssh://$(whoami)@tubbs/svnroot/tfb/releases | sed '$!d' | sed 's/\/$//'`"
