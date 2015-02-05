@@ -25,6 +25,8 @@ else
     }
 fi
 
+shopt -s extglob nullglob
+
 # array of functions to call before finishing up.
 declare -a finalize
 

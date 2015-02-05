@@ -1,0 +1,165 @@
+#!/bin/bash
+
+if [ "${t_setpaths}" == "yes" ]; then
+    #module load com.android.developer.SDK
+    #module load com.facebook.arcanist
+    module load org.merly.node-js
+    module load org.summitbasecamp.arcanist
+    module load org.summitbasecamp.dev-env
+fi
+
+# this needs to be called after interactive setup.
+function completion_disable_case_sensitivity() {
+    if [ "${interactive}" == "yes" ] &&
+        [ "${TERMTYPE}" != "dumb" ]; then
+        bind "set completion-ignore-case on"
+    fi
+}
+finalize=( ${finalize[@]} completion_disable_case_sensitivity )
+
+
+function tivodec() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: tivodec <tivo_file>"
+        return 1
+    fi
+
+    echo $1
+
+    filename=$(basename "$1")
+    extension=${filename##*.}
+    filebase=${filename%.*}
+
+    outputfile=$(dirname "$1")/${filebase}.mpg
+
+    tivodecode -m 2765639181 -o "$outputfile" "$1"
+}
+
+function ydl() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: ydl <url>..."
+        return 1
+    fi
+
+    cd ~/Downloads
+    while [ $# -ge 1 ]; do
+        for ((a=1; a <= 10 ; a++)); do
+            youtube-dl -c -o '%(title)s.%(ext)s' "$1"
+            if [ $? -eq 0 ]; then
+                break
+            fi
+            sleep 60
+        done
+        shift
+    done
+    cd -
+}
+
+function shove() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: ${FUNCNAME[0]} <branch>"
+        return 1
+    fi
+
+    branch=$1
+
+    git branch | egrep -q '^\*?\s*'"${branch}"'\s*$'
+    errcode=$?
+    if [ $errcode -ne 0 ]; then
+        echo "Branch ${branch} doesn't exist"
+        return 2
+    fi
+
+    git co -f master &&
+    git shove "${branch}" &&
+    while true; do
+        git fetch &&
+        git rebase origin/master master
+        if [ $? -ne 0 ]; then
+            break;
+        fi;
+        git push origin master
+        if [ $? -eq 0 ]; then
+            git branch -D "${branch}"
+            break
+        fi;
+    done
+
+}
+
+function screenshot() {
+    filename="/tmp/screen-$(date +%s).png"
+    adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >| "${filename}"
+
+    if [ -s "${filename}" ]; then
+        osascript -e 'tell application "Finder" to reveal {"'"${filename}"'" as POSIX file}'
+        osascript -e 'tell application "Finder" to activate'
+    else
+        rm -f "${filename}"
+    fi
+}
+
+function ig() {
+    buck install instagram
+}
+
+function smugmug() {
+    (
+        IFS=
+
+        if [ "${SMUGPASSWD}" == '' ]; then
+            echo "SMUGPASSWD not set"
+            return 1
+        fi
+
+        if [ "${year}" == '' ]; then
+            echo "year not set"
+            return 1
+        fi
+
+        if [ "${secure}" == 'yes' ]; then
+            gallery_password_argument="--gallery_password=gumxiaobee"
+        elif [ "${secure}" == 'no' ]; then
+            gallery_password_argument=
+        else
+            echo "secure not set"
+            return 1
+        fi
+
+        if [ "${subcategory}" == '' ]; then
+            subcategory_argument=
+        else
+            subcategory_argument="--subcategory=${subcategory}"
+        fi
+
+        for dir in *; do
+            (
+                cd ${dir} &&
+                (
+                    ~/Development/sm-photo-tool/src/sm_photo_tool.py create --login duckncabb@merly.org --password=$SMUGPASSWD --category ${year} ${subcategory_argument} ${gallery_password_argument} --showfilenames ${dir} *.@(avi|jpg|mp4|mov)
+                    matches=(*.png)
+                    if [ ${#matches[@]} -ne 0 ]; then
+                        ~/Development/sm-photo-tool/src/sm_photo_tool.py create --login duckncabb@merly.org --password=$SMUGPASSWD --category ${year}-original ${subcategory_argument} ${gallery_password_argument} --showfilenames ${dir} *.png
+                    fi
+                )
+            )
+        done
+    )
+}
+
+shopt -s nocaseglob
+
+alias update_podcasts='osascript -e '\''tell application "iTunes" to updateAllPodcasts'\'
+alias sync_iphone='osascript -e '\''tell application "iTunes"
+  repeat with s in sources
+    if (kind of s is iPod) then update s
+  end repeat
+end tell'\'
+alias kill_fb4a='adb shell run-as com.facebook.katana kill `adb shell ps | grep "com.facebook.katana.$" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
+alias kill_ig='adb shell run-as com.instagram.android kill `adb shell ps | grep "com.instagram.android" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
+alias kill_bolt='adb shell run-as com.instagram.bolt kill `adb shell ps | grep "com.instagram.bolt" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
+alias ibolt='buck install -r pepper'
+alias arcd='arc diff --nostablecheck --verbatim'
+alias buckp='buck project igproject'
+
+complete -W 'merly.org 17 dev dev121.ash4.facebook.com' ssh

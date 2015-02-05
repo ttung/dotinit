@@ -8,7 +8,8 @@ fi
 if [ "${TERM}" == "screen" ] ||
     [ "${TERM}" == "screen-w" ]; then
     TERMTYPE=screen
-elif [ "${TERM}" == "xterm-color" ]; then
+elif [ "${TERM}" == "xterm-color" ] ||
+      [ "${TERM}" == "xterm-256color" ]; then
     TERMTYPE=xterm
 elif [ "${TERM}" == "emacs" ]; then
     TERMTYPE=dumb
@@ -77,12 +78,14 @@ fi
 if [ ! -z "`type -t sqlite_history.py`" ]; then
     function sqlite_history() {
         old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
-        HISTTIMEFORMAT='%s '
+        HISTTIMEFORMAT='***** %s ***** '
         new_history_file=`history | sqlite_history.py`
         HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
         unset old_HISTTIMEFORMAT
 
+        history -c
         history -r $new_history_file
+
         rm -f $new_history_file
     }
     PROMPT_COMMAND=sqlite_history
@@ -90,7 +93,7 @@ if [ ! -z "`type -t sqlite_history.py`" ]; then
 else
     PROMPT_COMMAND='history -a; history -n'
 fi
-HISTCONTROL=erasedups
+HISTCONTROL=erasedups:ignorespace
 HISTFILESIZE=5000
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
@@ -98,6 +101,26 @@ shopt -s histappend cmdhist lithist
 set -o notify
 set -o noclobber
 IGNOREEOF=2
+
+function watch() {
+    IFS=
+    sleeptime=1
+    while getopts ":s:" o; do
+        case "${o}" in
+            s)
+                sleeptime=${OPTARG}
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    while true; do
+        output=$($*)
+        clear
+        echo "${output}"
+        sleep $sleeptime
+    done
+}
 
 # clean up.
 unset t_bold_cmd t_unbold_cmd

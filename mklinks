@@ -42,31 +42,6 @@ if (-d .init/${addr_user}-addressbook/) then
     end
 endif
 
-echo "cshrc..."
-foreach cshrc (.init/cshrc*)
-    set cshrcdest = `echo ${cshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-    if (-e ${cshrcdest}) then
-        if (! -l ${cshrcdest}) then
-            set skiplink
-            echo "Warning: ${cshrcdest} is in the way and may need to be checked into CVS."
-            if ($?clean) then
-                unset skiplink
-                'mv' -f ${cshrcdest} ${cshrc}
-                echo "Cleaning by moving ${cshrcdest} to ${cshrc}."
-            endif
-        else
-            unset skiplink
-            'rm' -f ${cshrcdest}
-        endif
-    endif
-
-    if ($?skiplink) then
-        unset skiplink
-    else
-        ln -sf ${cshrc} ${cshrcdest}
-    endif
-end
-
 echo "bash..."
 foreach bash (.init/bash*)
     set bashdest = `echo ${bash} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
@@ -119,8 +94,8 @@ foreach df ( ${fileset} )
     endif
 end
 
-set src = ( .cshrc.aliases .cshrc.login .cshrc.logout .xsession )
-set dst = (       .aliases       .login       .logout .xinitrc  )
+set src = ( .xsession )
+set dst = ( .xinitrc  )
 
 set cntr = 1
 while ($cntr <= ${#src})
