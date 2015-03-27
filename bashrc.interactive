@@ -77,16 +77,15 @@ fi
 # merging history
 if [ ! -z "`type -t sqlite_history.py`" ]; then
     function sqlite_history() {
-        old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
+        local old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
         HISTTIMEFORMAT='***** %s ***** '
         new_history_file=`history | sqlite_history.py`
         HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
-        unset old_HISTTIMEFORMAT
 
-        history -c
-        history -r $new_history_file
-
-        rm -f $new_history_file
+        if [ ! -z "${new_history_file}" ]; then
+            history -c -r $new_history_file
+            rm -f $new_history_file
+        fi
     }
     PROMPT_COMMAND=sqlite_history
     unset HISTFILE
@@ -120,6 +119,21 @@ function watch() {
         echo "${output}"
         sleep $sleeptime
     done
+}
+
+function tmux () {
+    declare SAS
+
+    if [ ! -d ${HOME}/tmp ]; then
+        mkdir -p ${HOME}/tmp
+    fi
+
+    if [ "${TERMTYPE}" != "screen" ] && [ "${!SSH_AUTH_SOCK[@]}" ]; then
+        ln -sf ${SSH_AUTH_SOCK} ${HOME}/tmp/${USER}-agent-screen
+        SAS=${HOME}/tmp/${USER}-agent-screen
+    fi
+
+    SSH_AUTH_SOCK="${SAS}" command tmux $@
 }
 
 # clean up.
