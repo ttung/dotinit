@@ -8,7 +8,8 @@ fi
 if [ "${TERM}" == "screen" ] ||
     [ "${TERM}" == "screen-w" ]; then
     TERMTYPE=screen
-elif [ "${TERM}" == "xterm-color" ]; then
+elif [ "${TERM}" == "xterm-color" ] ||
+    [ "${TERM}" == "xterm-256color" ]; then
     TERMTYPE=xterm
 elif [ "${TERM}" == "emacs" ]; then
     TERMTYPE=dumb
@@ -76,14 +77,15 @@ fi
 # merging history
 if [ ! -z "`type -t sqlite_history.py`" ]; then
     function sqlite_history() {
-        old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
+        local old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
         HISTTIMEFORMAT='%s '
         new_history_file=`history | sqlite_history.py`
         HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
-        unset old_HISTTIMEFORMAT
 
-        history -r $new_history_file
-        rm -f $new_history_file
+        if [ ! -z "${new_history_file}" ]; then
+            history -c -r $new_history_file
+            rm -f $new_history_file
+        fi
     }
     PROMPT_COMMAND=sqlite_history
     unset HISTFILE
@@ -98,6 +100,21 @@ shopt -s histappend cmdhist lithist
 set -o notify
 set -o noclobber
 IGNOREEOF=2
+
+function tmux () {
+    declare SAS
+
+    if [ ! -d ${HOME}/tmp ]; then
+        mkdir -p ${HOME}/tmp
+    fi
+
+    if [ "${TERMTYPE}" != "screen" ] && [ "${!SSH_AUTH_SOCK[@]}" ]; then
+        ln -sf ${SSH_AUTH_SOCK} ${HOME}/tmp/${USER}-agent-screen
+        SAS=${HOME}/tmp/${USER}-agent-screen
+    fi
+
+    SSH_AUTH_SOCK="${SAS}" command tmux $@
+}
 
 # clean up.
 unset t_bold_cmd t_unbold_cmd
