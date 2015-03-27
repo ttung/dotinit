@@ -128,8 +128,4 @@ foreach dotfile (.*)
     endif
 end
 
-if (-e ${HOME}/emacs) then
-    make -C ${HOME}/emacs
-endif
-
 cd -

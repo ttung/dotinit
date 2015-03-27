@@ -99,10 +99,6 @@ function screenshot() {
     fi
 }
 
-function ig() {
-    buck install instagram
-}
-
 function smugmug() {
     (
         IFS=
@@ -147,6 +143,19 @@ function smugmug() {
     )
 }
 
+function alert() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: alert <message> [<title>]"
+        return 1
+    fi
+
+    if [ $# -eq 1 ]; then
+        osascript -e 'display notification "'"${1}"'" with title "Alert"'
+    else
+        osascript -e 'display notification "'"${1}"'" with title "'"${2}"'"'
+    fi
+}
+
 shopt -s nocaseglob
 
 alias update_podcasts='osascript -e '\''tell application "iTunes" to updateAllPodcasts'\'
@@ -155,11 +164,8 @@ alias sync_iphone='osascript -e '\''tell application "iTunes"
     if (kind of s is iPod) then update s
   end repeat
 end tell'\'
-alias kill_fb4a='adb shell run-as com.facebook.katana kill `adb shell ps | grep "com.facebook.katana.$" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
-alias kill_ig='adb shell run-as com.instagram.android kill `adb shell ps | grep "com.instagram.android" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
-alias kill_bolt='adb shell run-as com.instagram.bolt kill `adb shell ps | grep "com.instagram.bolt" | sed -E "s/[^ ]+[ ]+([0-9]+).*/\1/"`'
-alias ibolt='buck install -r pepper'
 alias arcd='arc diff --nostablecheck --verbatim'
 alias buckp='buck project igproject'
+alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
 
 complete -W 'merly.org 17 dev dev121.ash4.facebook.com' ssh

@@ -69,7 +69,7 @@ t_prompt_machname=`echo ${HOST} | sed 's/\..*//'`
 
 if [ "$TERMTYPE" == "xterm" ] ||
     [ "$TERMTYPE" == "screen" ]; then
-    PS1="\[\e]0;[${t_prompt_machname}]:\w${t_prompt_end}\a\][${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}"'$(__git_ps1 ":%s")'"${t_prompt_end} "
+    PS1="\[\e]0;[${t_prompt_machname}]:\w${t_prompt_end}\a\][${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}"'$(_dotfiles_scm_info ":%s")'"${t_prompt_end} "
 else
     PS1="[${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
 fi

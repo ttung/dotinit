@@ -87,10 +87,18 @@ if [ "${interactive}" == "yes" ] &&
     . "${HOME}/.bashrc.complete"
 fi
 
-# all completions stuff....
+# all scm stuff....
 if [ "${interactive}" == "yes" ] &&
     [ -r "${HOME}/.bashrc.gitcomplete" ]; then
     . "${HOME}/.bashrc.gitcomplete"
+fi
+if [ "${interactive}" == "yes" ] &&
+    [ -r "${HOME}/.bashrc.hgcomplete" ]; then
+    . "${HOME}/.bashrc.hgcomplete"
+fi
+if [ "${interactive}" == "yes" ] &&
+    [ -r "${HOME}/.bashrc.scmprompt" ]; then
+    . "${HOME}/.bashrc.scmprompt"
 fi
 
 # domain-specific initialization.
