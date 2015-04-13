@@ -1,4 +1,4 @@
-# shell prompts for git/hg -*- sh -*-
+# shell prompts for git/hg -*- mode: sh; sh-basic-offset: 2; sh-indentation: 2; -*-
 
 # Determines the "branch" of the current repo and emits it.
 # For use in generating the prompt.
@@ -79,13 +79,31 @@ _dotfiles_scm_info()
       # check to see if active bookmark needs update
       local marks="$hg/.hg/bookmarks"
       if [[ -z "$extra" ]] && [[ -f "$marks" ]]; then
-        local markstate=$(grep " $br$" "$marks" | cut -f 1 -d ' ')
+        local markstate=$(grep --color=never " $br$" "$marks" | cut -f 1 -d ' ')
+        if [[ $markstate == "0000000000000000000000000000000000000000" ]]; then
+          markstate="empty"
+        fi
         if [[ $markstate != $dirstate ]]; then
           extra="|UPDATE_NEEDED"
         fi
       fi
     else
-      br=$(expr substr "$dirstate" 1 7)
+      br=$(echo $dirstate | cut -c 1-7)
+    fi
+    local remote="$hg/.hg/remotenames"
+    if [[ -f "$remote" ]]; then
+      local marks=$(grep --color=never "^$dirstate bookmarks" "$remote" | \
+        cut -f 3 -d ' ' | tr '\n' '|' | head -c -1)
+      if [[ -n "$marks" ]]; then
+        br="$br|$marks"
+      fi
+    fi
+    local branch
+    if [[ -f $hg/.hg/branch ]]; then
+      branch=$(cat $hg/.hg/branch)
+      if [[ $branch != "default" ]]; then
+        br="$br|$branch"
+      fi
     fi
     br="$br$extra"
   elif test -n "$git" ; then
@@ -93,10 +111,7 @@ _dotfiles_scm_info()
       read br < "$git/.git/HEAD"
       case $br in
         ref:\ refs/heads/*) br=${br#ref: refs/heads/} ;;
-        # Lop off all of an SHA1 except the leading 7 hex digits.
-        # Use this cumbersome notation (it's portabile) rather
-        # than ${br:0:7}, which doesn't work with older zsh.
-        *) br="${br%????????????????????????????????}" ;;
+        *) br=$(echo $br | cut -c 1-7) ;;
       esac
       if [ -f "$git/.git/rebase-merge/interactive" ]; then
         b="$(cat "$git/.git/rebase-merge/head-name")"
@@ -124,6 +139,6 @@ _dotfiles_scm_info()
     fi
   fi
   if [ -n "$br" ]; then
-    printf $fmt "$br"
+    printf "$fmt" "$br"
   fi
 }
