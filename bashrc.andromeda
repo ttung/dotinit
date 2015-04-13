@@ -168,4 +168,4 @@ alias arcd='arc diff --nostablecheck --verbatim'
 alias buckp='buck project igproject'
 alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
 
-complete -W 'merly.org 17 dev dev121.ash4.facebook.com' ssh
+complete -W 'merly.org dev' ssh
