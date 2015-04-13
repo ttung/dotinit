@@ -75,13 +75,14 @@ else
 fi
 
 # merging history
-if [ ! -z "`type -t sqlite_history.py`" ]; then
+if [[ ! -z "`type -t sqlite_history.py`" &&
+            ( ! -L ~/.shell_history ||
+                -r ~/.shell_history ) ]]; then
     function sqlite_history() {
-        old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
+        local old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
         HISTTIMEFORMAT='***** %s ***** '
-        new_history_file=`history | sqlite_history.py`
+        local new_history_file=`history | sqlite_history.py`
         HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
-        unset old_HISTTIMEFORMAT
 
         history -c
         history -r $new_history_file
