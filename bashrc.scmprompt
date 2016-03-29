@@ -51,7 +51,7 @@ _dotfiles_scm_info()
     fi
     test "$d" = / && break
     # portable "realpath" equivalent
-    d=$(cd "$d/.." && echo "$PWD")
+    d=$(cd -P "$d/.." && echo "$PWD")
   done
 
   local br
