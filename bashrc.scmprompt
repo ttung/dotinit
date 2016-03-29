@@ -70,8 +70,8 @@ _dotfiles_scm_info()
     elif [ -d "$hg/.hg/merge" ]; then
       extra="|MERGE"
     fi
-    local dirstate=$(test -f $hg/.hg/dirstate && \
-      hexdump -vn 20 -e '1/1 "%02x"' $hg/.hg/dirstate || \
+    local dirstate=$(test -f "$hg/.hg/dirstate" && \
+      hexdump -vn 20 -e '1/1 "%02x"' "$hg/.hg/dirstate" || \
       echo "empty")
     local current="$hg/.hg/bookmarks.current"
     if  [[ -f "$current" ]]; then
@@ -99,8 +99,8 @@ _dotfiles_scm_info()
       fi
     fi
     local branch
-    if [[ -f $hg/.hg/branch ]]; then
-      branch=$(cat $hg/.hg/branch)
+    if [[ -f "$hg/.hg/branch" ]]; then
+      branch=$(cat "$hg/.hg/branch")
       if [[ $branch != "default" ]]; then
         br="$br|$branch"
       fi
