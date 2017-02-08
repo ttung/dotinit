@@ -80,6 +80,10 @@ _dotfiles_scm_info()
       local marks="$hg/.hg/bookmarks"
       if [[ -z "$extra" ]] && [[ -f "$marks" ]]; then
         local markstate=$(grep " $br$" "$marks" | cut -f 1 -d ' ')
+        if [[ $markstate == "0000000000000000000000000000000000000000" ]]; then
+            markstate="empty"
+        fi
+
         if [[ $markstate != $dirstate ]]; then
           extra="|UPDATE_NEEDED"
         fi
