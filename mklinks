@@ -68,7 +68,7 @@ foreach bash (.init/bash*)
 end
 
 set fileset = ( xstart dvorak xsession qwerty fvwm2rc xmodmap \
-             dvorak.keysym Xdefaults hushlogin screenrc )
+             dvorak.keysym Xdefaults hushlogin screenrc tmux.conf )
 
 echo "Miscellaneous..."
 foreach df ( ${fileset} )
