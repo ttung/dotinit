@@ -96,6 +96,7 @@ else
 fi
 HISTCONTROL=erasedups:ignorespace
 HISTFILESIZE=5000
+HISTSIZE=2500
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
@@ -115,11 +116,22 @@ function watch() {
     done
     shift $((OPTIND-1))
 
+    IFS=' '
+
     while true; do
-        output=$($*)
+        output=$(bash -c "$1")
         clear
         echo "${output}"
         sleep $sleeptime
+    done
+}
+
+function repeat() {
+    local n=$1 # gets the number of times the succeeding command needs to be executed
+    shift      # now $@ has the command that needs to be executed
+    while [ $(( n -= 1 )) -ge 0 ] #loop n times;
+    do
+        "$@"   # execute the command; you can also add error handling here or parallelize the commands
     done
 }
 

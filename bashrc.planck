@@ -2,10 +2,7 @@
 
 if [ "${t_setpaths}" == "yes" ]; then
     #module load com.android.developer.SDK
-    #module load com.facebook.arcanist
-    module load org.merly.node-js
-    module load org.summitbasecamp.arcanist
-    module load org.summitbasecamp.dev-env
+    module load com.facebook.arcanist
 fi
 
 # this needs to be called after interactive setup.
@@ -55,38 +52,6 @@ function ydl() {
     cd -
 }
 
-function shove() {
-    if [ $# -ne 1 ]; then
-        echo "Usage: ${FUNCNAME[0]} <branch>"
-        return 1
-    fi
-
-    branch=$1
-
-    git branch | egrep -q '^\*?\s*'"${branch}"'\s*$'
-    errcode=$?
-    if [ $errcode -ne 0 ]; then
-        echo "Branch ${branch} doesn't exist"
-        return 2
-    fi
-
-    git co -f master &&
-    git shove "${branch}" &&
-    while true; do
-        git fetch &&
-        git rebase origin/master master
-        if [ $? -ne 0 ]; then
-            break;
-        fi;
-        git push origin master
-        if [ $? -eq 0 ]; then
-            git branch -D "${branch}"
-            break
-        fi;
-    done
-
-}
-
 function screenshot() {
     filename="/tmp/screen-$(date +%s).png"
     adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >| "${filename}"
@@ -97,50 +62,6 @@ function screenshot() {
     else
         rm -f "${filename}"
     fi
-}
-
-function smugmug() {
-    (
-        IFS=
-
-        if [ "${SMUGPASSWD}" == '' ]; then
-            echo "SMUGPASSWD not set"
-            return 1
-        fi
-
-        if [ "${year}" == '' ]; then
-            echo "year not set"
-            return 1
-        fi
-
-        if [ "${secure}" == 'yes' ]; then
-            gallery_password_argument="--gallery_password=gumxiaobee"
-        elif [ "${secure}" == 'no' ]; then
-            gallery_password_argument=
-        else
-            echo "secure not set"
-            return 1
-        fi
-
-        if [ "${subcategory}" == '' ]; then
-            subcategory_argument=
-        else
-            subcategory_argument="--subcategory=${subcategory}"
-        fi
-
-        for dir in *; do
-            (
-                cd ${dir} &&
-                (
-                    ~/Development/sm-photo-tool/src/sm_photo_tool.py create --login duckncabb@merly.org --password=$SMUGPASSWD --category ${year} ${subcategory_argument} ${gallery_password_argument} --showfilenames ${dir} *.@(avi|jpg|mp4|mov)
-                    matches=(*.png)
-                    if [ ${#matches[@]} -ne 0 ]; then
-                        ~/Development/sm-photo-tool/src/sm_photo_tool.py create --login duckncabb@merly.org --password=$SMUGPASSWD --category ${year}-original ${subcategory_argument} ${gallery_password_argument} --showfilenames ${dir} *.png
-                    fi
-                )
-            )
-        done
-    )
 }
 
 function alert() {
@@ -169,3 +90,6 @@ alias buckp='buck project igproject'
 alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
 
 complete -W 'merly.org dev' ssh
+
+export FB_HG_RPMS_ROOT=~/work/mercurial/facebook-hg-rpms
+export HG_DIST=/usr/local/bin/hg
