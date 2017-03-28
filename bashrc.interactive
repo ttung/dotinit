@@ -74,6 +74,25 @@ else
     PS1="[${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
 fi
 
+function auto_env() {
+    local pwd="$(pwd)"
+    if [ ! -z "${AUTO_VIRTUAL_ENV_ROOT+x}" ]; then
+        case "${pwd}" in
+            "${AUTO_VIRTUAL_ENV_ROOT}*")
+            ;;
+            *)
+                deactivate
+                unset AUTO_VIRTUAL_ENV_ROOT
+                ;;
+        esac
+    fi
+
+    if [ -e ".venv" ]; then
+        source .venv/bin/activate
+        AUTO_VIRTUAL_ENV_ROOT="${pwd}"
+    fi
+}
+
 # merging history
 if [[ ! -z "`type -t sqlite_history.py`" &&
             ( ! -L ~/.shell_history ||
@@ -89,10 +108,10 @@ if [[ ! -z "`type -t sqlite_history.py`" &&
             rm -f $new_history_file
         fi
     }
-    PROMPT_COMMAND=sqlite_history
+    PROMPT_COMMAND='auto_env; sqlite_history'
     unset HISTFILE
 else
-    PROMPT_COMMAND='history -a; history -n'
+    PROMPT_COMMAND='auto_env; history -a; history -n'
 fi
 HISTCONTROL=erasedups:ignorespace
 HISTFILESIZE=5000
