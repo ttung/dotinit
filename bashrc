@@ -2,6 +2,7 @@
 
 if [ ! -z "${HOME}" ]; then
     PYENV_HOME="${HOME}/software/pyenv"
+    export PYENV_PATH="${HOME}/software/pyenv/modules:./.pyenv-modules"
 
     function module() {
         local module_file=`${PYENV_HOME}/modulecmd -s bash "$@"`
