@@ -65,32 +65,55 @@ else
     t_prompt_end='>'
 fi
 
-t_prompt_machname=`echo ${HOST} | sed 's/\..*//'`
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function venv_prompt() {
+  if [ "${VIRTUAL_ENV##*/}" != "" ]; then
+      printf "$1" "${VIRTUAL_ENV##*/}"
+  fi
+}
 
 if [ "$TERMTYPE" == "xterm" ] ||
     [ "$TERMTYPE" == "screen" ]; then
-    PS1="\[\e]0;[${t_prompt_machname}]:\w${t_prompt_end}\a\][${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}"'$(_dotfiles_scm_info ":%s")'"${t_prompt_end} "
+    PS1="\[\e]0;[${HOST%.*}"'$(venv_prompt " (%s)")'"]:\w${t_prompt_end}\a\][${HOST%.*}"'$(venv_prompt " (%s)")'"]:${t_bold_cmd}\w${t_unbold_cmd}"'$(_dotfiles_scm_info ":%s")'"${t_prompt_end} "
 else
-    PS1="[${t_prompt_machname}]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
+    PS1="[${HOST%.*}"'$(venv_prompt " (%s)")'"]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
 fi
 
 function auto_env() {
     local pwd="$(pwd)"
     if [ ! -z "${AUTO_VIRTUAL_ENV_ROOT+x}" ]; then
         case "${pwd}" in
-            "${AUTO_VIRTUAL_ENV_ROOT}*")
-            ;;
+            ${AUTO_VIRTUAL_ENV_ROOT}*)
+                ;;
             *)
                 deactivate
                 unset AUTO_VIRTUAL_ENV_ROOT
                 ;;
         esac
     fi
-
-    if [ -e ".venv" ]; then
-        source .venv/bin/activate
-        AUTO_VIRTUAL_ENV_ROOT="${pwd}"
+    if [ ! -z "${AUTOLOAD_ROOT+x}" ]; then
+        case "${pwd}" in
+            ${AUTOLOAD_ROOT}*)
+                ;;
+            *)
+                module unload autoload
+                unset AUTOLOAD_ROOT
+                ;;
+        esac
     fi
+
+    while [ "$pwd" != "" ]; do
+        if [ -z "${AUTO_VIRTUAL_ENV_ROOT+x}" -a -e "${pwd}/.venv" ]; then
+            source ${pwd}/.venv/bin/activate
+            AUTO_VIRTUAL_ENV_ROOT="${pwd}"
+        fi
+
+        if [ -z "${AUTOLOAD_ROOT+x}" -a -e "${pwd}/.pyenv-modules/autoload.py" ]; then
+            module load autoload
+            AUTOLOAD_ROOT="${pwd}"
+        fi
+        pwd="${pwd%/*}"
+    done
 }
 
 # merging history
