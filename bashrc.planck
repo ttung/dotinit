@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ "${t_setpaths}" == "yes" ]; then
-    #module load com.android.developer.SDK
-    module load com.facebook.arcanist
-fi
-
 # this needs to be called after interactive setup.
 function completion_disable_case_sensitivity() {
     if [ "${interactive}" == "yes" ] &&
@@ -90,6 +85,3 @@ alias buckp='buck project igproject'
 alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
 
 complete -W 'merly.org dev' ssh
-
-export FB_HG_RPMS_ROOT=~/work/mercurial/facebook-hg-rpms
-export HG_DIST=/usr/local/bin/hg
