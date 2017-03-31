@@ -142,6 +142,10 @@ HISTSIZE=2500
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
+if [ "$OSTYPE" == "Darwin" ]; then
+    shopt -s nocaseglob
+fi
+
 set -o notify
 set -o noclobber
 IGNOREEOF=2
