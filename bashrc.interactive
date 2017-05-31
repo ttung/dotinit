@@ -96,7 +96,7 @@ function auto_env() {
             ${AUTOLOAD_ROOT}*)
                 ;;
             *)
-                module unload autoload
+                PYENV_PATH="$PYENV_PATH:$AUTOLOAD_ROOT/.pyenv-modules" module unload autoload
                 unset AUTOLOAD_ROOT
                 ;;
         esac
@@ -109,8 +109,8 @@ function auto_env() {
         fi
 
         if [ -z "${AUTOLOAD_ROOT+x}" -a -e "${pwd}/.pyenv-modules/autoload.py" ]; then
-            module load autoload
             AUTOLOAD_ROOT="${pwd}"
+            PYENV_PATH="$PYENV_PATH:$AUTOLOAD_ROOT/.pyenv-modules" module load autoload
         fi
         pwd="${pwd%/*}"
     done
