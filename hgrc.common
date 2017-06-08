@@ -1,0 +1,109 @@
+[ui]
+interface=curses
+
+[extensions]
+evolve=
+hggit=
+hgext.bookmarks=
+rebase=
+fbshow=
+smartlog=
+automv=
+pager=
+strip=
+
+[alias]
+sl=smartlog -T '{sl}'
+ssl=smartlog -T '{ssl}'
+
+[automv]
+similarity=75
+
+[color]
+evolution.troubles=red
+log.changeset=bold blue
+sl.active=yellow
+sl.amended=bold black
+sl.branch=bold
+sl.book=green
+sl.current=magenta
+sl.diff=bold
+sl.draft=yellow bold
+sl.folded=bold black
+sl.hiddenlabel=bold black
+sl.hiddennode=bold black
+sl.histedited=bold black
+sl.landed=bold black
+sl.public=yellow
+sl.rebased=bold black
+sl.remote=green
+sl.split=bold black
+sl.tasks=bold
+sl.troubles=red
+ssl.abandoned=black bold
+ssl.accepted=green bold
+ssl.committed=cyan
+ssl.review=yellow bold
+ssl.revision=red bold
+sb.active=green
+
+[experimental]
+evolution=createmarkers
+evolutioncommands=prev next split fold obsolete metaedit
+prunestrip=True
+
+[pager]
+attend=annotate, cat, diff, export, grep, heads, help, incoming, locate, log, outgoing, parents, pdiff, reflog, show, sl, smartlog, status, tags, tip, ssl
+attend-lg=True
+attend-lgiso=True
+pager=less -mei
+
+[revsetalias]
+sb(n)=first(sort(bookmark(), -rev), n)
+sba=sort(bookmark(), -rev)
+top=heads(. ::)
+bottom=first(::. & draft())
+
+[templatealias]
+sl_phase="{ifeq(phase, 'public', 'sl.public', 'sl.draft')}"
+sl_node="{label(sl_phase, shortest(node, 6))}"
+sl_user="{label('sl.user', author|user)}"
+sl_active="{if(activebookmark, label('sl.active', '{activebookmark}*'))}"
+sl_labeled_bm="{label('sl.book', bookmark)}"
+sl_nonactive="{ifeq(bookmark, active, '', '{sl_labeled_bm} ')}"
+sl_others="{strip(bookmarks % '{sl_nonactive}')}"
+sl_remote="{label('sl.remote', remotebookmarks)}"
+sl_books="{separate(' ', sl_active, sl_others, sl_remote)}"
+sl_diff="{label('sl.diff', phabdiff)}"
+sl_difflabel="{ifeq(phabstatus, 'Accepted', 'ssl.accepted', ifeq(phabstatus, 'Needs Revision', 'ssl.revision', ifeq(phabstatus, 'Committed', 'ssl.committed', ifeq(phabstatus, 'Needs Review', 'ssl.review', ifeq(phabstatus, 'Abandoned', 'ssl.abandoned', 'sl.diff')))))}"
+sl_diffstatus="{phabstatus}{ifeq(phabstatus, 'Needs Revision', '*')}"
+sl_task="{label('sl.tasks', 't{task}')}"
+sl_tasks="{join(tasks % '{sl_task}', ' ')}"
+sl_branch="{ifeq(branch, 'default', '', label('sl.branch', branch))}"
+sl_troubles="{label('sl.troubles', troubles)}"
+sl_landed="{if(singlepublicsuccessor, label('sl.landed', '(Landed as {shortest(singlepublicsuccessor, 6)})'))}"
+sl_amended="{if(amendsuccessors, label('sl.amended', '(Amended as {join(amendsuccessors % \'{shortest(amendsuccessor, 6)}\', ', ')})'))}"
+sl_rebased="{if(rebasesuccessors, label('sl.rebased', '(Rebased as {join(rebasesuccessors % \'{shortest(rebasesuccessor, 6)}\', ', ')})'))}"
+sl_split="{if(splitsuccessors, label('sl.split', '(Split into {join(splitsuccessors % \'{shortest(splitsuccessor, 6)}\', ', ')})'))}"
+sl_folded="{if(foldsuccessors, label('sl.folded', '(Folded into {join(foldsuccessors % \'{shortest(foldsuccessor, 6)}\', ', ')})'))}"
+sl_histedited="{if(histeditsuccessors, label('sl.histedited', '(Histedited as {join(histeditsuccessors % \'{shortest(histeditsuccessor, 6)}\', ', ')})'))}"
+sl_hidden="{ifcontains(rev, revset('hidden()'), label('sl.hiddenlabel', '(hidden)'))}"
+sl_obsolete="{separate(' ', sl_landed, sl_amended, sl_rebased, sl_split, sl_folded, sl_histedited)}"
+sl_label="{ifeq(graphnode, '@', 'sl.current', ifeq(graphnode, 'x', 'sl.hiddennode'))}"
+hsl_node="{label(sl_phase, '{rev}:{shortest(node, 6)}')}"
+sl_node_info="{separate(' ', sl_node, sl_obsolete)}"
+hsl_node_info="{separate(' ', hsl_node, sl_obsolete, sl_hidden)}"
+ssl_diff_labeled="{if(sl_diff, label(sl_difflabel, '{phabdiff} {sl_diffstatus}'))}"
+csl_diff_labeled="{if(sl_diff, label(sl_difflabel, '{phabdiff}'))}"
+sl_desc="{desc|firstline}"
+sl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, sl_diff, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+ssl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, ssl_diff_labeled, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+csl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, csl_diff_labeled, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+hsl="{label(sl_label, separate('\n', separate('  ', hsl_node_info, sl_user, sl_diff, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+sb_date="{date(date, '%x')}"
+sb_item="{sb_date} {bookmarks}\n           {desc|firstline}\n"
+sb_active="{label('sb.active', sb_item)}"
+sb="{if(activebookmark, sb_active, sb_item)}"
+
+[tweakdefaults]
+allowfullrepohistgrep=True
