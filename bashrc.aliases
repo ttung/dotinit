@@ -41,3 +41,5 @@ function git() {
 
     command git "$@"
 }
+
+alias py=ipython

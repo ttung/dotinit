@@ -81,5 +81,6 @@ end tell'\'
 alias arcd='arc diff --nostablecheck --verbatim'
 alias buckp='buck project igproject'
 alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
+alias travis='/Users/tonytung/.gem/ruby/2.0.0/bin/travis'
 
 complete -W 'merly.org dev' ssh
