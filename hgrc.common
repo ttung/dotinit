@@ -1,20 +1,30 @@
 [ui]
 interface=curses
+merge=ediff
+
+[merge-tools]
+ediff.args = $base $local $other $output
+ediff.executable = ediff-merge.sh
 
 [extensions]
-evolve=
-hggit=
-hgext.bookmarks=
-rebase=
-fbshow=
-smartlog=
 automv=
+evolve=
+fbamend=
+fbshow=
+hgext.bookmarks=
+hggit=
+histedit=
 pager=
+rebase=
+shelve=
+smartlog=
 strip=
 
 [alias]
-sl=smartlog -T '{sl}'
+sl=!hg smartlog -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
+fsl=smartlog -T '{sl}'
 ssl=smartlog -T '{ssl}'
+oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r 'ancestors(master) & bookmark()' | egrep -v ^master$
 
 [automv]
 similarity=75
@@ -49,11 +59,15 @@ sb.active=green
 
 [experimental]
 evolution=createmarkers
-evolutioncommands=prev next split fold obsolete metaedit
+evolutioncommands=prev next split fold obsolete metaedit touch
 prunestrip=True
 
+[fbamend]
+date=implicitupdate
+userestack=True
+
 [pager]
-attend=annotate, cat, diff, export, grep, heads, help, incoming, locate, log, outgoing, parents, pdiff, reflog, show, sl, smartlog, status, tags, tip, ssl
+attend=annotate, cat, diff, export, fsl, grep, heads, help, incoming, locate, log, outgoing, parents, pdiff, reflog, show, sl, smartlog, status, tags, tip, ssl
 attend-lg=True
 attend-lgiso=True
 pager=less -mei
