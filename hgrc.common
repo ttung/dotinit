@@ -19,12 +19,13 @@ rebase=
 shelve=
 smartlog=
 strip=
+tweakdefaults=
 
 [alias]
 sl=!hg smartlog -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
 fsl=smartlog -T '{sl}'
 ssl=smartlog -T '{ssl}'
-oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r 'ancestors(master) & bookmark()' | egrep -v ^master$
+oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r '(ancestors(master) & bookmark()) | obsolete()' | egrep -v ^master$
 
 [automv]
 similarity=75
