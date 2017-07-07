@@ -133,10 +133,10 @@ while ($cntr <= ${#src})
 end
 
 foreach dotfile (.*)
-    if (-l $dotfile && ! -e $dotfile) then
+    if (-l "$dotfile" && ! -e "$dotfile") then
         echo "Warning: $dotfile is a broken link."
         if ($?clean) then
-            'rm' -f ${dotfile}
+            'rm' -f "${dotfile}"
         endif
     endif
 end
