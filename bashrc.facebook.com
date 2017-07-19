@@ -10,6 +10,18 @@ if [ "${t_setpaths}" == "yes" ]; then
     module load com.facebook.init.paths
 fi
 
+function running_proc_watch() {
+    tmux set-option automatic-rename off
+    while true; do
+        output=$(date;
+                 echo "";
+                 ps auxf | awk '{if($8 ~ /^[DR]/) print $0;}')
+        echo "${output}"
+        sleep 1
+        clear
+    done
+}
+
 alias reset_err="sudo tcsh -c 'cat /dev/null >! ~ttung/logs/error_log_ttung'"
 
 function rebase_stack_phabricator() {
