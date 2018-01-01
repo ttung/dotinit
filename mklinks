@@ -75,6 +75,7 @@ set fileset = ( \
     gitconfig \
     hgrc.common \
     hushlogin \
+    less \
     qwerty \
     screenrc \
     tmux.conf \
