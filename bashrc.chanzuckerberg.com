@@ -1,7 +1,7 @@
 function pullmaster() {
     hg pull --hidden
     hg boo -d $(hg oldbm)
-    hg strip $(hg log -T '{node}\n' -r 'unstable()')
+    hg strip $(hg log -T '{node}\n' -r 'obsolete()')
     hg rebase -d master -s 'children(ancestors(master) and (not master)) & bookmark(r"re:tonytung-*")'
     if [ $? -ne 0 ]; then
         return $?

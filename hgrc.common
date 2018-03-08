@@ -27,6 +27,8 @@ sl=!hg smartlog -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
 fsl=smartlog -T '{sl}'
 ssl=smartlog -T '{ssl}'
 oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r '(ancestors(master) & bookmark()) | obsolete()' | egrep -v ^master$
+yankb=!$HG log -T "$1 is currently at {node}\n" -r $1 && $HG bookmark -fr . $1 && $HG bookmark $1
+bstrip=!$HG strip $1 && $HG bookmark -d $1
 
 [automv]
 similarity=75
@@ -97,6 +99,9 @@ sb(n)=first(sort(bookmark(), -rev), n)
 sba=sort(bookmark(), -rev)
 top=heads(. ::)
 bottom=first(::. & draft())
+
+[subrepos]
+git:allowed=True
 
 [templatealias]
 sl_phase="{ifeq(phase, 'public', 'sl.public', 'sl.draft')}"
