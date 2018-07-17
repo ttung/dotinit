@@ -1,8 +1,10 @@
 function pullmaster() {
+    hg boo -d $(hg boo -q | egrep -v '(^tonytung|^master$)')
     hg pull --hidden
     hg boo -d $(hg oldbm)
+    hg strip -r 'not (bookmark() or ancestors(bookmark()) or author(ttung))'
     hg strip $(hg log -T '{node}\n' -r 'obsolete()')
-    hg rebase -d master -s 'children(ancestors(master) and (not master)) & bookmark(r"re:tonytung-*")'
+    hg rebase -d master -s 'children(ancestors(master)) & (not ancestors(master)) & ancestors(author(ttung))'
     if [ $? -ne 0 ]; then
         return $?
     fi
@@ -16,7 +18,3 @@ function syncmaster() {
         hg push $(hg boo -q | egrep '^tonytung' | awk '/^/{print "-B"}1') -f && \
         hg sl
 }
-
-export NVM_DIR="$HOME/software/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
