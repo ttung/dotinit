@@ -138,7 +138,7 @@ else
 fi
 HISTCONTROL=erasedups:ignorespace
 HISTFILESIZE=5000
-HISTSIZE=2500
+HISTSIZE=1000
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
