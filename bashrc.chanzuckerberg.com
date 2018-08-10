@@ -2,7 +2,6 @@ function pullmaster() {
     hg boo -d $(hg boo -q | egrep -v '(^tonytung|^master$)')
     hg pull --hidden
     hg boo -d $(hg oldbm)
-    hg strip -r 'not (bookmark() or ancestors(bookmark()) or author(ttung))'
     hg strip $(hg log -T '{node}\n' -r 'obsolete()')
     hg rebase -d master -s 'children(ancestors(master)) & (not ancestors(master)) & ancestors(author(ttung))'
     if [ $? -ne 0 ]; then
@@ -10,6 +9,7 @@ function pullmaster() {
     fi
     hg boo -d $(hg oldbm)
     hg strip $(hg log -T '{node}\n' -r 'unstable()')
+    hg strip -r 'not (bookmark() or ancestors(bookmark()) or author(ttung))'
     return 0
 }
 
