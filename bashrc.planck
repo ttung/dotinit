@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# this needs to be called after interactive setup.
-function completion_disable_case_sensitivity() {
-    if [ "${interactive}" == "yes" ] &&
-        [ "${TERMTYPE}" != "dumb" ]; then
-        bind "set completion-ignore-case on"
-    fi
-}
-finalize=( ${finalize[@]} completion_disable_case_sensitivity )
-
-
 function tivodec() {
     if [ $# -lt 1 ]; then
         echo "Usage: tivodec <tivo_file>"

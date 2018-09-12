@@ -144,6 +144,7 @@ shopt -s histappend cmdhist lithist
 
 if [ "$OSTYPE" == "Darwin" ]; then
     shopt -s nocaseglob
+    bind "set completion-ignore-case on"
 fi
 
 set -o notify
