@@ -14,6 +14,7 @@ fbshow=
 hgext.bookmarks=
 hggit=
 histedit=
+inhibit=
 pager=
 purge=
 rebase=
@@ -26,9 +27,10 @@ tweakdefaults=
 sl=!hg smartlog -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
 fsl=smartlog -T '{sl}'
 ssl=smartlog -T '{ssl}'
-oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r '(ancestors(master) & bookmark()) | obsolete()' | egrep -v ^master$
+oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r 'ancestors(master) & bookmark()' | egrep -v ^master$
 yankb=!$HG log -T "$1 is currently at {node}\n" -r $1 && $HG bookmark -fr . $1 && $HG bookmark $1
 bstrip=!$HG strip $1 && $HG bookmark -d $1
+faketag=!$HG tag t1 -f -m "fake commit"
 
 [automv]
 similarity=75
