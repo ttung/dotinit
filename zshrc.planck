@@ -1,0 +1,76 @@
+#!/bin/bash
+
+function tivodec() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: tivodec <tivo_file>"
+        return 1
+    fi
+
+    echo $1
+
+    filename=$(basename "$1")
+    extension=${filename##*.}
+    filebase=${filename%.*}
+
+    outputfile=$(dirname "$1")/${filebase}.mpg
+
+    tivodecode -m 2765639181 -o "$outputfile" "$1"
+}
+
+function ydl() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: ydl <url>..."
+        return 1
+    fi
+
+    cd ~/Downloads
+    while [ $# -ge 1 ]; do
+        for ((a=1; a <= 10 ; a++)); do
+            youtube-dl -c -o '%(title)s.%(ext)s' "$1"
+            if [ $? -eq 0 ]; then
+                break
+            fi
+            sleep 60
+        done
+        shift
+    done
+    cd -
+}
+
+function screenshot() {
+    filename="/tmp/screen-$(date +%s).png"
+    adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >| "${filename}"
+
+    if [ -s "${filename}" ]; then
+        osascript -e 'tell application "Finder" to reveal {"'"${filename}"'" as POSIX file}'
+        osascript -e 'tell application "Finder" to activate'
+    else
+        rm -f "${filename}"
+    fi
+}
+
+function alert() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: alert <message> [<title>]"
+        return 1
+    fi
+
+    if [ $# -eq 1 ]; then
+        osascript -e 'display notification "'"${1}"'" with title "Alert"'
+    else
+        osascript -e 'display notification "'"${1}"'" with title "'"${2}"'"'
+    fi
+}
+
+alias update_podcasts='osascript -e '\''tell application "iTunes" to updateAllPodcasts'\'
+alias sync_iphone='osascript -e '\''tell application "iTunes"
+  repeat with s in sources
+    if (kind of s is iPod) then update s
+  end repeat
+end tell'\'
+alias arcd='arc diff --nostablecheck --verbatim'
+alias buckp='buck project igproject'
+alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
+alias travis='/Users/tonytung/.gem/ruby/2.0.0/bin/travis'
+
+zstyle ':completion:*:ssh:*' hosts dev merly.org

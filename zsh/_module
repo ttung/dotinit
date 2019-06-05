@@ -1,0 +1,26 @@
+#compdef module
+
+function _module {
+    local line
+
+    _arguments -C \
+              "1: :(avail load loaded unload)" \
+              "*::arg:->args"
+
+    case $line[1] in
+        unload)
+            _module_unload
+            ;;
+        load)
+            _module_load
+            ;;
+    esac
+}
+
+function _module_unload() {
+    _arguments "*: :($(module loaded))"
+}
+
+function _module_load() {
+    _arguments "*: :($(module avail))"
+}

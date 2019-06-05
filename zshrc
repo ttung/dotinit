@@ -1,0 +1,126 @@
+#!/bin/bash
+
+if [ ! -z "${HOME}" ]; then
+    PYENV_HOME="${HOME}/software/pyenv"
+    export PYENV_PATH="${HOME}/software/pyenv/modules"
+
+    function module() {
+        local module_file=`${PYENV_HOME}/modulecmd -s bash "$@"`
+        if [ -f "${module_file}" ]; then
+            . "${module_file}"
+            rm -f "${module_file}"
+        fi
+    }
+fi
+
+if [ ! -z "${PS1}" ]; then
+    interactive=yes
+    function init_stat() {
+        # echo -en "$@"
+        echo -n ""
+    }
+else
+    interactive=no
+    function init_stat() {
+        echo -n ""
+    }
+fi
+
+# array of functions to call before finishing up.
+declare -a finalize
+
+init_stat "main..."
+
+if [ ! -z "`which uname`" ]; then
+    export MACHTYPE=`uname -m`
+    export OSTYPE=`uname -s`
+else
+    export MACHTYPE=unknown
+    export OSTYPE=unknown
+fi
+
+# Figure out the current host name
+if [ -r "${HOME}/.host" ]; then
+    export HOST="`cat ${HOME}/.host`"
+elif [ ! -z "`which hostname`" ]; then
+    export HOST="`hostname`"
+elif [ ! -z "`which uname`" ]; then
+    export HOST="`uname -n`"
+else
+    export HOST=unknown
+fi
+export HOST="`echo ${HOST} | tr '[:upper:]' '[:lower:]'`"
+
+# Figure out the current domain name
+if [ -r "${HOME}/.domain" ]; then
+    export DOMAIN="`cat ${HOME}/.domain`"
+elif [ ! -z "`which domainname`" ]; then
+    export DOMAIN="`domainname`"
+else
+    export DOMAIN=unknown
+fi
+export DOMAIN="`echo ${DOMAIN} | tr '[:upper:]' '[:lower:]'`"
+
+if [ -z "${INIT_PATHS_SET}" ]; then
+    t_setpaths=yes
+elif [ "${TERM}" = "screen" ] || [ "${TERM}" = "screen-w" ]; then
+    t_setpaths=yes
+fi
+init_stat "done\n"
+
+if [ "${t_setpaths}" = "yes" ]; then
+    init_stat "paths..."
+    module load --force org.merly.init.paths
+    export INIT_PATHS_SET=true
+    init_stat "done\n"
+fi
+
+# all aliases stuff....
+if [ -r "${HOME}/.zshrc.aliases" ]; then
+    . "${HOME}/.zshrc.aliases"
+fi
+
+# all completions stuff....
+if [ "${interactive}" = "yes" ] &&
+    [ -r "${HOME}/.zshrc.complete" ]; then
+    . "${HOME}/.zshrc.complete"
+fi
+
+# all scm stuff....
+if [ "${interactive}" = "yes" ] &&
+    [ -r "${HOME}/.zshrc.gitcomplete" ]; then
+    . "${HOME}/.zshrc.gitcomplete"
+fi
+if [ "${interactive}" = "yes" ] &&
+    [ -r "${HOME}/.zshrc.hgcomplete" ]; then
+    . "${HOME}/.zshrc.hgcomplete"
+fi
+if [ "${interactive}" = "yes" ] &&
+    [ -r "${HOME}/.zshrc.scmprompt" ]; then
+    . "${HOME}/.zshrc.scmprompt"
+fi
+
+# domain-specific initialization.
+if [ ! -z "${DOMAIN}" ] &&
+    [ "${DOMAIN}" != "${HOST}" ] &&
+    [ -r "${HOME}/.zshrc.${DOMAIN}" ]; then
+    . "${HOME}/.zshrc.${DOMAIN}"
+fi
+
+# host-specific initialization.
+if [ ! -z "${HOST}" ] &&
+    [ -r "${HOME}/.zshrc.${HOST}" ]; then
+    . "${HOME}/.zshrc.${HOST}"
+fi
+
+# all interactive stuff....
+if [ "${interactive}" = "yes" ] &&
+    [ -r "${HOME}/.zshrc.interactive" ]; then
+    . "${HOME}/.zshrc.interactive"
+fi
+
+for func in $finalize; do
+    $func
+done
+
+unset t_setpaths

@@ -1,0 +1,190 @@
+#!/bin/bash
+
+if [ -z "${TERM}" ] ||
+    [ "${TERM}" = "dumb" ]; then
+    eval `tset -s - | sed -e '1d'`
+fi
+
+if [ "${TERM}" = "screen" ] ||
+    [ "${TERM}" = "screen-w" ]; then
+    TERMTYPE=screen
+elif [ "${TERM}" = "xterm-color" ] ||
+      [ "${TERM}" = "xterm-256color" ]; then
+    TERMTYPE=xterm
+elif [ "${TERM}" = "emacs" ]; then
+    TERMTYPE=dumb
+elif [ ! -z "${TERM}" ]; then
+    TERMTYPE="${TERM}"
+else
+    TERMTYPE=dumb
+fi
+
+stty erase '^?' kill undef intr '^C' stop '^O' werase undef
+
+if [ "${TERMTYPE}" != "dumb" ]; then
+    bindkey \\C-F forward-word
+    bindkey \\C-b backward-word
+    bindkey \\M-f forward-char
+    bindkey \\M-b backward-char
+    bindkey \\C-u kill-whole-line
+    bindkey \\C-w kill-region
+fi
+
+if [ ! -z "${DISPLAY}" ] &&
+    [ -z "${SSH_DISPLAY}" ]; then
+    SSH_DISPLAY="${DISPLAY}"
+fi
+
+export EDITOR=emacs
+export BLOCKSIZE=K
+export CVS_RSH=ssh
+export RSYNC_RSH=ssh
+
+if [ "${TERMTYPE}" = dumb ]; then
+    export PAGER="cat"
+else
+    export PAGER="less -meiR"
+fi
+
+# word-style
+autoload -U select-word-style
+select-word-style bash
+
+# completion
+fpath=(${HOME}/.init/zsh $fpath)
+autoload -U compinit && compinit
+zstyle ':completion:*:*:git:*' script ~/.init/bashrc.gitcomplete
+
+# set the prompt.
+setopt PROMPT_SUBST
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function venv_prompt() {
+  if [ "${VIRTUAL_ENV##*/}" != "" ]; then
+      printf "$1" "${VIRTUAL_ENV##*/}"
+  fi
+}
+
+if [ "$TERMTYPE" = "xterm" ] ||
+    [ "$TERMTYPE" = "screen" ]; then
+    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
+else
+    PS1=$'[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
+fi
+
+function auto_env() {
+    local pwd="$(pwd)"
+    if [ ! -z "${AUTO_VIRTUAL_ENV_ROOT+x}" ]; then
+        case "${pwd}" in
+            ${AUTO_VIRTUAL_ENV_ROOT}*)
+                ;;
+            *)
+                deactivate
+                unset AUTO_VIRTUAL_ENV_ROOT
+                ;;
+        esac
+    fi
+    if [ ! -z "${AUTOLOAD_ROOT+x}" ]; then
+        case "${pwd}" in
+            ${AUTOLOAD_ROOT}*)
+                ;;
+            *)
+                PYENV_PATH="$PYENV_PATH:$AUTOLOAD_ROOT/.pyenv-modules" module unload autoload
+                unset AUTOLOAD_ROOT
+                ;;
+        esac
+    fi
+
+    while [ "$pwd" != "" ]; do
+        if [ -z "${AUTO_VIRTUAL_ENV_ROOT+x}" -a -e "${pwd}/.venv" ]; then
+            source ${pwd}/.venv/bin/activate
+            AUTO_VIRTUAL_ENV_ROOT="${pwd}"
+        fi
+
+        if [ -z "${AUTOLOAD_ROOT+x}" -a -e "${pwd}/.pyenv-modules/autoload.py" ]; then
+            AUTOLOAD_ROOT="${pwd}"
+            PYENV_PATH="$PYENV_PATH:$AUTOLOAD_ROOT/.pyenv-modules" module load autoload
+        fi
+        pwd="${pwd%/*}"
+    done
+}
+
+# merging history
+# if hash sqlite_history.py &> /dev/null &&
+#         [[ ( ! -L ~/.shell_history ||
+#                  -r ~/.shell_history ) ]] ; then
+#     function sqlite_history() {
+#         local old_HISTTIMEFORMAT="${HISTTIMEFORMAT}"
+#         HISTTIMEFORMAT='***** %s ***** '
+#         local new_history_file=`history | sqlite_history.py`
+#         HISTTIMEFORMAT="${old_HISTTIMEFORMAT}"
+
+#         if [ ! -z "${new_history_file}" ]; then
+#             history -c -r $new_history_file
+#             rm -f $new_history_file
+#         fi
+#     }
+#     PROMPT_COMMAND='auto_env; sqlite_history'
+#     unset HISTFILE
+# else
+#     PROMPT_COMMAND='auto_env; history -a; history -n'
+# fi
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+setopt APPEND_HISTORY EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST SHARE_HISTORY
+
+if [ "$OSTYPE" = "Darwin" ]; then
+    unsetopt CASE_GLOB
+    zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+fi
+
+set -o notify
+set -o noclobber
+IGNOREEOF=2
+
+function watch() {
+    IFS=
+    sleeptime=1
+    while getopts ":s:" o; do
+        case "${o}" in
+            s)
+                sleeptime=${OPTARG}
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    IFS=' '
+
+    while true; do
+        output=$(bash -c "$1")
+        clear
+        echo "${output}"
+        sleep $sleeptime
+    done
+}
+
+function repeat() {
+    local n=$1 # gets the number of times the succeeding command needs to be executed
+    shift      # now $@ has the command that needs to be executed
+    while [ $(( n -= 1 )) -ge 0 ] #loop n times;
+    do
+        "$@"   # execute the command; you can also add error handling here or parallelize the commands
+    done
+}
+
+function tmux () {
+    declare SAS
+
+    if [ ! -d ${HOME}/tmp ]; then
+        mkdir -p ${HOME}/tmp
+    fi
+
+    if [ "${TERMTYPE}" != "screen" ] && [ "${!SSH_AUTH_SOCK[@]}" ]; then
+        ln -sf ${SSH_AUTH_SOCK} ${HOME}/tmp/${USER}-agent-screen
+        SAS=${HOME}/tmp/${USER}-agent-screen
+    fi
+
+    SSH_AUTH_SOCK="${SAS}" command tmux $@
+}

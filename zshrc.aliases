@@ -1,0 +1,30 @@
+#!/bin/bash
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias l='ls -F'
+alias ls='ls -F'
+alias ll='ls -l'
+alias lla='ls -al'
+alias f='finger'
+
+alias more='less -meiR'
+
+# editors
+alias en='emacs -nw'
+alias em='emacs'
+
+function git() {
+    if [ "$1" = "diff" ]; then
+        if [ $# -eq 1 ]; then
+            command git diff HEAD
+            return $?
+        fi
+    fi
+
+    command git "$@"
+}
+
+alias py=ipython

@@ -67,6 +67,31 @@ foreach bash (.init/bash*)
     endif
 end
 
+echo "zsh..."
+foreach zshrc (.init/zshrc*)
+    set zshrcdest = `echo ${zshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
+    if (-e ${zshrcdest}) then
+        if (! -l ${zshrcdest}) then
+            set skiplink
+            echo "Warning: ${zshrcdest} is in the way and may need to be checked into CVS."
+            if ($?clean) then
+                unset skiplink
+                'mv' -f ${zshrcdest} ${zshrc}
+                echo "Cleaning by moving ${zshrcdest} to ${zshrc}."
+            endif
+        else
+            unset skiplink
+            'rm' -f ${zshrcdest}
+        endif
+    endif
+
+    if ($?skiplink) then
+        unset skiplink
+    else
+        ln -sf ${zshrc} ${zshrcdest}
+    endif
+end
+
 set fileset = ( \
     Xdefaults \
     dvorak \
