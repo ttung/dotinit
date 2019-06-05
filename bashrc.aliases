@@ -32,7 +32,7 @@ function which() {
 alias where='type -a'
 
 function git() {
-    if [ "$1" == "diff" ]; then
+    if [ "$1" = "diff" ]; then
         if [ $# -eq 1 ]; then
             command git diff HEAD
             return $?

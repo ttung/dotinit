@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "${t_setpaths}" == "yes" ]; then
+if [ "${t_setpaths}" = "yes" ]; then
     while read module
     do
         if [ "${module}" != "org.merly.init.paths" ]; then

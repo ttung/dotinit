@@ -65,12 +65,12 @@ export DOMAIN="`echo ${DOMAIN} | tr '[:upper:]' '[:lower:]'`"
 
 if [ -z "${INIT_PATHS_SET}" ]; then
     t_setpaths=yes
-elif [ "${TERM}" == "screen" ] || [ "${TERM}" == "screen-w" ]; then
+elif [ "${TERM}" = "screen" ] || [ "${TERM}" = "screen-w" ]; then
     t_setpaths=yes
 fi
 init_stat "done\n"
 
-if [ "${t_setpaths}" == "yes" ]; then
+if [ "${t_setpaths}" = "yes" ]; then
     init_stat "paths..."
     module load --force org.merly.init.paths
     export INIT_PATHS_SET=true
@@ -83,21 +83,21 @@ if [ -r "${HOME}/.bashrc.aliases" ]; then
 fi
 
 # all completions stuff....
-if [ "${interactive}" == "yes" ] &&
+if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.bashrc.complete" ]; then
     . "${HOME}/.bashrc.complete"
 fi
 
 # all scm stuff....
-if [ "${interactive}" == "yes" ] &&
+if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.bashrc.gitcomplete" ]; then
     . "${HOME}/.bashrc.gitcomplete"
 fi
-if [ "${interactive}" == "yes" ] &&
+if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.bashrc.hgcomplete" ]; then
     . "${HOME}/.bashrc.hgcomplete"
 fi
-if [ "${interactive}" == "yes" ] &&
+if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.bashrc.scmprompt" ]; then
     . "${HOME}/.bashrc.scmprompt"
 fi
@@ -116,7 +116,7 @@ if [ ! -z "${HOST}" ] &&
 fi
 
 # all interactive stuff....
-if [ "${interactive}" == "yes" ] &&
+if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.bashrc.interactive" ]; then
     . "${HOME}/.bashrc.interactive"
 fi

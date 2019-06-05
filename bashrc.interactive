@@ -1,17 +1,17 @@
 #!/bin/bash
 
 if [ -z "${TERM}" ] ||
-    [ "${TERM}" == "dumb" ]; then
+    [ "${TERM}" = "dumb" ]; then
     eval `tset -s - | sed -e '1d'`
 fi
 
-if [ "${TERM}" == "screen" ] ||
-    [ "${TERM}" == "screen-w" ]; then
+if [ "${TERM}" = "screen" ] ||
+    [ "${TERM}" = "screen-w" ]; then
     TERMTYPE=screen
-elif [ "${TERM}" == "xterm-color" ] ||
-      [ "${TERM}" == "xterm-256color" ]; then
+elif [ "${TERM}" = "xterm-color" ] ||
+      [ "${TERM}" = "xterm-256color" ]; then
     TERMTYPE=xterm
-elif [ "${TERM}" == "emacs" ]; then
+elif [ "${TERM}" = "emacs" ]; then
     TERMTYPE=dumb
 elif [ ! -z "${TERM}" ]; then
     TERMTYPE="${TERM}"
@@ -47,7 +47,7 @@ export BLOCKSIZE=K
 export CVS_RSH=ssh
 export RSYNC_RSH=ssh
 
-if [ "${TERMTYPE}" == dumb ]; then
+if [ "${TERMTYPE}" = dumb ]; then
     export PAGER="cat"
 else
     export PAGER="less -meiR"
@@ -72,8 +72,8 @@ function venv_prompt() {
   fi
 }
 
-if [ "$TERMTYPE" == "xterm" ] ||
-    [ "$TERMTYPE" == "screen" ]; then
+if [ "$TERMTYPE" = "xterm" ] ||
+    [ "$TERMTYPE" = "screen" ]; then
     PS1="\[\e]0;[${HOST%.*}"'$(venv_prompt " (%s)")'"]:\w${t_prompt_end}\a\][${HOST%.*}"'$(venv_prompt " (%s)")'"]:${t_bold_cmd}\w${t_unbold_cmd}"'$(_dotfiles_scm_info ":%s")'"${t_prompt_end} "
 else
     PS1="[${HOST%.*}"'$(venv_prompt " (%s)")'"]:${t_bold_cmd}\w${t_unbold_cmd}${t_prompt_end} "
@@ -142,7 +142,7 @@ HISTSIZE=1000
 HISTTIMEFORMAT=' %F %T '
 shopt -s histappend cmdhist lithist
 
-if [ "$OSTYPE" == "Darwin" ]; then
+if [ "$OSTYPE" = "Darwin" ]; then
     shopt -s nocaseglob
     bind "set completion-ignore-case on"
 fi
