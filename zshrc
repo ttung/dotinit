@@ -31,7 +31,7 @@ declare -a finalize
 
 init_stat "main..."
 
-if [ ! -z "`which uname`" ]; then
+if hash uname &> /dev/null; then
     export MACHTYPE=`uname -m`
     export OSTYPE=`uname -s`
 else
@@ -42,9 +42,9 @@ fi
 # Figure out the current host name
 if [ -r "${HOME}/.host" ]; then
     export HOST="`cat ${HOME}/.host`"
-elif [ ! -z "`which hostname`" ]; then
+elif hash hostname &> /dev/null; then
     export HOST="`hostname`"
-elif [ ! -z "`which uname`" ]; then
+elif hash uname &> /dev/null; then
     export HOST="`uname -n`"
 else
     export HOST=unknown
@@ -54,7 +54,7 @@ export HOST="`echo ${HOST} | tr '[:upper:]' '[:lower:]'`"
 # Figure out the current domain name
 if [ -r "${HOME}/.domain" ]; then
     export DOMAIN="`cat ${HOME}/.domain`"
-elif [ ! -z "`which domainname`" ]; then
+elif hash domainname &> /dev/null; then
     export DOMAIN="`domainname`"
 else
     export DOMAIN=unknown
