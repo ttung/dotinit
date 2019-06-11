@@ -28,3 +28,5 @@ function git() {
 }
 
 alias py=ipython
+
+alias history='fc -il 1'
