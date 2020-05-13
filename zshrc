@@ -80,12 +80,6 @@ if [ -r "${HOME}/.zshrc.aliases" ]; then
     . "${HOME}/.zshrc.aliases"
 fi
 
-# all completions stuff....
-if [ "${interactive}" = "yes" ] &&
-    [ -r "${HOME}/.zshrc.complete" ]; then
-    . "${HOME}/.zshrc.complete"
-fi
-
 # all scm stuff....
 if [ "${interactive}" = "yes" ] &&
     [ -r "${HOME}/.zshrc.gitcomplete" ]; then
