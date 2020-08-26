@@ -69,9 +69,9 @@ function venv_prompt() {
 
 if [ "$TERMTYPE" = "xterm" ] ||
     [ "$TERMTYPE" = "screen" ]; then
-    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}[${HOST%.*}$(venv_prompt " (%s)")%(?,, %F{red}/%?%f)]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}%(?,,%F{red}%?%f\n)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
 else
-    PS1=$'[${HOST%.*}$(venv_prompt " (%s)")%(?,, %F{red}/%?%f)]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'%(?,,%F{red}%?%f)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
 fi
 
 function precmd() {
@@ -136,9 +136,7 @@ set -o noclobber
 IGNOREEOF=2
 
 REPORTTIME=10
-TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
-disable -r time
-alias time='time -p '
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\nmem\t%M'$([ "$OSTYPE" = "Darwin" ] && echo "KB" || echo "MB" )
 
 function watch() {
     IFS=
