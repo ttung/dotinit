@@ -1,11 +1,11 @@
 [merge]
-	tool = ediff
+        tool = ediff
 [mergetool "ediff"]
-	cmd = ediff-merge.sh $BASE $LOCAL $REMOTE $MERGED
-	trustExitCode = true
+        cmd = ediff-merge.sh $BASE $LOCAL $REMOTE $MERGED
+        trustExitCode = true
 [mergetool]
-	prompt = false
-	keepBackup = false
+        prompt = false
+        keepBackup = false
 
 [alias]
         br = branch -vv
@@ -21,18 +21,19 @@
         brup = !sh -c 'git-branch-upstream.sh $*' -
 
 #       facebook-specific aliases
-	frdc = !sh -c 'git-fetch-rebase-dc.sh $1' -
+        frdc = !sh -c 'git-fetch-rebase-dc.sh $1' -
         postdiff = !sh -c 'git-postdiff-dc.sh $1' -
         shove = !sh -c 'git-shove.sh $1' -
+        fsl = log --graph --pretty=format:'%C(bold cyan)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(red)<%an>%Creset' --abbrev-commit --all
 
 [user]
-	name = Tony Tung
-	email = tonytung@merly.org
+        name = Tony Tung
+        email = tonytung@merly.org
 [core]
-	excludesfile = /Users/tonytung/.gitignore
+        excludesfile = /Users/tonytung/.gitignore
 [diff]
-	ignoreSubmodules = untracked
+        ignoreSubmodules = untracked
 [color]
-	ui = auto
+        ui = auto
 [branch]
-	autosetuprebase = always
+        autosetuprebase = always
