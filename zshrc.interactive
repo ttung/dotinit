@@ -69,9 +69,9 @@ function venv_prompt() {
 
 if [ "$TERMTYPE" = "xterm" ] ||
     [ "$TERMTYPE" = "screen" ]; then
-    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}[${HOST%.*}$(venv_prompt " (%s)")%(?,, %F{red}/%?%f)]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
 else
-    PS1=$'[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'[${HOST%.*}$(venv_prompt " (%s)")%(?,, %F{red}/%?%f)]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
 fi
 
 function precmd() {
@@ -124,7 +124,7 @@ function zshaddhistory() {
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
-setopt APPEND_HISTORY EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST SHARE_HISTORY
+setopt APPEND_HISTORY EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_SPACE SHARE_HISTORY
 
 if [ "$OSTYPE" = "Darwin" ]; then
     unsetopt CASE_GLOB
@@ -134,6 +134,11 @@ fi
 set -o notify
 set -o noclobber
 IGNOREEOF=2
+
+REPORTTIME=10
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
+disable -r time
+alias time='time -p '
 
 function watch() {
     IFS=
