@@ -74,3 +74,5 @@ alias gitx='/Applications/SourceTree.app/Contents/Resources/stree'
 alias travis='/Users/tonytung/.gem/ruby/2.0.0/bin/travis'
 
 zstyle ':completion:*:ssh:*' hosts dev merly.org
+
+umask 0066
