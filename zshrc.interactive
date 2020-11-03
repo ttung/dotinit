@@ -176,7 +176,7 @@ function tmux () {
         mkdir -p ${HOME}/tmp
     fi
 
-    if [ "${TERMTYPE}" != "screen" ] && [ "${!SSH_AUTH_SOCK[@]}" ]; then
+    if [ "${TERMTYPE}" != "screen" ] && [ -e "${SSH_AUTH_SOCK}" ]; then
         ln -sf ${SSH_AUTH_SOCK} ${HOME}/tmp/${USER}-agent-screen
         SAS=${HOME}/tmp/${USER}-agent-screen
     fi
