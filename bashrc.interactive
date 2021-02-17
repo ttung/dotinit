@@ -198,6 +198,21 @@ function tmux () {
     SSH_AUTH_SOCK="${SAS}" command tmux $@
 }
 
+if [ "$OSTYPE" = "Darwin" ]; then
+    function alert() {
+        if [ $# -lt 1 ]; then
+            echo "Usage: alert <message> [<title>]"
+            return 1
+        fi
+
+        if [ $# -eq 1 ]; then
+            osascript -e 'display notification "'"${1}"'" with title "Alert"'
+        else
+            osascript -e 'display notification "'"${1}"'" with title "'"${2}"'"'
+        fi
+    }
+fi
+
 # clean up.
 unset t_bold_cmd t_unbold_cmd
 unset t_prompt_end

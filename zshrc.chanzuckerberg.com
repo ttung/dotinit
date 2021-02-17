@@ -21,4 +21,6 @@ function load_conda() {
     # <<< conda initialize <<<
 }
 
-module load com.chanzuckerberg.aws-oidc
+if ! module loaded | egrep -q '^com\.chanzuckerberg\.aws-oidc$'; then
+    module load com.chanzuckerberg.aws-oidc
+fi
