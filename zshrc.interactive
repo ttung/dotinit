@@ -65,6 +65,8 @@ export NODE_VIRTUAL_ENV_DISABLE_PROMPT=1
 function venv_prompt() {
   if [ "${VIRTUAL_ENV##*/}" != "" ]; then
       printf "$1" "${VIRTUAL_ENV##*/}"
+  elif [ "${NODE_VIRTUAL_ENV##*/}" != "" ]; then
+      printf "$1" "${NODE_VIRTUAL_ENV##*/}"
   fi
 }
 
@@ -82,7 +84,11 @@ function precmd() {
             ${AUTO_VIRTUAL_ENV_ROOT}*)
                 ;;
             *)
-                deactivate
+                if typeset -f deactivate_node > /dev/null; then
+                    deactivate_node
+                else
+                    deactivate
+                fi
                 unset AUTO_VIRTUAL_ENV_ROOT
                 ;;
         esac
