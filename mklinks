@@ -14,7 +14,7 @@ for bashfile in .init/bash*; do
         fi
     fi
 
-    if [ ! -z "${skiplink}" ]; then
+    if [ -z "${skiplink}" ]; then
         ln -sf "${bashfile}" "${bashdest}"
     fi
 done
@@ -32,7 +32,7 @@ for zshfile in .init/zsh*; do
         fi
     fi
 
-    if [ ! -z "${skiplink}" ]; then
+    if [ -z "${skiplink}" ]; then
         ln -sf "${zshfile}" "${zshdest}"
     fi
 done
@@ -47,7 +47,7 @@ fileset=(
 )
 
 echo "Miscellaneous..."
-for _srcfile in fileset; do
+for _srcfile in ${fileset}; do
     srcfile=.init/"${_srcfile}"
     dstfile=."${_srcfile}"
     skiplink=
@@ -60,7 +60,7 @@ for _srcfile in fileset; do
         fi
     fi
 
-    if [ ! -z "${skiplink}" ]; then
+    if [ -z "${skiplink}" ]; then
         ln -sf "${srcfile}" "${dstfile}"
     fi
 done
