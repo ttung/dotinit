@@ -1,170 +1,74 @@
-#!/bin/tcsh
+#!/bin/bash
 cd ${HOME}
 
-if ($argv == "clean") then
-    set clean
-endif
-
-if ($user == "cwu") then
-    set addr_user = iyaowu
-else if ($user == "tungc") then
-    set addr_user = ctung
-else
-    set addr_user = ${USER}
-endif
-
-echo "Addressbook..."
-if (-d .init/${addr_user}-addressbook/) then
-    foreach addrbook (.init/${addr_user}-addressbook/addr*)
-        set addrbookdest = `echo $addrbook | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-
-        if (-e ${addrbookdest}) then
-            if (! -l ${addrbookdest}) then
-                set skiplink
-                echo "Warning: ${addrbookdest} is in the way and may need to be checked into CVS."
-                if ($?clean) then
-                    unset skiplink
-                    mkdir -p .init/${addr_user}-addressbook/
-                    'mv' -f ${addrbookdest} ${addrbook}
-                    echo "Cleaning by moving ${addrbookdest} to ${addrbook}."
-                endif
-            else
-                'rm' -f ${addrbookdest}
-            endif
-        endif
-
-        if ($?skiplink) then
-            unset skiplink
-        else
-            ln -sf ${addrbook} ${addrbookdest}
-        endif
-
-    end
-endif
-
 echo "bash..."
-foreach bash (.init/bash*)
-    set bashdest = `echo ${bash} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-    if (-e ${bashdest}) then
-        if (! -l ${bashdest}) then
-            set skiplink
-            echo "Warning: ${bashdest} is in the way and may need to be checked into CVS."
-            if ($?clean) then
-                unset skiplink
-                'mv' -f ${bashdest} ${bash}
-                echo "Cleaning by moving ${bashdest} to ${bash}."
-            endif
+for bashfile in .init/bash*; do
+    bashdest=$(echo "${bashfile}" | sed -e 's/.*\/\([^\/]*\)/.\1/')
+    skiplink=
+    if [ -e "${bashdest}" ]; then
+        if [ ! -h "${bashdest}" ]; then
+            skiplink=1
+            echo "Warning: ${bashdest} is in the way and may need to be checked into git."
         else
-            unset skiplink
-            'rm' -f ${bashdest}
-        endif
-    endif
+            rm -f "${bashdest}"
+        fi
+    fi
 
-    if ($?skiplink) then
-        unset skiplink
-    else
-        ln -sf ${bash} ${bashdest}
-    endif
-end
+    if [ ! -z "${skiplink}" ]; then
+        ln -sf "${bashfile}" "${bashdest}"
+    fi
+done
 
 echo "zsh..."
-foreach zshrc (.init/zshrc*)
-    set zshrcdest = `echo ${zshrc} | sed -e 's/.*\/\([^\/]*\)/.\1/'`
-    if (-e ${zshrcdest}) then
-        if (! -l ${zshrcdest}) then
-            set skiplink
-            echo "Warning: ${zshrcdest} is in the way and may need to be checked into CVS."
-            if ($?clean) then
-                unset skiplink
-                'mv' -f ${zshrcdest} ${zshrc}
-                echo "Cleaning by moving ${zshrcdest} to ${zshrc}."
-            endif
+for zshfile in .init/zsh*; do
+    zshdest=$(echo "${zshfile}" | sed -e 's/.*\/\([^\/]*\)/.\1/')
+    skiplink=
+    if [ -e "${zshdest}" ]; then
+        if [ ! -h "${zshdest}" ]; then
+            skiplink=1
+            echo "Warning: ${zshdest} is in the way and may need to be checked into git."
         else
-            unset skiplink
-            'rm' -f ${zshrcdest}
-        endif
-    endif
+            rm -f "${zshdest}"
+        fi
+    fi
 
-    if ($?skiplink) then
-        unset skiplink
-    else
-        ln -sf ${zshrc} ${zshrcdest}
-    endif
-end
+    if [ ! -z "${skiplink}" ]; then
+        ln -sf "${zshfile}" "${zshdest}"
+    fi
+done
 
-set fileset = ( \
-    Xdefaults \
-    dvorak \
-    dvorak.keysym \
-    fvwm2rc \
-    gitconfig \
-    hgrc.common \
-    hushlogin \
-    less \
-    qwerty \
-    screenrc \
-    tmux.conf \
-    xmodmap \
-    xsession \
-    xstart \
+fileset=(
+    gitconfig
+    hgrc.common
+    hushlogin
+    less
+    lesskey
+    tmux.conf
 )
 
 echo "Miscellaneous..."
-foreach df ( ${fileset} )
-    set dfdest = .${df}
-    if (-e ${dfdest}) then
-        if (! -l ${dfdest}) then
-            set skiplink
-            echo "Warning: ${dfdest} is in the way and may need to be checked into CVS."
-            if ($?clean) then
-                unset skiplink
-                'mv' -f ${dfdest} .init/${df}
-                echo "Cleaning by moving ${dfdest} to .init/${df}."
-            endif
+for _srcfile in fileset; do
+    srcfile=.init/"${_srcfile}"
+    dstfile=."${_srcfile}"
+    skiplink=
+    if [ -e "${dstfile}" ]; then
+        if [ ! -h "${dstfile}" ]; then
+            skiplink=1
+            echo "Warning: ${dstfile} is in the way and may need to be checked into git."
         else
-            'rm' -f ${dfdest}
-        endif
-    endif
+            rm -f "${dstfile}"
+        fi
+    fi
 
-    if ($?skiplink) then
-        unset skiplink
-    else
-        ln -sf .init/${df} ${dfdest}
-    endif
-end
+    if [ ! -z "${skiplink}" ]; then
+        ln -sf "${srcfile}" "${dstfile}"
+    fi
+done
 
-set src = ( .xsession )
-set dst = ( .xinitrc  )
-
-set cntr = 1
-while ($cntr <= ${#src})
-    if (-e ${dst[$cntr]}) then
-        if (! -l ${dst[$cntr]}) then
-            set skiplink
-            echo "Warning: ${dst[$cntr]} is in the way."
-        endif
-
-        if ($?clean || -l ${dst[$cntr]}) then
-            'rm' -f ${dst[$cntr]}
-        endif
-    endif
-
-    if ($?skiplink) then
-        unset skiplink
-    else
-        ln -sf ${src[$cntr]} ${dst[$cntr]}
-    endif
-
-    set cntr = `expr ${cntr} + 1`
-end
-
-foreach dotfile (.*)
-    if (-l "$dotfile" && ! -e "$dotfile") then
+for dotfile in .*; do
+    if [ -h "${dotfile}" ] && [ ! -e "${dotfile}" ]; then
         echo "Warning: $dotfile is a broken link."
-        if ($?clean) then
-            'rm' -f "${dotfile}"
-        endif
-    endif
-end
+    fi
+done
 
 cd -
