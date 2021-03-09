@@ -47,7 +47,7 @@ fileset=(
 )
 
 echo "Miscellaneous..."
-for _srcfile in ${fileset}; do
+for _srcfile in ${fileset[@]}; do
     srcfile=.init/"${_srcfile}"
     dstfile=."${_srcfile}"
     skiplink=
@@ -70,5 +70,3 @@ for dotfile in .*; do
         echo "Warning: $dotfile is a broken link."
     fi
 done
-
-cd -
