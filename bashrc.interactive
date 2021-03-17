@@ -62,7 +62,7 @@ fi
 if [ $UID -eq 0 ]; then
     t_prompt_end='%'
 else
-    t_prompt_end='>'
+    t_prompt_end='»'
 fi
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1

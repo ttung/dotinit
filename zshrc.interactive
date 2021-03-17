@@ -72,9 +72,9 @@ function venv_prompt() {
 
 if [ "$TERMTYPE" = "xterm" ] ||
     [ "$TERMTYPE" = "screen" ]; then
-    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo ">")\a%}%(?,,%F{red}%?%f\n)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'%{\e]0;[${HOST%.*}$(venv_prompt " (%s)")]:%~$([ $UID -eq 0 ] && echo "%" || echo "»")\a%}%(?,,%F{red}%?%f\n)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$(_dotfiles_scm_info ":%s")$([ $UID -eq 0 ] && echo "%" || echo "»") '
 else
-    PS1=$'%(?,,%F{red}%?%f)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo ">") '
+    PS1=$'%(?,,%F{red}%?%f)[${HOST%.*}$(venv_prompt " (%s)")]:%B%~%b$([ $UID -eq 0 ] && echo "%" || echo "»") '
 fi
 
 function precmd() {
