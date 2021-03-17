@@ -140,7 +140,25 @@ fi
 
 set -o notify
 set -o noclobber
-IGNOREEOF=2
+setopt ignore_eof
+IGNOREEOF=3
+bash-ctrl-d() {
+  if [[ $CURSOR == 0 && -z $BUFFER ]]
+  then
+    [[ -z $IGNOREEOF || $IGNOREEOF == 0 ]] && exit
+    if [[ $LASTWIDGET == bash-ctrl-d ]]
+    then
+      (( --__BASH_IGNORE_EOF <= 0 )) && exit
+    else
+      (( __BASH_IGNORE_EOF = IGNOREEOF-1 ))
+    fi
+    zle send-break
+  else
+    zle delete-char-or-list
+  fi
+}
+zle -N bash-ctrl-d
+bindkey '^D' bash-ctrl-d
 
 REPORTTIME=10
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\nmem\t%M'$([ "$OSTYPE" = "Darwin" ] && echo "KB" || echo "MB" )
