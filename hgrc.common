@@ -9,28 +9,28 @@ ediff.executable = ediff-merge.sh
 [extensions]
 automv=
 evolve=
-fbamend=
-fbshow=
+# fbamend=
+graphlog=
 hgext.bookmarks=
 hggit=
 histedit=
-inhibit=
+# inhibit=
 pager=
 purge=
 rebase=
 shelve=
-smartlog=
 strip=
-tweakdefaults=
+# tweakdefaults=
 
 [alias]
-sl=!hg smartlog -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
-fsl=smartlog -T '{sl}'
-ssl=smartlog -T '{ssl}'
+sl=!hg log -G -T '{sl}' --color always | head -n $(expr $(tput lines) - 10)
+fsl=log -G -T '{sl}'
+ssl=log -G -T '{ssl}'
 oldbm=!hg log -T "{join(bookmarks, '\n')}\n" -r 'ancestors(master) & bookmark()' | egrep -v ^master$
 yankb=!$HG log -T "$1 is currently at {node}\n" -r $1 && $HG bookmark -fr . $1 && $HG bookmark $1
 bstrip=!$HG strip $1 && $HG bookmark -d $1
 faketag=!$HG tag t1 -f -m "fake commit"
+show=![ "$1" == "" ] && $HG log --color always -vp -r . || $HG log --color always -vp -r $1
 
 [automv]
 similarity=75
@@ -63,6 +63,10 @@ ssl.review=yellow bold
 ssl.revision=red bold
 sb.active=green
 
+[commands]
+rebase.requiredest = True
+update.check = abort
+
 [committemplate]
 changeset = {if(desc, desc, emptymsg)}\n\n
     HG: Enter commit message.  Lines beginning with 'HG:' are removed.
@@ -82,8 +86,7 @@ changeset = {if(desc, desc, emptymsg)}\n\n
     HG: End:
 
 [experimental]
-evolution=createmarkers
-evolutioncommands=prev next split fold obsolete metaedit touch
+evolution=all
 prunestrip=True
 
 [fbamend]
@@ -118,8 +121,6 @@ sl_books="{separate(' ', sl_active, sl_others, sl_remote)}"
 sl_diff="{label('sl.diff', phabdiff)}"
 sl_difflabel="{ifeq(phabstatus, 'Accepted', 'ssl.accepted', ifeq(phabstatus, 'Needs Revision', 'ssl.revision', ifeq(phabstatus, 'Committed', 'ssl.committed', ifeq(phabstatus, 'Needs Review', 'ssl.review', ifeq(phabstatus, 'Abandoned', 'ssl.abandoned', 'sl.diff')))))}"
 sl_diffstatus="{phabstatus}{ifeq(phabstatus, 'Needs Revision', '*')}"
-sl_task="{label('sl.tasks', 't{task}')}"
-sl_tasks="{join(tasks % '{sl_task}', ' ')}"
 sl_branch="{ifeq(branch, 'default', '', label('sl.branch', branch))}"
 sl_troubles="{label('sl.troubles', troubles)}"
 sl_landed="{if(singlepublicsuccessor, label('sl.landed', '(Landed as {shortest(singlepublicsuccessor, 6)})'))}"
@@ -137,10 +138,10 @@ hsl_node_info="{separate(' ', hsl_node, sl_obsolete, sl_hidden)}"
 ssl_diff_labeled="{if(sl_diff, label(sl_difflabel, '{phabdiff} {sl_diffstatus}'))}"
 csl_diff_labeled="{if(sl_diff, label(sl_difflabel, '{phabdiff}'))}"
 sl_desc="{desc|firstline}"
-sl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, sl_diff, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
-ssl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, ssl_diff_labeled, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
-csl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, csl_diff_labeled, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
-hsl="{label(sl_label, separate('\n', separate('  ', hsl_node_info, sl_user, sl_diff, sl_tasks, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+sl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, sl_diff, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+ssl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, ssl_diff_labeled, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+csl="{label(sl_label, separate('\n', separate('  ', sl_node_info, sl_user, csl_diff_labeled, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
+hsl="{label(sl_label, separate('\n', separate('  ', hsl_node_info, sl_user, sl_diff, sl_books, sl_branch, sl_troubles), '{sl_desc}', '\n'))}"
 sb_date="{date(date, '%x')}"
 sb_item="{sb_date} {bookmarks}\n           {desc|firstline}\n"
 sb_active="{label('sb.active', sb_item)}"
