@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function screenshot() {
+    filename="/tmp/screen-$(date +%s).png"
+    adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >| "${filename}"
+
+    if [ -s "${filename}" ]; then
+        osascript -e 'tell application "Finder" to reveal {"'"${filename}"'" as POSIX file}'
+        osascript -e 'tell application "Finder" to activate'
+    else
+        rm -f "${filename}"
+    fi
+}
+
+zstyle ':completion:*:ssh:*' hosts dev merly.org
