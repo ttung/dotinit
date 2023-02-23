@@ -223,3 +223,6 @@ if [ "$OSTYPE" = "Darwin" ]; then
         fi
     }
 fi
+
+# Make JQ null show up in red instead of dark grey.
+export JQ_COLORS='0;31:0;39:0;39:0;39:0;32:1;39:1;39'
