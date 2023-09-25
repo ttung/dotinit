@@ -31,11 +31,13 @@
         email = tonytung@merly.org
 [core]
         excludesfile = /Users/tonytung/.gitignore
-[diff]
-        ignoreSubmodules = untracked
 [color]
         ui = auto
 [branch]
         autosetuprebase = always
+[diff]
+        ignoreSubmodules = untracked
 [init]
 	defaultBranch = trunk
+[push]
+	autoSetupRemote = true
