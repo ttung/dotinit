@@ -152,7 +152,7 @@ bash-ctrl-d() {
     else
       (( __BASH_IGNORE_EOF = IGNOREEOF-1 ))
     fi
-    zle send-break
+    zle -M "Use 'exit' to leave the shell ($__BASH_IGNORE_EOF more ^D to exit)"
   else
     zle delete-char-or-list
   fi
